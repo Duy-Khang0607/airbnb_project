@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Form, Navigate, Route, Routes } from "react-router-dom";
 import HomeTemplate from "./templates/HomeTemplate";
 import Home from "./pages/User/Home/Home";
 import Register from "./pages/User/Register/Register";
@@ -10,7 +10,7 @@ import Profile from "./pages/User/Profile/Profile";
 import AdminTemplate from "./templates/AdminTemplate";
 import UserManagement from "./pages/Admin/UserManagement/UserManagement";
 import LocationManagement from "./pages/Admin/LocationManagement/LocationManagement";
-import AppRoute from "./api/AppRoute";
+
 type Props = {};
 
 const App = (props: Props) => {
@@ -28,9 +28,9 @@ const App = (props: Props) => {
           <Route path='profile' element={<Profile />}></Route>
           <Route path='*' element={<Navigate to='' />}></Route>
         </Route>
-        <Route path='admin' element={<AppRoute />}>
-          <Route path='UM' element={<UserManagement />}></Route>
-          <Route path='LM' element={<LocationManagement />}></Route>
+        <Route path='admin' element={<AdminTemplate />}>
+          <Route index path='' element={<UserManagement />}></Route>
+          <Route path='position' element={<LocationManagement />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
