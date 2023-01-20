@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../../assets/img/airbnb.png";
+// import logo from "assets/img/airbnb.png";
+import { SideBarData } from "./DataSideBar/Data";
 type Props = {};
 
 const SideBar = (props: Props) => {
+  const [selected, setSelected] = useState(0);
   return (
     <div className='sideBar'>
       <div className='logo'>
@@ -12,10 +15,17 @@ const SideBar = (props: Props) => {
         </span>
       </div>
       <div className='menu'>
-        <div className='menuItem'>
-          <div>icon</div>
-          <span>Dashboard</span>
-        </div>
+        {SideBarData.map((item, index) => {
+          return (
+            <div
+              key={index}
+              className={selected === index ? "menuItem active" : "menuItem"}
+              onClick={() => setSelected(index)}>
+              <div>{item.icon}</div>
+              <span>{item.heading}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
