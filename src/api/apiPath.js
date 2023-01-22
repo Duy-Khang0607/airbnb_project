@@ -10,4 +10,5 @@ export const apiPath = {
   LAY_DS_VE_PHONG: "/api/tickets/by-room?roomId=60e2b057e22b6b3b7024309c",
   // 2)
   //---------------- Admin --------------
+  PROFILE_PAGE: "/api/users/pagination",
 };
