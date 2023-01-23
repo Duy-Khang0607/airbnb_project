@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.css"
 import { BrowserRouter, Form, Navigate, Route, Routes } from "react-router-dom";
 import HomeTemplate from "./templates/HomeTemplate";
 import Home from "./pages/User/Home/Home";

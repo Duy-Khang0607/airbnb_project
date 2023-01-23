@@ -12,6 +12,7 @@ module.exports = {
         blue: "rgb(0 21 42)",
         pink: "rgba(255,56,92)",
       },
+    
     },
   },
   plugins: [],
