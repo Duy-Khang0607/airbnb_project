@@ -1,5 +1,6 @@
 export const apiPath = {
   //---------------- User --------------
+  REGISTER: "/api/auth/register",
   // 1) Quản lý vé
   DANH_SACH_VE: "/api/tickets",
   THONG_TIN_CHI_TIET_VE: "/api/tickets/60c3291e900ea640e0fe4e47",
@@ -11,4 +12,5 @@ export const apiPath = {
   // 2)
   //---------------- Admin --------------
   PROFILE_PAGE: "/api/users/pagination",
+ 
 };
