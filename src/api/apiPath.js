@@ -1,6 +1,6 @@
 export const apiPath = {
   //---------------- User --------------
-  REGISTER: "/api/auth/register",
+  REGISTER: "/api/auth/signup",
   // 1) Quản lý vé
   DANH_SACH_VE: "/api/tickets",
   THONG_TIN_CHI_TIET_VE: "/api/tickets/60c3291e900ea640e0fe4e47",

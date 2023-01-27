@@ -17,32 +17,32 @@ import * as yup from "yup";
 type Props = {};
 
 const Register = (props: Props) => {
-  // const randomNumberInRange = (min: number, max: number) => {
-  //   //  get number between min (inclusive) and max (inclusive)
-  //   return Math.floor(Math.random() * (max - min + 1)) + min;
-  // };
+  const randomNumberInRange = (min: number, max: number) => {
+    //  get number between min (inclusive) and max (inclusive)
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
 
-  // const [num, setNum] = useState(randomNumberInRange(0, 1000000));
+  const [num, setNum] = useState(randomNumberInRange(0, 1000000));
 
   const formik = useFormik<{
-    
+    id:number,
     name: string;
     email: string;
     password: string;
     phone: string;
     birthday: string;
     gender: boolean;
-    address: string;
+    role: string;
   }>({
     initialValues: {
-     
+      id: 0,
       name: "",
       email: "",
       password: "",
       phone: "",
       birthday: "",
       gender: true,
-      address: "",
+      role: "USER",
     },
 
     onSubmit: async (values) => {
@@ -74,15 +74,15 @@ const Register = (props: Props) => {
         .required("Phone is required !")
         .min(10, "Phone must be at least 10 characters"),
       birthday: yup.string().required("Birthday is required !"),
-      address: yup.string().required("Address is required !"),
+      role: yup.string().required("Address is required !"),
     }),
   });
 
-  // console.log(formik.values);
-  // useEffect(() => {
-  //   setNum(randomNumberInRange(0, 1000000));
-  //   formik.setFieldValue("id", num);
-  // }, []);
+  console.log(formik.values);
+  useEffect(() => {
+    setNum(randomNumberInRange(0, 1000000));
+    formik.setFieldValue("id", num);
+  }, []);
   return (
     <>
       <Row>
@@ -155,12 +155,12 @@ const Register = (props: Props) => {
             </Form.Item>
             <Form.Item label="Address">
               <Input
-                name="address"
-                value={formik.values.address}
+                name="role"
+                value={formik.values.role}
                 onChange={formik.handleChange}
               />
-              {formik.errors.address && (
-                <span className="text-red-400">{formik.errors.address}</span>
+              {formik.errors.role && (
+                <span className="text-red-400">{formik.errors.role}</span>
               )}
             </Form.Item>
 
