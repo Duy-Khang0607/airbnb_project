@@ -42,7 +42,7 @@ const Register = (props: Props) => {
       phone: "",
       birthday: "",
       gender: true,
-      role: "USER",
+      role: "",
     },
 
     onSubmit: async (values) => {
@@ -74,7 +74,7 @@ const Register = (props: Props) => {
         .required("Phone is required !")
         .min(10, "Phone must be at least 10 characters"),
       birthday: yup.string().required("Birthday is required !"),
-      role: yup.string().required("Address is required !"),
+     
     }),
   });
 
@@ -153,15 +153,14 @@ const Register = (props: Props) => {
                 ]}
               />
             </Form.Item>
-            <Form.Item label="Address">
-              <Input
-                name="role"
-                value={formik.values.role}
-                onChange={formik.handleChange}
+            <Form.Item label="Role">
+            <Select
+                options={[
+                  { value: "USER", label: "User" },
+                  { value: "ADMIN", label: "Admin" },
+                ]}
               />
-              {formik.errors.role && (
-                <span className="text-red-400">{formik.errors.role}</span>
-              )}
+              
             </Form.Item>
 
             <div className="flex justify-center">
