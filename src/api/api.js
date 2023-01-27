@@ -3,7 +3,7 @@ import axios from "axios";
 const requester = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
-    TokenCybersoft: process.env.REACT_APP_CYBERSOFT_TOKEN,
+    tokenCybersoft: process.env.REACT_APP_CYBERSOFT_TOKEN,
     // => Để Authorization ở đây, thì khi user chưa đăng nhập thì các resquest Authorization  không có
 
     // Authorization: "Bearer " + localStorage.getItem("token"),
