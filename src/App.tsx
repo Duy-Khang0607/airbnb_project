@@ -1,15 +1,21 @@
 import React from "react";
-import { BrowserRouter, Form, Navigate, Route, Routes } from "react-router-dom";
-import HomeTemplate from "./templates/HomeTemplate";
-import Home from "./pages/User/Home/Home";
-import Register from "./pages/User/Register/Register";
-import Login from "./pages/User/Login/Login";
-import DetailRoom from "./pages/User/DetailRoom/DetailRoom";
-import RoomList from "./pages/User/RoomList/RoomList";
-import Profile from "./pages/User/Profile/Profile";
-import AdminTemplate from "./templates/AdminTemplate";
-import UserManagement from "./pages/Admin/UserManagement/UserManagement";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import AppRoute from "./api/AppRoute";
+import PrivateRoute from "./api/PrivateRoute";
+import BookingManagement from "./pages/Admin/BookingManagement/BookingManagement";
+import Dashboard from "./pages/Admin/Dashboard/Dashboard";
 import LocationManagement from "./pages/Admin/LocationManagement/LocationManagement";
+import UserManagement from "./pages/Admin/UserManagement/UserManagement";
+import DetailRoom from "./pages/User/DetailRoom/DetailRoom";
+import Home from "./pages/User/Home/Home";
+import Login from "./pages/User/Login/Login";
+import LoginAdmin from "./pages/Admin/Login/LoginAdmin";
+import RegisterAdmin from "./pages/Admin/Register/RegisterAdmin";
+import Profile from "./pages/User/Profile/Profile";
+import Register from "./pages/User/Register/Register";
+import RoomList from "./pages/User/RoomList/RoomList";
+import AdminTemplate from "./templates/AdminTemplate";
+import HomeTemplate from "./templates/HomeTemplate";
 
 type Props = {};
 
@@ -29,8 +35,12 @@ const App = (props: Props) => {
           <Route path='*' element={<Navigate to='' />}></Route>
         </Route>
         <Route path='admin' element={<AdminTemplate />}>
-          <Route index path='' element={<UserManagement />}></Route>
-          <Route path='position' element={<LocationManagement />}></Route>
+          <Route index path='' element={<Dashboard />}></Route>
+          <Route path='user' element={<UserManagement />}></Route>
+          <Route path='location' element={<LocationManagement />}></Route>
+          <Route path='booking' element={<BookingManagement />}></Route>
+          <Route path='loginAD' element={<LoginAdmin />}></Route>
+          <Route path='registerAD' element={<RegisterAdmin />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

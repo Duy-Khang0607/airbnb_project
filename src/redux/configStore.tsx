@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { type } from "@testing-library/user-event/dist/type";
-import detailProfile from "./DetailProfile/detailProfile";
+import { type } from "os";
+import UserReducer from "./UserReducer/UserReducer";
 
 export const store = configureStore({
   reducer: {
-    detailProfile: detailProfile,
+    UserReducer: UserReducer,
   },
 });
 
