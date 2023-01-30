@@ -1,14 +1,16 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 
 type Props = {};
 
 const HomeTemplate = (props: Props) => {
   return (
     <>
-      <header>Header</header>
+      <Header />
       <Outlet />
-      <footer>Footer</footer>
+      <Footer />
     </>
   );
 };

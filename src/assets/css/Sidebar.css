@@ -1,0 +1,17 @@
+:where(.css-dev-only-do-not-override-1i9hnpv).ant-layout
+  .ant-layout-sider-children {
+  background-color: rgb(26, 25, 25);
+  overflow: hidden;
+}
+
+:where(.css-dev-only-do-not-override-1i9hnpv).ant-menu-dark
+  .ant-menu-item-selected {
+  background-color: rgb(255 56 92);
+}
+:where(.css-dev-only-do-not-override-1i9hnpv).ant-menu-dark {
+  width: 400px;
+}
+:where(.css-dev-only-do-not-override-1i9hnpv).ant-menu-dark .ant-menu-item a,
+:where(.css-dev-only-do-not-override-1i9hnpv).ant-menu-dark .ant-menu-item a {
+  text-decoration: none;
+}

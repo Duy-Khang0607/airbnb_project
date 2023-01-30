@@ -25,14 +25,13 @@ const App = (props: Props) => {
       <Routes>
         <Route path='' element={<HomeTemplate />}>
           <Route index element={<Home />}></Route>
-          <Route element={<RoomList />}></Route>
+          <Route path='roomlist' element={<RoomList />}></Route>
           <Route path='detail'>
             <Route path=':id' element={<DetailRoom />}></Route>
           </Route>
           <Route path='register' element={<Register />}></Route>
           <Route path='login' element={<Login />}></Route>
           <Route path='profile' element={<Profile />}></Route>
-          <Route path='*' element={<Navigate to='' />}></Route>
         </Route>
         <Route path='admin' element={<AdminTemplate />}>
           <Route index path='' element={<Dashboard />}></Route>
@@ -42,6 +41,7 @@ const App = (props: Props) => {
           <Route path='loginAD' element={<LoginAdmin />}></Route>
           <Route path='registerAD' element={<RegisterAdmin />}></Route>
         </Route>
+        <Route path='*' element={<Navigate to='' />}></Route>
       </Routes>
     </BrowserRouter>
   );

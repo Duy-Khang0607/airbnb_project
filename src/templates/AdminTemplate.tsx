@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import "../assets/css/Sidebar.css";
 import { Avatar, Badge, Layout, Menu, theme } from "antd";
 import { NavLink, Outlet } from "react-router-dom";
 import {
@@ -8,7 +8,7 @@ import {
   UserOutlined,
   DashboardOutlined,
 } from "@ant-design/icons";
-import logo from "../assets/imgs/img1.png";
+import logo from "../assets/imgs/airbnb.png";
 import logomini from "../assets/imgs/img2.png";
 import SubMenu from "antd/es/menu/SubMenu";
 import clsx from "clsx";
@@ -32,24 +32,27 @@ const AdminTemplate = () => {
         <Sider
           breakpoint='lg'
           collapsedWidth='0'
-          onBreakpoint={(broken) => {
-            console.log(broken);
-          }}
+          onBreakpoint={(broken) => {}}
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}>
           <div
             style={{
-              height: 32,
+              height: "auto",
               margin: 5,
+              textAlign: "center",
             }}>
-            <img src={clsx(logo)} alt='' className='w-25 h-14' />
+            <img
+              src={clsx(logo)}
+              alt=''
+              className='w-24 h-24 object-cover rounded-2xl'
+            />
           </div>
           <Menu
             theme='dark'
             defaultSelectedKeys={["dashboard"]}
             mode='inline'
-            className='mt-16'>
+            className='bg-black '>
             <Menu.Item key='dashboard' icon={<DashboardOutlined />}>
               <NavLink to='/admin'>Dashboard</NavLink>
             </Menu.Item>
@@ -78,7 +81,6 @@ const AdminTemplate = () => {
               background: colorBgContainer,
             }}>
             <Profile />
-            {/* <p>Duy Khang</p> */}
           </Header>
           <Content
             style={{
