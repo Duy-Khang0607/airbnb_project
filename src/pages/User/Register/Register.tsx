@@ -55,8 +55,9 @@ const Register = (props: Props) => {
         })
 
         console.log(res.data.content)
-      } catch (error) {
-        console.log( error)
+        alert("Create User Account Successfully !");
+      } catch (error:any) {
+        alert(error.response?.data?.content)
       }
     },
     validationSchema: yup.object().shape({
@@ -78,7 +79,7 @@ const Register = (props: Props) => {
     }),
   });
 
-  console.log(formik.values);
+ 
   useEffect(() => {
     setNum(randomNumberInRange(0, 1000000));
     formik.setFieldValue("id", num);
