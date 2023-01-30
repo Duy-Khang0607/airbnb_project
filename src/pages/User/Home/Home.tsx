@@ -1,15 +1,17 @@
 import { Row } from "antd";
 import React from "react";
+import CarouselSearch from "src/components/Carousel/CarouselSearch";
+import Location from "./Location/Location";
 
 type Props = {};
 
 const Home = (props: Props) => {
   return <div>
     <Row>
-      <div className="carosel">carosel</div>
+      <CarouselSearch/>
     </Row>
     <Row>
-      <div className="explore"></div>
+      <Location/>
     </Row>
     <Row>
       <div className="where"></div>
