@@ -7,26 +7,108 @@ import {
   Tag,
   Form,
   Input,
-  message,
+  Modal,
+  Select,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { SearchOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  SearchOutlined,
+  SettingOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteUser,
+  editUser,
   getUserApi,
   UserModel,
 } from "../../../redux/UserReducer/UserReducer";
 import { DispatchType, RootState } from "../../../redux/configStore";
-
+import Upload from "antd/es/upload/Upload";
+import Upload_Image from "./UploadImage";
+import {
+  setEditAction,
+  setModalAction,
+} from "../../../redux/ModalReducer/ModalReducer";
+import Modaltest from "../../../HOC/Modaltest";
+import { signUpApi } from "../../../redux/SignUpReducer/SignUpReducer";
+import { useNavigate } from "react-router-dom";
+import { getStoreJSON } from "../../../utils/setting";
+import EditUser from "./EditUser";
+let timeout: ReturnType<typeof setTimeout>;
 const UserManagement: React.FC = () => {
-  const dispatch: DispatchType = useDispatch();
   const user: UserModel[] = useSelector(
     (state: RootState) => state.UserReducer.arrUser
   );
+  console.log(user);
+
+  interface DataType {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+    phone: string;
+    birthday: string;
+    avatar: string;
+    gender: boolean;
+    role: string;
+  }
+  const data: DataType[] = user;
+  const dispatch: DispatchType = useDispatch();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [editRowKey, setEditRowKey] = useState("");
+  const userLogin = getStoreJSON("userLogin");
   const [form] = Form.useForm();
+
+  // ----------------------- Edit User ------------------
+  const handleEdit = (id: number) => {
+    const actionEditReduce = editUser(id);
+    const actionEditComponent = setEditAction({
+      Component: EditUser,
+      title: "Edit Personal Information",
+      ID: id,
+    });
+    dispatch(actionEditComponent);
+    dispatch(actionEditReduce);
+  };
+  // -----------------------  ------------------
+
+  // ------------- Modal upload ảnh -------
+  const [isModalUpload, setIsModalUpload] = useState(false);
+  const showModalUpload = () => {
+    setIsModalUpload(true);
+  };
+  const handleOkUpload = () => {
+    setIsModalUpload(false);
+  };
+  const handleCancelUpload = () => {
+    setIsModalUpload(false);
+  };
+  const normFile = (e: DataType) => {
+    console.log("Upload event:", e);
+    if (Array.isArray(e.id)) {
+      return e;
+    }
+    return e?.id;
+  };
+  const formItemLayout = {
+    labelCol: { span: 6 },
+    wrapperCol: { span: 14 },
+  };
+  const handleUploadAvatar = (id: number) => {
+    const actionUploadComponent = setModalAction({
+      Component: Upload_Image,
+      title: "Upload User Avatar",
+    });
+    dispatch(actionUploadComponent);
+    console.log(id);
+  };
+
+  const onFinishUpload = (value: any) => {
+    console.log(value);
+  };
+  //----------------------------------
+
   const getAllUserApi = () => {
     // Goi api va dua du lieu len redux
     const actionAsync = getUserApi();
@@ -39,41 +121,6 @@ const UserManagement: React.FC = () => {
     getAllUserApi();
     setLoading(false);
   }, []);
-
-  interface DataType {
-    id: number;
-    name: string;
-    email: string;
-    password: string;
-    phone: null;
-    birthday: string;
-    avatar: null;
-    gender: boolean;
-    role: string;
-    // tags: string[];
-  }
-
-  const isEditing = (record: any) => {
-    return record.id === editRowKey;
-  };
-
-  const cancel = () => {};
-  const save = () => {};
-  const edit = (record: any) => {
-    form.setFieldsValue({
-      id: 0,
-      name: "",
-      email: "",
-      phone: "",
-      birthday: "",
-      gender: true,
-      role: "",
-      ...record,
-    });
-    setEditRowKey(record.id);
-  };
-
-  const data: DataType[] = user;
 
   const columns: ColumnsType<DataType> = [
     {
@@ -129,25 +176,42 @@ const UserManagement: React.FC = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      render: (text) => <a>{text}</a>,
     },
     {
       title: "Password",
       dataIndex: "password",
       key: "password",
-      render: (text) => <a>{text}</a>,
     },
     {
       title: "Phone",
       dataIndex: "phone",
       key: "phone",
-      render: (text) => <a>{text}</a>,
     },
     {
       title: "Birthday",
       dataIndex: "birthday",
       key: "birthday",
-      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "Avatar",
+      dataIndex: "avatar",
+      key: "avatar",
+      render: (_: any, user: UserModel) => {
+        return user?.avatar !== null ? (
+          <img
+            src={user?.avatar}
+            alt='...'
+            style={{ height: "50px", width: "50px", borderRadius: "5px" }}
+          />
+        ) : (
+          <Button
+            onClick={showModalUpload}
+            type='primary'
+            style={{ background: "rgb(240, 189, 199)", width: "auto" }}>
+            Upload ảnh
+          </Button>
+        );
+      },
     },
     {
       title: "Gender",
@@ -167,9 +231,9 @@ const UserManagement: React.FC = () => {
       key: "role",
       render: (text) => {
         let color = text.length > 4 ? "red" : "green";
-        // if (text === "loser") {
-        //   color = "volcano";
-        // }
+        if (text !== "ADMIN" && text !== "USER") {
+          color = "blue";
+        }
         return (
           <Tag color={color} key={text}>
             {text.toUpperCase()}
@@ -180,102 +244,73 @@ const UserManagement: React.FC = () => {
     {
       title: <SettingOutlined className='text-2xl' />,
       key: "action",
-      render: (text, user) => {
-        const editUser = isEditing(user);
-
+      render: (_: any, record: DataType) => {
         return data.length >= 1 ? (
           <Space>
             <Popconfirm
               title='Bạn có muốn xóa ? '
               onConfirm={() => {
-                dispatch(deleteUser(user.id));
+                dispatch(deleteUser(record?.id));
                 dispatch(getUserApi());
               }}>
-              <Button disabled={editUser} type='primary' danger>
+              <Button type='primary' danger>
                 Xóa
               </Button>
             </Popconfirm>
-            {editUser ? (
-              <span>
-                <Space size='middle'>
-                  <Button onClick={() => console.log("first")} type='primary'>
-                    Save
-                  </Button>
-                  <Popconfirm title='Bạn có muốn hủy ? ' onConfirm={cancel}>
-                    <Button type='primary' danger>
-                      Cancel
-                    </Button>
-                  </Popconfirm>
-                </Space>
-              </span>
-            ) : (
-              <Button
-                onClick={() => {
-                  edit(user);
-                }}
-                type='primary'>
-                Sửa
-              </Button>
-            )}
+            <button
+              className='btn btn-outline-warning btn-sm rounded-5 mx-1'
+              data-bs-toggle='modal'
+              data-bs-target='#modalId'
+              onClick={(event: React.MouseEvent<HTMLElement>) => {
+                handleEdit(record?.id);
+              }}>
+              Sửa <i className='far fa-edit'></i>
+            </button>
           </Space>
-        ) : null;
+        ) : (
+          ""
+        );
       },
     },
   ];
 
-  // const mergedColumns = columns.map((col)=>{
-  //   if(!col.edit){
-  //     return col;
-  //   }
-  // })
-
-  type Props = {
-    editing: string;
-    dataIndex: string;
-    title: string;
-    record: string;
-    children: string;
-    restProps: string;
-  };
-
-  const EditableCell = (props: Props) => {
-    const input = <Input />;
-    return (
-      <td>
-        {props.editing ? (
-          <Form.Item
-            name={props.dataIndex}
-            rules={[
-              {
-                required: true,
-                message: `Vui lòng nhập thông tin ${props.title}`,
-              },
-            ]}>
-            {input}
-          </Form.Item>
-        ) : (
-          props.children
-        )}
-      </td>
-    );
-  };
-
   return (
     <div>
-      <h1 className='text-4xl'>Quản lý người dùng</h1>
+      <Modaltest />
+      <h1 className='text-4xl text-center'>Quản lý người dùng</h1>
+
       <Form form={form} component={false}>
-        <Table
-          components={{
-            body: {
-              cell: EditableCell,
-            },
-          }}
-          loading={loading}
-          bordered
-          columns={columns}
-          dataSource={data}
-        />
+        <Table loading={loading} bordered columns={columns} dataSource={data} />
       </Form>
+
+      {/* Modal upload ảnh */}
+      <Modal
+        title='Upload ảnh'
+        open={isModalUpload}
+        onOk={handleOkUpload}
+        onCancel={handleCancelUpload}>
+        <Form
+          name='validate_other'
+          {...formItemLayout}
+          onFinish={onFinishUpload}
+          initialValues={{
+            "input-number": 3,
+            "checkbox-group": ["A", "B"],
+            rate: 3.5,
+          }}
+          style={{ maxWidth: 600 }}>
+          <Form.Item
+            name='upload'
+            label='Upload'
+            valuePropName='fileList'
+            getValueFromEvent={normFile}
+            extra=''>
+            <Upload name='logo' action='/upload.do' listType='picture'>
+              <Button icon={<UploadOutlined />}>Click to upload</Button>
+            </Upload>
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };

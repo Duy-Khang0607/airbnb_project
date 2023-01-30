@@ -1,13 +1,20 @@
 import { NotificationOutlined, UserOutlined } from "@ant-design/icons";
 import { Drawer } from "@mui/material";
-import { Avatar, Badge, Button } from "antd";
+import { Avatar, Badge, Button, Image } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { RootState } from "../../../redux/configStore";
+import { UserModel } from "../../../redux/UserReducer/UserReducer";
+import { USER_LOGIN } from "../../../utils/setting";
 
 type Props = {};
 
 const Profile = (props: Props) => {
+  const profile = useSelector(
+    (state: RootState) => state.SignInReducer.userLogin
+  );
+
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
@@ -20,26 +27,60 @@ const Profile = (props: Props) => {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+    localStorage.removeItem(USER_LOGIN);
+    navigate("/admin/loginAD");
+    window.location.reload();
   };
 
   useEffect(() => {}, []);
   return (
     <div>
       <div className='flex justify-end mr-6 align-content-center'>
-        <div className='user '>
-          <Button onClick={showDrawer} className='mx-2 '>
-            <NotificationOutlined />
-          </Button>
-          <Badge count={1}>
-            <Avatar shape='square' icon={<UserOutlined />} />
-          </Badge>
-          <span className='px-3 text-lg'>Duy Khang</span>
-          <Button danger type='primary' onClick={handleLogOut}>
-            Log Out
-          </Button>
-        </div>
+        {profile ? (
+          <div className='user '>
+            <Button onClick={showDrawer} className='mx-2 '>
+              <NotificationOutlined />
+            </Button>
+            <Badge count={1}>
+              {profile.avatar ? (
+                <img src={profile.user.avatar} alt='Image' />
+              ) : (
+                <Avatar
+                  src={
+                    <Image
+                      src='https://joeschmoe.io/api/v1/random'
+                      style={{ width: 50 }}
+                    />
+                  }
+                />
+              )}
+              {}
+            </Badge>
+            <span className='px-3 text-lg'>{profile.user.name}</span>
+            <Button danger type='primary' onClick={handleLogOut}>
+              Log Out
+            </Button>
+          </div>
+        ) : (
+          <nav className='nav-profile'>
+            <NavLink
+              to='/admin/loginAD'
+              className={({ isActive }) => {
+                if (isActive) return "text-red-200 text-lg";
+                return "text-white text-xl   ";
+              }}>
+              <Button className='text-base' type='text'>
+                Đăng nhập
+              </Button>
+            </NavLink>
+            <span className='text-black text-lg'>|</span>
+            <NavLink to='/admin/registerAD' className='text-white text-xl'>
+              <Button className='text-base' type='text'>
+                Đăng ký
+              </Button>
+            </NavLink>
+          </nav>
+        )}
       </div>
       <Drawer anchor='right' title='Basic Drawer' onClose={onClose} open={open}>
         <div>Thông báo</div>

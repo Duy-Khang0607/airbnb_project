@@ -47,20 +47,17 @@ export const configs = {
   },
   ACCESS_TOKEN: "accessToken",
   USER_LOGIN: "userLogin",
-
 };
 
-
 export const {
-    ACCESS_TOKEN,
-    USER_LOGIN,
-    getCookie,
-    setCookie,
-    getStore,
-    setStore,
-    getStoreJSON,
-    setStoreJSON,
-    clearCookie,
-    clearLocalStorage,
-  } = configs;
-  
+  ACCESS_TOKEN,
+  USER_LOGIN,
+  getCookie,
+  setCookie,
+  getStore,
+  setStore,
+  getStoreJSON,
+  setStoreJSON,
+  clearCookie,
+  clearLocalStorage,
+} = configs;
