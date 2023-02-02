@@ -1,28 +1,42 @@
-import React, { useState } from "react";
-import "../assets/css/Sidebar.css";
-import { Avatar, Badge, Layout, Menu, theme } from "antd";
+import React, { useEffect, useState } from "react";
+import "../assets/css/sidebar.css";
+import { Layout, Menu, theme } from "antd";
 import { NavLink, Outlet } from "react-router-dom";
 import {
   FileOutlined,
   CalendarOutlined,
   UserOutlined,
   DashboardOutlined,
+  CompassOutlined,
+  HomeOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
 import logo from "../assets/imgs/airbnb.png";
-import logomini from "../assets/imgs/img2.png";
-import SubMenu from "antd/es/menu/SubMenu";
 import clsx from "clsx";
 import Profile from "../pages/Admin/Profile/Profile";
+import { getUserApi, UserModel } from "src/redux/UserReducer/UserReducer";
+import { DispatchType, RootState } from "src/redux/configStore";
+import { useDispatch, useSelector } from "react-redux";
 
 type Props = {};
 
 const AdminTemplate = () => {
+  const user: UserModel[] = useSelector(
+    (state: RootState) => state.UserReducer.arrUser
+  );
+  const profile = useSelector(
+    (state: RootState) => state.SignInReducer.userLogin
+  );
+  const dispatch: DispatchType = useDispatch();
   const { Header, Content, Footer, Sider } = Layout;
 
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  useEffect(() => {
+    dispatch(getUserApi());
+  }, [profile]);
   return (
     <div>
       <Layout
@@ -30,6 +44,7 @@ const AdminTemplate = () => {
           minHeight: "100vh",
         }}>
         <Sider
+          className='sideBar'
           breakpoint='lg'
           collapsedWidth='0'
           onBreakpoint={(broken) => {}}
@@ -52,24 +67,24 @@ const AdminTemplate = () => {
             theme='dark'
             defaultSelectedKeys={["dashboard"]}
             mode='inline'
-            className='bg-black '>
+            className='bg-black text-lg'>
             <Menu.Item key='dashboard' icon={<DashboardOutlined />}>
               <NavLink to='/admin'>Dashboard</NavLink>
             </Menu.Item>
             <Menu.Item key='user' icon={<UserOutlined />}>
-              <NavLink to='/admin/user'>Quản lý người dùng</NavLink>
+              <NavLink to='/admin/user'>User</NavLink>
             </Menu.Item>
-            <Menu.Item key='location' icon={<FileOutlined />}>
-              <NavLink to='/admin/location'>Quản lý thông tin vị trí</NavLink>
+            <Menu.Item key='location' icon={<CompassOutlined />}>
+              <NavLink to='/admin/location'>Location</NavLink>
             </Menu.Item>
-            <Menu.Item key='booking' icon={<CalendarOutlined />}>
-              <NavLink to='/admin/booking'>Quản lý thông tin phòng</NavLink>
+            <Menu.Item key='booking' icon={<HomeOutlined />}>
+              <NavLink to='/admin/booking'>Room</NavLink>
             </Menu.Item>
-            <Menu.Item key='loginAD' icon={<CalendarOutlined />}>
-              <NavLink to='/admin/loginAD'>Đăng nhập</NavLink>
+            <Menu.Item key='loginAD' icon={<UserOutlined />}>
+              <NavLink to='/admin/loginAD'>Login</NavLink>
             </Menu.Item>
-            <Menu.Item key='registerAD' icon={<CalendarOutlined />}>
-              <NavLink to='/admin/registerAD'>Đăng ký</NavLink>
+            <Menu.Item key='registerAD' icon={<EditOutlined />}>
+              <NavLink to='/admin/registerAD'>Register</NavLink>
             </Menu.Item>
           </Menu>
         </Sider>

@@ -29,7 +29,7 @@ export default function RegisterAdmin({}: Props) {
     password: string;
     phone: string;
     birthday: string;
-    gender: string;
+    gender: boolean;
     role: string;
   }>({
     initialValues: {
@@ -39,7 +39,7 @@ export default function RegisterAdmin({}: Props) {
       password: "",
       phone: "",
       birthday: "",
-      gender: "",
+      gender: true,
       role: "",
     },
     onSubmit: async (values) => {
@@ -53,7 +53,7 @@ export default function RegisterAdmin({}: Props) {
       const action = signUpApi(values);
       console.log(action);
       alert("Đăng ký thành công !");
-      // navigate("/admin/loginAD");
+      navigate("/admin/loginAD");
       dispatch(action);
     },
     validationSchema: Yup.object().shape({

@@ -1,190 +1,254 @@
-import React, { useState } from "react";
-import { Form, Input, InputNumber, Popconfirm, Table, Typography } from "antd";
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  Input,
+  InputNumber,
+  Popconfirm,
+  Table,
+  Tag,
+  Typography,
+} from "antd";
+import { SettingOutlined } from "@ant-design/icons";
+import {
+  deleteLocationApi,
+  getLocationApi,
+  getLocationByIdApi,
+  getLocationPaginationApi,
+  LocationModel,
+} from "src/redux/LocationReducer/LocationReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { DispatchType, RootState } from "src/redux/configStore";
+import type { ColumnGroupType, ColumnsType } from "antd/es/table";
+import Pagination from "src/components/Pagination/Pagination";
+import Modaltest from "src/HOC/Modaltest";
+import {
+  setEditAction,
+  setModalAction,
+} from "src/redux/ModalReducer/ModalReducer";
+import Upload_Image from "../UploadImage/Upload_Image";
+import EditLocation from "../EditLocation/EditLocation";
+import AddLocation from "../AddLocation/AddLocation";
+import { getStore, USER_LOGIN } from "src/utils/setting";
 
-interface Item {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-}
-
-const originData: Item[] = [];
-for (let i = 0; i < 100; i++) {
-  originData.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
-  });
-}
-interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
-  editing: boolean;
-  dataIndex: string;
-  title: any;
-  inputType: "number" | "text";
-  record: Item;
-  index: number;
-  children: React.ReactNode;
-}
-
-const EditableCell: React.FC<EditableCellProps> = ({
-  editing,
-  dataIndex,
-  title,
-  inputType,
-  record,
-  index,
-  children,
-  ...restProps
-}) => {
-  const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
-
-  return (
-    <td {...restProps}>
-      {editing ? (
-        <Form.Item
-          name={dataIndex}
-          style={{ margin: 0 }}
-          rules={[
-            {
-              required: true,
-              message: `Please Input ${title}!`,
-            },
-          ]}>
-          {inputNode}
-        </Form.Item>
-      ) : (
-        children
-      )}
-    </td>
-  );
+type Props = {
+  // postsPerPage: number;
+  // setCurrentPage: (value: number) => void;
+  // totalRow: number;
 };
+let timeout: ReturnType<typeof setTimeout>;
+interface Item {
+  id: string;
+  tenViTri: string;
+  tinhThanh: string;
+  quocGia: string;
+  hinhAnh: string;
+  editable: boolean;
+}
 
 const LocationManagement: React.FC = () => {
-  const [form] = Form.useForm();
-  const [data, setData] = useState(originData);
-  const [editingKey, setEditingKey] = useState("");
+  const location: LocationModel[] = useSelector(
+    (state: RootState) => state.LocationReducer.arrLocation
+  );
+  const { arrLocationPageIndex, totalRow, statusAction } = useSelector(
+    (state: RootState) => state.LocationReducer
+  );
+  const [reload, setReload] = useState<boolean>(false);
+  /**
+   * currentPage: trang hiện tại đang được trỏ tới
+   */
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  /**
+   * postsPerPage: là số danh sách sản phẩm được hiển thị trên page
+   */
+  const [postsPerPage, setPostPerPage] = useState<number>(5);
 
-  const isEditing = (record: Item) => record.key === editingKey;
-
-  const edit = (record: Partial<Item> & { key: React.Key }) => {
-    form.setFieldsValue({ name: "", age: "", address: "", ...record });
-    setEditingKey(record.key);
+  const dispatch: DispatchType = useDispatch();
+  // const getAllLocationApi = () => {
+  //   const location = getLocationApi();
+  //   dispatch(location);
+  // };
+  const getLocationPageIndexAction = () => {
+    const action = getLocationPaginationApi(currentPage, postsPerPage);
+    dispatch(action);
   };
 
-  const cancel = () => {
-    setEditingKey("");
+  const handleAdd = () => {
+    const actionAddComponent = setModalAction({
+      Component: AddLocation,
+      title: "Add New Location",
+    });
+    dispatch(actionAddComponent);
   };
 
-  const save = async (key: React.Key) => {
-    try {
-      const row = (await form.validateFields()) as Item;
+  const handleEdit = (id: number) => {
+    const actionGetId = getLocationByIdApi(id);
+    const actionEditComponent = setModalAction({
+      Component: EditLocation,
+      title: "Edit location infor",
+    });
+    dispatch(actionGetId);
+    dispatch(actionEditComponent);
+  };
 
-      const newData = [...data];
-      const index = newData.findIndex((item) => key === item.key);
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, {
-          ...item,
-          ...row,
-        });
-        setData(newData);
-        setEditingKey("");
-      } else {
-        newData.push(row);
-        setData(newData);
-        setEditingKey("");
+  const handleUpload = (id: number) => {
+    const actionUploadComponent = setEditAction({
+      Component: Upload_Image,
+      title: "Change Picture Location",
+      ID: id,
+    });
+    dispatch(actionUploadComponent);
+  };
+
+  const handleDelete = (id: number) => {
+    const deleteAction = deleteLocationApi(id);
+    dispatch(deleteAction);
+    setReload(true);
+  };
+
+  useEffect(() => {
+    timeout = setTimeout(() => {
+      // getAllLocationApi();
+      getLocationPageIndexAction();
+    }, 100);
+    return () => {
+      if (timeout !== null) {
+        clearTimeout(timeout);
       }
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
-    }
-  };
-
-  const columns = [
-    {
-      title: "name",
-      dataIndex: "name",
-      width: "25%",
-      editable: true,
-    },
-    {
-      title: "age",
-      dataIndex: "age",
-      width: "15%",
-      editable: true,
-    },
-    {
-      title: "address",
-      dataIndex: "address",
-      width: "40%",
-      editable: true,
-    },
-    {
-      title: "operation",
-      dataIndex: "operation",
-      render: (_: any, record: Item) => {
-        const editable = isEditing(record);
-        return editable ? (
-          <span>
-            <Typography.Link
-              onClick={() => save(record.key)}
-              style={{ marginRight: 8 }}>
-              Save
-            </Typography.Link>
-            <Popconfirm title='Sure to cancel?' onConfirm={cancel}>
-              <a>Cancel</a>
-            </Popconfirm>
-          </span>
-        ) : (
-          <Typography.Link
-            disabled={editingKey !== ""}
-            onClick={() => edit(record)}>
-            Edit
-          </Typography.Link>
-        );
-      },
-    },
-  ];
-
-  const mergedColumns = columns.map((col) => {
-    if (!col.editable) {
-      return col;
-    }
-    return {
-      ...col,
-      onCell: (record: Item) => ({
-        record,
-        inputType: col.dataIndex === "age" ? "number" : "text",
-        dataIndex: col.dataIndex,
-        title: col.title,
-        editing: isEditing(record),
-      }),
     };
-  });
-
+  }, [currentPage, statusAction]);
   return (
-    <Form form={form} component={false}>
-      <Table
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        bordered
-        dataSource={data}
-        columns={mergedColumns}
-        rowClassName='editable-row'
-        pagination={{
-          onChange: cancel,
-        }}
-      />
-    </Form>
+    <section>
+      <Modaltest />
+      <h1 className='text-4xl text-center'>Quản lý vị trí</h1>
+      <div className='addAdminPage mb-3' style={{ cursor: "pointer" }}>
+        <Tag
+          color='cyan'
+          data-bs-toggle='modal'
+          data-bs-target='#modalId'
+          onClick={handleAdd}
+          className='text-xl'>
+          Thêm vị trí
+        </Tag>
+      </div>
+      <div className='row'>
+        <form className='search col-lg-4'>
+          <div className='input-group mb-3'>
+            <input
+              className='form-control'
+              placeholder='Locations Name'
+              // onChange={handleChange}
+              // value={id}
+            />
+            <button className='btn btn-outline-danger'>Search</button>
+          </div>
+        </form>
+
+        <div className='table-responsive'>
+          <table className='table table-hover'>
+            <thead>
+              <tr>
+                <th scope='col'>ID</th>
+                <th scope='col'>Location</th>
+                <th scope='col'>City</th>
+                <th scope='col'>Picture</th>
+                <th scope='col'>Country</th>
+                <th scope='col'>
+                  <SettingOutlined className='text-2xl' />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {arrLocationPageIndex?.map((locate: any, index: React.Key) => {
+                return (
+                  <tr key={index}>
+                    <td>{locate?.id}</td>
+                    <td>{locate?.tenViTri}</td>
+                    <td>{locate?.tinhThanh}</td>
+                    <td>
+                      {locate?.hinhAnh !== "" ? (
+                        <>
+                          <img
+                            src={locate?.hinhAnh}
+                            alt='Image location'
+                            className='w-56 h-56 rounded object-cover'
+                          />
+                          <button
+                            className='btn btn-outline-dark btn-sm rounded-5 ms-2'
+                            data-bs-toggle='modal'
+                            data-bs-target='#modalId'
+                            onClick={(event: React.MouseEvent<HTMLElement>) => {
+                              handleUpload(locate?.id);
+                            }}>
+                            <i className='far fa-image'></i>
+                          </button>
+                        </>
+                      ) : (
+                        "No avatar"
+                      )}
+                    </td>
+                    <td>{locate?.quocGia}</td>
+                    <td>
+                      {/* <button
+                        className='btn btn-outline-primary btn-sm rounded-5 mx-1'
+                        data-bs-toggle='modal'
+                        data-bs-target='#modalId' >
+                        <i className='fas fa-map-marker-alt'></i>
+                      </button> */}
+                      <button
+                        className='btn btn-outline-warning btn-sm rounded-5 mx-1'
+                        data-bs-toggle='modal'
+                        data-bs-target='#modalId'
+                        onClick={() => handleEdit(locate?.id)}>
+                        <i className='fas fa-edit'></i>
+                      </button>
+                      <Popconfirm
+                        title='Bạn có muốn xóa ? '
+                        onConfirm={() => {
+                          handleDelete(locate?.id);
+                        }}>
+                        <button className='btn btn-outline-danger btn-sm rounded-5'>
+                          <i className='fas fa-trash-alt'></i>
+                        </button>
+                      </Popconfirm>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div className='pagination d-flex justify-content-center'>
+          <Pagination
+            postsPerPage={postsPerPage}
+            setCurrentPage={setCurrentPage}
+            totalRow={totalRow}
+          />
+        </div>
+        {/* <Modal show={openModal} size="lg" className="modal-dialog-scrollable">
+          <Modal.Header>
+            <Modal.Title>
+              {openPopUp ? "Upload Picture" : "Edit Location Infor"}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {openPopUp ? (
+              <UploadPicure id={String(idLocation)} />
+            ) : (
+              <EditLocation id={idLocation} />
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+            <button
+              className="btn btn-secondary"
+              onClick={() => handleCloseModal()}
+            >
+              Close
+            </button>
+          </Modal.Footer>
+        </Modal> */}
+      </div>
+    </section>
   );
 };
-// .editable-row .ant-form-item-explain {
-//   position: absolute;
-//   top: 100%;
-//   font-size: 12px;
-// }
 
 export default LocationManagement;

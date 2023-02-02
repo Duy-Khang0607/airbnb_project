@@ -8,7 +8,6 @@ import MenuProfile from "./MenuProfile";
 import HeaderSearch from "../HeaderSearch/HeaderSearch";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
-import TabPane from "antd/es/tabs/TabPane";
 
 const { Search } = Input;
 
@@ -24,7 +23,7 @@ const items: TabsProps["items"] = [
     label: `Stays`,
     children: (
       <>
-        <div className="rounded flex justify-center ">
+        <div className='rounded flex justify-center '>
           <div>Where </div>
           <div>Check in</div>
           <div>Check out </div>
@@ -33,11 +32,10 @@ const items: TabsProps["items"] = [
               <h4>Who</h4>
               <p>Add guests</p>
             </span>
-            <span className="bg-pink p-2 rounded-full w-6 h-6 items-center">
-                  <SearchOutlined className="text-white" />
-
-                  Search
-                </span>
+            <span className='bg-pink p-2 rounded-full w-6 h-6 items-center'>
+              <SearchOutlined className='text-white' />
+              Search
+            </span>
           </div>
         </div>
       </>
@@ -65,51 +63,48 @@ const Header = (props: Props) => {
   return (
     <>
       <Row
-        className="bg-white py-3 mx-16 border-b-2 border-gray-400  "
-        style={{ border: "20px", borderColor: "red" }}
-      >
-        <Col span={8} className=" flex justify-start items-center">
+        className='bg-white py-3 mx-16 border-b-2 border-gray-400  '
+        style={{ border: "20px", borderColor: "red" }}>
+        <Col span={8} className=' flex justify-start items-center'>
           <NavLink to={""}>
-            <img src={logo} className="" alt="airbnb-logo" />
+            <img src={logo} className='' alt='airbnb-logo' />
           </NavLink>
         </Col>
         {true && (
           <Col span={8}>
             <div
-              className="  flex justify-between items-center rounded-full border-2 border-solid border-gray-300 p-2 shadow-lg   "
-              onClick={showDropdown}
-            >
-              <button className="border-none bg-inherit  w-1/4 text-sm">
+              className='  flex justify-between items-center rounded-full border-2 border-solid border-gray-300 p-2 shadow-lg   '
+              onClick={showDropdown}>
+              <button className='border-none bg-inherit  w-1/4 text-sm'>
                 AnyWhere
               </button>
 
-              <button className=" bg-inherit border-y-0 border-solid border-gray-300  w-1/4 text-sm">
+              <button className=' bg-inherit border-y-0 border-solid border-gray-300  w-1/4 text-sm'>
                 {" "}
                 AnyWeek
               </button>
 
-              <button className=" flex justify-between border-none bg-inherit  w-2/4 items-center text-sm text-gray-400">
-                <span className="text-center m-auto">Add guests </span>
+              <button className=' flex justify-between border-none bg-inherit  w-2/4 items-center text-sm text-gray-400'>
+                <span className='text-center m-auto'>Add guests </span>
 
-                <span className="bg-pink p-2 rounded-full w-6 h-6 items-center">
-                  <SearchOutlined className="text-white" />
+                <span className='bg-pink p-2 rounded-full w-6 h-6 items-center'>
+                  <SearchOutlined className='text-white' />
                 </span>
               </button>
             </div>
           </Col>
         )}
         {false && (
-          <Col span={8} className="relative flex justify-center ">
+          <Col span={8} className='relative flex justify-center '>
             <Tabs
-              defaultActiveKey="1"
+              defaultActiveKey='1'
               items={items}
               onChange={onChange}
-              className="absolute top-0   "
-            ></Tabs>
+              className='absolute top-0   '></Tabs>
           </Col>
         )}
 
-        <Col span={8} className="flex justify-end">
+        <Col span={8} className='flex justify-end'>
           <MenuProfile />
         </Col>
       </Row>

@@ -1,47 +1,51 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
-// import { http } from "../../../util/setting";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/configStore";
-import requester from "../../../api/api";
+import requester from "src/api/api";
+import { Tag } from "antd";
+import { openNotificationWithIcon } from "src/utils/notification";
 type Props = {};
 
-const Upload_Image = ({}: Props) => {
+export default function Upload_Image({}: Props) {
   const [active, setActive] = useState<number>(0);
   const [submit, setSubmit] = useState(0);
   const [image, setImage] = useState<any>("");
   const { idOrderRoom } = useSelector((state: RootState) => state.ModalReducer);
   console.log("ID: ", idOrderRoom);
   const formik = useFormik<{
-    avatar: string | any;
+    hinhAnh: string | any;
   }>({
     initialValues: {
-      avatar: "",
+      hinhAnh: "",
     },
     // validationSchema: Yup.object({
     //   avatar: Yup.mixed().required("Required !"),
     // }),
     onSubmit: async (values) => {
-      console.log("Avatar: ", formik.values.avatar);
-      console.log("ID: ", idOrderRoom);
       //   setImage(values.hinhAnh);
       try {
         let result = await requester.post(
-          `/api/users/upload-avatar${idOrderRoom}`,
-          values?.avatar
+          `/api/users/upload-avatar`,
+          values?.hinhAnh
         );
-        console.log(result.config);
-
-        // const result = await requester({
-        //   url: "/api/users/upload-avatar",
-        //   method: "POST",
-        //   data: values,
-        // });
-        // console.log(result.data.content);
-        // alert("Update Location Successfully !");
-      } catch (err) {
+        openNotificationWithIcon(
+          "success",
+          " ",
+          <Tag color='success' className='text-xl'>
+            Thêm ảnh thành công
+          </Tag>
+        );
+        console.log(result.data.content);
+      } catch (err: any) {
         console.log(err);
+        openNotificationWithIcon(
+          "error",
+          " ",
+          <Tag color='error' className='text-xl'>
+            Thêm ảnh thất bại
+          </Tag>
+        );
       }
     },
   });
@@ -70,7 +74,7 @@ const Upload_Image = ({}: Props) => {
           <input
             type='text'
             className='form-control'
-            id='avatar'
+            id='hinhAnh'
             aria-describedby='emailHelp'
             placeholder='Your picture'
             onChange={formik.handleChange}
@@ -87,10 +91,10 @@ const Upload_Image = ({}: Props) => {
           <input
             type='file'
             className='form-control'
-            id='avatar'
+            id='hinhAnh'
             aria-describedby='emailHelp'
             placeholder='Your picture'
-            accept='.jpeg, .png, .jpg'
+            accept='.jpeg, .png, .jpg, .jfif'
             onChange={handleFile}
           />
         </div>
@@ -132,6 +136,4 @@ const Upload_Image = ({}: Props) => {
       </div>
     </div>
   );
-};
-
-export default Upload_Image;
+}

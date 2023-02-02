@@ -25,22 +25,23 @@ import {
 } from "../../../redux/UserReducer/UserReducer";
 import { DispatchType, RootState } from "../../../redux/configStore";
 import Upload from "antd/es/upload/Upload";
-import Upload_Image from "./UploadImage";
 import {
   setEditAction,
   setModalAction,
 } from "../../../redux/ModalReducer/ModalReducer";
 import Modaltest from "../../../HOC/Modaltest";
 import { signUpApi } from "../../../redux/SignUpReducer/SignUpReducer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getStoreJSON } from "../../../utils/setting";
 import EditUser from "./EditUser";
+import "src/assets/css/sidebar.css";
+import Upload_Image from "../UploadImage/Upload_Image";
+import AddUser from "../AddUser/AddUser";
 let timeout: ReturnType<typeof setTimeout>;
 const UserManagement: React.FC = () => {
   const user: UserModel[] = useSelector(
     (state: RootState) => state.UserReducer.arrUser
   );
-  console.log(user);
 
   interface DataType {
     id: number;
@@ -49,7 +50,7 @@ const UserManagement: React.FC = () => {
     password: string;
     phone: string;
     birthday: string;
-    avatar: string;
+    avatar?: string;
     gender: boolean;
     role: string;
   }
@@ -60,7 +61,7 @@ const UserManagement: React.FC = () => {
   const userLogin = getStoreJSON("userLogin");
   const [form] = Form.useForm();
 
-  // ----------------------- Edit User ------------------
+  // -------------- Edit User ---------
   const handleEdit = (id: number) => {
     const actionEditReduce = editUser(id);
     const actionEditComponent = setEditAction({
@@ -71,56 +72,29 @@ const UserManagement: React.FC = () => {
     dispatch(actionEditComponent);
     dispatch(actionEditReduce);
   };
-  // -----------------------  ------------------
 
-  // ------------- Modal upload ảnh -------
-  const [isModalUpload, setIsModalUpload] = useState(false);
-  const showModalUpload = () => {
-    setIsModalUpload(true);
+  const handleAdd = () => {
+    const actionAddComponent = setModalAction({
+      Component: AddUser,
+      title: "Add New User",
+    });
+    dispatch(actionAddComponent);
   };
-  const handleOkUpload = () => {
-    setIsModalUpload(false);
-  };
-  const handleCancelUpload = () => {
-    setIsModalUpload(false);
-  };
-  const normFile = (e: DataType) => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e.id)) {
-      return e;
-    }
-    return e?.id;
-  };
-  const formItemLayout = {
-    labelCol: { span: 6 },
-    wrapperCol: { span: 14 },
-  };
+
   const handleUploadAvatar = (id: number) => {
     const actionUploadComponent = setModalAction({
       Component: Upload_Image,
       title: "Upload User Avatar",
+      ID: id,
     });
     dispatch(actionUploadComponent);
-    console.log(id);
   };
-
-  const onFinishUpload = (value: any) => {
-    console.log(value);
-  };
-  //----------------------------------
 
   const getAllUserApi = () => {
     // Goi api va dua du lieu len redux
     const actionAsync = getUserApi();
     dispatch(actionAsync);
   };
-
-  useEffect(() => {
-    setLoading(true);
-    // Call api
-    getAllUserApi();
-    setLoading(false);
-  }, []);
 
   const columns: ColumnsType<DataType> = [
     {
@@ -177,11 +151,11 @@ const UserManagement: React.FC = () => {
       dataIndex: "email",
       key: "email",
     },
-    {
-      title: "Password",
-      dataIndex: "password",
-      key: "password",
-    },
+    // {
+    //   title: "Password",
+    //   dataIndex: "password",
+    //   key: "password",
+    // },
     {
       title: "Phone",
       dataIndex: "phone",
@@ -205,9 +179,13 @@ const UserManagement: React.FC = () => {
           />
         ) : (
           <Button
-            onClick={showModalUpload}
             type='primary'
-            style={{ background: "rgb(240, 189, 199)", width: "auto" }}>
+            style={{ background: "rgb(240, 189, 199)", width: "auto" }}
+            data-bs-toggle='modal'
+            data-bs-target='#modalId'
+            onClick={(event: React.MouseEvent<HTMLElement>) => {
+              handleUploadAvatar(user?.id);
+            }}>
             Upload ảnh
           </Button>
         );
@@ -251,7 +229,8 @@ const UserManagement: React.FC = () => {
               title='Bạn có muốn xóa ? '
               onConfirm={() => {
                 dispatch(deleteUser(record?.id));
-                dispatch(getUserApi());
+                // Load lại ds ng dùng
+                getAllUserApi();
               }}>
               <Button type='primary' danger>
                 Xóa
@@ -274,43 +253,31 @@ const UserManagement: React.FC = () => {
     },
   ];
 
+  useEffect(() => {
+    setLoading(true);
+    // Call api
+    getAllUserApi();
+    setLoading(false);
+  }, []);
+
   return (
     <div>
       <Modaltest />
       <h1 className='text-4xl text-center'>Quản lý người dùng</h1>
-
+      {/* Add user */}
+      <div className='addAdminPage mb-3' style={{ cursor: "pointer" }}>
+        <Tag
+          className='text-xl'
+          color='red'
+          data-bs-toggle='modal'
+          data-bs-target='#modalId'
+          onClick={handleAdd}>
+          <i className='fa fa-user-plus'></i> Thêm người dùng
+        </Tag>
+      </div>
       <Form form={form} component={false}>
         <Table loading={loading} bordered columns={columns} dataSource={data} />
       </Form>
-
-      {/* Modal upload ảnh */}
-      <Modal
-        title='Upload ảnh'
-        open={isModalUpload}
-        onOk={handleOkUpload}
-        onCancel={handleCancelUpload}>
-        <Form
-          name='validate_other'
-          {...formItemLayout}
-          onFinish={onFinishUpload}
-          initialValues={{
-            "input-number": 3,
-            "checkbox-group": ["A", "B"],
-            rate: 3.5,
-          }}
-          style={{ maxWidth: 600 }}>
-          <Form.Item
-            name='upload'
-            label='Upload'
-            valuePropName='fileList'
-            getValueFromEvent={normFile}
-            extra=''>
-            <Upload name='logo' action='/upload.do' listType='picture'>
-              <Button icon={<UploadOutlined />}>Click to upload</Button>
-            </Upload>
-          </Form.Item>
-        </Form>
-      </Modal>
     </div>
   );
 };

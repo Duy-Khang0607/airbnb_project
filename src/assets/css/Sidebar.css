@@ -1,17 +1,69 @@
-:where(.css-dev-only-do-not-override-1i9hnpv).ant-layout
-  .ant-layout-sider-children {
-  background-color: rgb(26, 25, 25);
-  overflow: hidden;
+.sideBar {
+  display: flex;
+  flex-direction: column;
+  padding-top: 4rem;
+  transition: all 0.5s;
+  background-color: pink !important;
 }
 
-:where(.css-dev-only-do-not-override-1i9hnpv).ant-menu-dark
-  .ant-menu-item-selected {
-  background-color: rgb(255 56 92);
+/* Menu  */
+.menu {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: black !important;
 }
-:where(.css-dev-only-do-not-override-1i9hnpv).ant-menu-dark {
-  width: 400px;
+.menuItem {
+  display: flex;
+  justify-content: flex-start;
+  /* margin-left: 2rem; */
+  /* padding-left: 2rem; */
+  width: 100%;
+  gap: 1rem;
+  align-items: center;
+  font-size: 20px;
+  position: relative;
+  transition: all 0.5s;
+  height: 2.5rem;
 }
-:where(.css-dev-only-do-not-override-1i9hnpv).ant-menu-dark .ant-menu-item a,
-:where(.css-dev-only-do-not-override-1i9hnpv).ant-menu-dark .ant-menu-item a {
+.menuItem:hover {
+  cursor: pointer;
+}
+:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu
+  .ant-menu-item
+  .ant-menu-item-icon
+  svg,
+:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu
+  .ant-menu-submenu-title
+  .ant-menu-item-icon
+  svg {
+  font-size: 18px;
+}
+:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark.ant-menu-inline
+  .ant-menu-item
+  .active {
+  background-color: transparent;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  margin-left: 0;
+}
+:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark
+  .ant-menu-item-selected
+  .active::before {
+  content: "";
+  width: 15px;
+  height: 100%;
+  background-color: rgb(235, 105, 127) !important;
+}
+
+:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark .ant-menu-item a,
+:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark
+  .ant-menu-item
+  a:hover {
   text-decoration: none;
+}
+:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark
+  .ant-menu-item-selected {
+  background-color: pink !important;
 }

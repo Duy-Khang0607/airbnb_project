@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DispatchType } from "../configStore";
 import requester from "../../api/api";
+import { openNotificationWithIcon } from "src/utils/notification";
+import { Tag } from "antd";
 // Sài interface sử dụng trùng tên dc , khả năng mở rộng cao hơn với type
 export interface UserModel {
   id: number;
@@ -9,10 +11,9 @@ export interface UserModel {
   password: string;
   phone: string;
   birthday: string;
-  avatar: string;
+  avatar?: string;
   gender: boolean;
   role: string;
-  //   tags: string[];
 }
 
 export type UserState = {
@@ -93,6 +94,41 @@ export const getUserApi = () => {
   };
 };
 
+// Thêm người dùng
+export const postUserApi = (user: UserModel) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const res = await requester({
+        url: "/api/users",
+        method: "POST",
+        data: user,
+      });
+
+      const content: UserModel[] = res.data.content;
+      //  Sau khi lấy dữ liệu từ API về => Bắt đầu dispatch lên store
+      const action: PayloadAction<UserModel[]> = setArrUserAction(content);
+      dispatch(action);
+      dispatch(setStatusAction(res.status));
+      openNotificationWithIcon(
+        "success",
+        " ",
+        <Tag color='success' className='text-xl'>
+          Thêm thành công
+        </Tag>
+      );
+    } catch (error: any) {
+      console.log(error?.response.data);
+      openNotificationWithIcon(
+        "error",
+        " ",
+        <Tag color='error' className='text-xl'>
+          {error?.response.data}
+        </Tag>
+      );
+    }
+  };
+};
+
 // Xóa người dùng
 export const deleteUser = (id: number) => {
   return async (dispatch: DispatchType) => {
@@ -110,7 +146,13 @@ export const deleteUser = (id: number) => {
       const action: PayloadAction<UserModel[]> =
         setArrUserDeleteAction(content);
       dispatch(action);
-      alert("Xóa thành công");
+      openNotificationWithIcon(
+        "success",
+        " ",
+        <Tag color='success' className='text-xl'>
+          Xóa thành công
+        </Tag>
+      );
     } catch (error) {
       console.log(error);
       alert("Xóa thất bại");
@@ -137,6 +179,13 @@ export const updateUserApi = (id: number, user: UserModel) => {
       let result = await requester.put(`/api/users/${id}`, user);
       console.log(result.data.content);
       dispatch(setStatusAction(result.status));
+      openNotificationWithIcon(
+        "success",
+        "Update user information successfully !!",
+        <Tag color='success' className='text-xl'>
+          Bấm "CLOSE" để hoàn thành sửa người dùng !
+        </Tag>
+      );
     } catch (err) {
       console.log(err);
     }

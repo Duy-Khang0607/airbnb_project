@@ -5,10 +5,12 @@ import SignInReducer from "./SignInReducer/SignInReducer";
 import UserReducer from "./UserReducer/UserReducer";
 import loginSlice from "./Login/loginSlice";
 import LocationSlice from "./Home/LocationSlice";
+import LocationReducer from "./LocationReducer/LocationReducer";
 
 export const store = configureStore({
   reducer: {
     UserReducer,
+    LocationReducer,
     ModalReducer,
     SignInReducer,
   },

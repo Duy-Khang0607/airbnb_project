@@ -16,6 +16,7 @@ import Register from "./pages/User/Register/Register";
 import RoomList from "./pages/User/RoomList/RoomList";
 import AdminTemplate from "./templates/AdminTemplate";
 import HomeTemplate from "./templates/HomeTemplate";
+import Modaltest from "./HOC/Modaltest";
 
 type Props = {};
 
@@ -40,6 +41,7 @@ const App = (props: Props) => {
           <Route path='booking' element={<BookingManagement />}></Route>
           <Route path='loginAD' element={<LoginAdmin />}></Route>
           <Route path='registerAD' element={<RegisterAdmin />}></Route>
+          <Route path='modalTest' element={<Modaltest />}></Route>
         </Route>
         <Route path='*' element={<Navigate to='' />}></Route>
       </Routes>

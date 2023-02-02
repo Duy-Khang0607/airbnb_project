@@ -12,15 +12,24 @@ import moment from "moment/moment.js";
 import { DispatchType, RootState } from "../../../redux/configStore";
 import {
   clearStatusAction,
+  getUserApi,
   updateUserApi,
   UserModel,
 } from "../../../redux/UserReducer/UserReducer";
 import { openNotificationWithIcon } from "../../../utils/notification";
+import { getStoreJSON, setStoreJSON, USER_LOGIN } from "src/utils/setting";
+import { Tag } from "antd";
+import { signInApi } from "src/redux/SignInReducer/SignInReducer";
 
 type Props = {};
 let timeout: ReturnType<typeof setTimeout>;
 const EditUser = (props: Props) => {
   const { editUser } = useSelector((state: RootState) => state.UserReducer);
+  const userLogin = getStoreJSON("userLogin");
+  const profile = useSelector(
+    (state: RootState) => state.SignInReducer.userLogin
+  );
+
   const [submit, setSubmit] = useState(0);
   console.log("User Edit: ", editUser);
   const dispatch: DispatchType = useDispatch();
@@ -73,14 +82,11 @@ const EditUser = (props: Props) => {
         gender: values?.gender,
         role: values?.role,
       };
+      setStoreJSON(USER_LOGIN, updateUser);
       const updateAction = updateUserApi(editUser?.id, updateUser);
       dispatch(updateAction);
+      dispatch(getUserApi());
       setSubmit(1);
-      openNotificationWithIcon(
-        "success",
-        "Update user informatuon successfully !!",
-        <p>Return user table to review information !</p>
-      );
       resetFieldValue();
     },
   });
@@ -228,6 +234,9 @@ const EditUser = (props: Props) => {
                   value={formik.values?.password}
                   onChange={formik.handleChange}
                 />
+                {formik.errors.password && formik.touched.password && (
+                  <p className='text-danger my-1'>Password Invalid</p>
+                )}
               </div>
             </div>
             <div className='btnSubmit d-md-flex justify-content-md-end'>
