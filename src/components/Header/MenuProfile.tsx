@@ -26,7 +26,7 @@ const MenuProfile = () => {
     <React.Fragment >
     <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
       <Typography sx={{ minWidth: 100 }}>Become a host</Typography>
-      <Typography sx={{ minWidth: 100 }}> <NavLink to={""}>
+      <Typography className='m-3'> <NavLink to={""}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -90,30 +90,27 @@ const MenuProfile = () => {
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
+      
       <MenuItem onClick={handleClose}>
-        <Avatar /> Profile
+      <NavLink to={'/register'} className="text-black no-underline"> Sign up</ NavLink>
       </MenuItem>
       <MenuItem onClick={handleClose}>
-        <Avatar /> My account
+       <NavLink to={'/login'} className="text-black no-underline">  Login</NavLink>
       </MenuItem>
+     
       <Divider />
       <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-          <PersonAdd fontSize="small" />
-        </ListItemIcon>
-        Add another account
+        
+    <NavLink to={"/"} className="text-black no-underline">     Airbnb your home</NavLink>
       </MenuItem>
       <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-          <Settings fontSize="small" />
-        </ListItemIcon>
-        Settings
+      <NavLink to={"/"} className="text-black no-underline">     Host an experience</NavLink>
+        
       </MenuItem>
       <MenuItem onClick={handleClose}>
-        <ListItemIcon>
-          <Logout fontSize="small" />
-        </ListItemIcon>
-        Logout
+      <NavLink to={"/"} className="text-black no-underline">     Help</NavLink>
+      
+        
       </MenuItem>
     </Menu>
   </React.Fragment>

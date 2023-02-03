@@ -7,7 +7,12 @@ const RoomList = (props: Props) => {
   return <div>
      <Row>
       <Col span={16}>List</Col>
-      <Col span={8}>Map</Col>
+      <Col span={8}>
+        
+
+
+        
+      </Col>
 
     </Row>
   </div>;

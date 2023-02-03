@@ -11,6 +11,9 @@ export const store = configureStore({
     UserReducer,
     ModalReducer,
     SignInReducer,
+    loginSlice,
+    LocationSlice,
+    
   },
 });
 

@@ -25,7 +25,7 @@ const App = (props: Props) => {
       <Routes>
         <Route path='' element={<HomeTemplate />}>
           <Route index element={<Home />}></Route>
-          <Route path='roomlist' element={<RoomList />}></Route>
+          <Route path='roombycity' element={<RoomList />}></Route>
           <Route path='detail'>
             <Route path=':id' element={<DetailRoom />}></Route>
           </Route>

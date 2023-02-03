@@ -2,7 +2,8 @@ export const apiPath = {
   //---------------- User --------------
   REGISTER: "/api/auth/signup",
   LOGIN: "/api/auth/signin",
-  LOCATION: "/api/locations",
+  LOCATION: "/api/phong-thue",
+  LOCATIONBYID: "/api/phong-thue/",
 
   
   // 1) Quản lý vé
