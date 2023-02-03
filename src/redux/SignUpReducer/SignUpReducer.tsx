@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { DispatchType } from "../configStore";
 import requester from "../../api/api";
+import { openNotificationWithIcon } from "src/utils/notification";
+import { Tag } from "antd";
 
 export interface UserSignUp {
   id: number;
@@ -9,7 +11,7 @@ export interface UserSignUp {
   password: string;
   phone: string;
   birthday: string;
-  gender: string;
+  gender: boolean;
   role: string;
 }
 
@@ -48,20 +50,24 @@ export const signUpApi = (userRegister: UserSignUp) => {
         data: userRegister,
       });
       console.log(res.data.content);
-      //  setStore(ACCESS_TOKEN, res.data.content.accessToken);
-      //  setStoreJSON(USER_LOGIN, res.data.content);
-      //  const action = setUserLogin(res.data.content);
-      //  dispatch(action);
-      //  dispatch(setUserInfo(res.data.content.user));
-      //  // setUserInfo(result.data.content);
-      //  const actionState = setStateLogin("okay");
       dispatch(res.data.content);
-      alert("Đăng ký thành công !");
+      openNotificationWithIcon(
+        "success",
+        " ",
+        <Tag color='success' className='text-xl'>
+          Đăng ký thành công
+        </Tag>
+      );
+      console.log(res.data.content);
     } catch (err: any) {
-      console.log(err.response.data);
-      alert(err.response.data);
-      //  const actionState = setStateLogin("fail");
-      //  dispatch(actionState);
+      console.log(err.response.data.content);
+      openNotificationWithIcon(
+        "error",
+        " ",
+        <Tag color='error' className='text-xl'>
+          {err.response.data.content}
+        </Tag>
+      );
     }
   };
 };

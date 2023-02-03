@@ -6,7 +6,8 @@ import { useDispatch } from "react-redux";
 import { getStoreJSON } from "../../../utils/setting";
 import { DispatchType } from "../../../redux/configStore";
 import { signInApi } from "../../../redux/SignInReducer/SignInReducer";
-import { Input } from "antd";
+import { Input, Tag } from "antd";
+import { openNotificationWithIcon } from "src/utils/notification";
 
 type Props = {};
 
@@ -30,7 +31,6 @@ export default function LoginAdmin({}: Props) {
         console.log(values.data.content);
       } catch (error: any) {
         console.log(error.response.data.content);
-        alert(error.response.data.content);
       }
     },
     validationSchema: Yup.object().shape({
