@@ -4,7 +4,7 @@ export const apiPath = {
   LOGIN: "/api/auth/signin",
   LOCATION: "/api/phong-thue",
   LOCATIONBYID: "/api/phong-thue/",
-
+  GETUSERBYID: "/api/users/",
   
   // 1) Quản lý vé
   DANH_SACH_VE: "/api/tickets",

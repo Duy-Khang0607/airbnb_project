@@ -15,6 +15,7 @@ export const configs = {
   getStoreJSON: (name: string) => {
     if (localStorage.getItem(name)) {
       let value: any = localStorage.getItem(name);
+      //convert to JSON object
       let content = JSON.parse(value);
       return content;
     }
@@ -49,6 +50,8 @@ export const configs = {
   USER_LOGIN: "userLogin",
 };
 
+
+
 export const {
   ACCESS_TOKEN,
   USER_LOGIN,
@@ -61,3 +64,4 @@ export const {
   clearCookie,
   clearLocalStorage,
 } = configs;
+

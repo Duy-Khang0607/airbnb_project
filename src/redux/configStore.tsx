@@ -6,6 +6,7 @@ import UserReducer from "./UserReducer/UserReducer";
 import loginSlice from "./Login/loginSlice";
 import LocationSlice from "./Home/LocationSlice";
 import LocationReducer from "./LocationReducer/LocationReducer";
+import ProfileSlice from "./Profile/ProfileSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     SignInReducer,
     loginSlice,
     LocationSlice,
+    ProfileSlice,
     
   },
 });

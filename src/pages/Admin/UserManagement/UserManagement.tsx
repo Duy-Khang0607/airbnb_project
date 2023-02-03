@@ -34,7 +34,7 @@ import { signUpApi } from "../../../redux/SignUpReducer/SignUpReducer";
 import { useNavigate, useParams } from "react-router-dom";
 import { getStoreJSON } from "../../../utils/setting";
 import EditUser from "./EditUser";
-import "src/assets/css/sidebar.css";
+import "src/assets/css/Sidebar.css";
 import Upload_Image from "../UploadImage/Upload_Image";
 import AddUser from "../AddUser/AddUser";
 let timeout: ReturnType<typeof setTimeout>;
