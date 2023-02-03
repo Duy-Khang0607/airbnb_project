@@ -12,7 +12,7 @@ import LoginAdmin from "./pages/Admin/Login/LoginAdmin";
 import RegisterAdmin from "./pages/Admin/Register/RegisterAdmin";
 import Profile from "./pages/User/Profile/Profile";
 import Register from "./pages/User/Register/Register";
-import RoomList from "./pages/User/RoomList/RoomList";
+import Roombycity from "./pages/User/RoomList/Roombycity";
 import AdminTemplate from "./templates/AdminTemplate";
 import HomeTemplate from "./templates/HomeTemplate";
 import Modaltest from "./HOC/Modaltest";
@@ -26,7 +26,7 @@ const App = (props: Props) => {
       <Routes>
         <Route path='' element={<HomeTemplate />}>
           <Route index element={<Home />}></Route>
-          <Route path='roomlist' element={<RoomList />}></Route>
+          <Route path='roombycity' element={<Roombycity />}></Route>
           <Route path='detail'>
             <Route path=':id' element={<DetailRoom />}></Route>
           </Route>
