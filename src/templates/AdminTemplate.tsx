@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../assets/css/sidebar.css";
+import "src/assets/css/Sidebar.css";
 import { Layout, Menu, theme } from "antd";
 import { NavLink, Outlet } from "react-router-dom";
 import {
@@ -77,8 +77,8 @@ const AdminTemplate = () => {
             <Menu.Item key='location' icon={<CompassOutlined />}>
               <NavLink to='/admin/location'>Location</NavLink>
             </Menu.Item>
-            <Menu.Item key='booking' icon={<HomeOutlined />}>
-              <NavLink to='/admin/booking'>Room</NavLink>
+            <Menu.Item key='room' icon={<HomeOutlined />}>
+              <NavLink to='/admin/room'>Room</NavLink>
             </Menu.Item>
             <Menu.Item key='loginAD' icon={<UserOutlined />}>
               <NavLink to='/admin/loginAD'>Login</NavLink>

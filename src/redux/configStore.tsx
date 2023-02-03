@@ -6,6 +6,8 @@ import UserReducer from "./UserReducer/UserReducer";
 import loginSlice from "./Login/loginSlice";
 import LocationSlice from "./Home/LocationSlice";
 import LocationReducer from "./LocationReducer/LocationReducer";
+import RoomReducer from "./RoomReducer/RoomReducer";
+import SignUpReducer from "./SignUpReducer/SignUpReducer";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +15,8 @@ export const store = configureStore({
     LocationReducer,
     ModalReducer,
     SignInReducer,
+    SignUpReducer,
+    RoomReducer,
   },
 });
 

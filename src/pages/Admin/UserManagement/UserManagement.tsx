@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Button,
   Popconfirm,
@@ -34,7 +34,7 @@ import { signUpApi } from "../../../redux/SignUpReducer/SignUpReducer";
 import { useNavigate, useParams } from "react-router-dom";
 import { getStoreJSON } from "../../../utils/setting";
 import EditUser from "./EditUser";
-import "src/assets/css/sidebar.css";
+import "src/assets/css/Sidebar.css";
 import Upload_Image from "../UploadImage/Upload_Image";
 import AddUser from "../AddUser/AddUser";
 let timeout: ReturnType<typeof setTimeout>;
@@ -266,14 +266,15 @@ const UserManagement: React.FC = () => {
       <h1 className='text-4xl text-center'>Quản lý người dùng</h1>
       {/* Add user */}
       <div className='addAdminPage mb-3' style={{ cursor: "pointer" }}>
-        <Tag
+        <Button
           className='text-xl'
-          color='red'
+          type='primary'
           data-bs-toggle='modal'
           data-bs-target='#modalId'
           onClick={handleAdd}>
-          <i className='fa fa-user-plus'></i> Thêm người dùng
-        </Tag>
+          <i className='fa fa-user-plus mr-2'></i>
+          Thêm người dùng
+        </Button>
       </div>
       <Form form={form} component={false}>
         <Table loading={loading} bordered columns={columns} dataSource={data} />
