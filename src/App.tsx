@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AppRoute from "./api/AppRoute";
 import PrivateRoute from "./api/PrivateRoute";
-import BookingManagement from "./pages/Admin/BookingManagement/BookingManagement";
 import Dashboard from "./pages/Admin/Dashboard/Dashboard";
 import LocationManagement from "./pages/Admin/LocationManagement/LocationManagement";
 import UserManagement from "./pages/Admin/UserManagement/UserManagement";
@@ -17,6 +16,7 @@ import Roombycity from "./pages/User/RoomList/Roombycity";
 import AdminTemplate from "./templates/AdminTemplate";
 import HomeTemplate from "./templates/HomeTemplate";
 import Modaltest from "./HOC/Modaltest";
+import RoomManagement from "./pages/Admin/BookingManagement/RoomManagement";
 
 type Props = {};
 
@@ -38,7 +38,7 @@ const App = (props: Props) => {
           <Route index path='' element={<Dashboard />}></Route>
           <Route path='user' element={<UserManagement />}></Route>
           <Route path='location' element={<LocationManagement />}></Route>
-          <Route path='booking' element={<BookingManagement />}></Route>
+          <Route path='room' element={<RoomManagement />}></Route>
           <Route path='loginAD' element={<LoginAdmin />}></Route>
           <Route path='registerAD' element={<RegisterAdmin />}></Route>
           <Route path='modalTest' element={<Modaltest />}></Route>

@@ -1,4 +1,9 @@
-import { NotificationOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  NotificationOutlined,
+  UserAddOutlined,
+  UsergroupAddOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Drawer } from "@mui/material";
 import { Avatar, Badge, Button, Image } from "antd";
 import React, { useEffect, useState } from "react";
@@ -78,7 +83,7 @@ const Profile = (props: Props) => {
             </Badge>
             <span className='px-3 text-lg'>{profile?.user?.name}</span>
             <Button danger type='primary' onClick={handleLogOut}>
-              Log Out
+              Log Out <i className='icomoon icon-exit'></i>
             </Button>
           </div>
         ) : (
@@ -86,7 +91,7 @@ const Profile = (props: Props) => {
             <NavLink
               to='/admin/loginAD'
               className={({ isActive }) => {
-                if (isActive) return "text-red-200 text-lg";
+                if (isActive) return "text-red-500 text-lg";
                 return "text-white text-xl   ";
               }}>
               <Button className='text-base' type='text'>
@@ -94,9 +99,14 @@ const Profile = (props: Props) => {
               </Button>
             </NavLink>
             <span className='text-black text-lg'>|</span>
-            <NavLink to='/admin/registerAD' className='text-white text-xl'>
+            <NavLink
+              to='/admin/registerAD'
+              className={({ isActive }) => {
+                if (isActive) return "text-red-500 text-lg";
+                return "text-white text-xl   ";
+              }}>
               <Button className='text-base' type='text'>
-                Đăng ký
+                Đăng ký <UsergroupAddOutlined className='text-2xl' />
               </Button>
             </NavLink>
           </nav>

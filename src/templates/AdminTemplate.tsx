@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
+import "src/assets/css/Sidebar.css";
+=======
 import "../assets/css/Sidebar.css";
+>>>>>>> 2b3ffd680430cc9b41d0734e49f1817b05506113
 import { Layout, Menu, theme } from "antd";
 import { NavLink, Outlet } from "react-router-dom";
 import {
@@ -77,8 +81,8 @@ const AdminTemplate = () => {
             <Menu.Item key='location' icon={<CompassOutlined />}>
               <NavLink to='/admin/location'>Location</NavLink>
             </Menu.Item>
-            <Menu.Item key='booking' icon={<HomeOutlined />}>
-              <NavLink to='/admin/booking'>Room</NavLink>
+            <Menu.Item key='room' icon={<HomeOutlined />}>
+              <NavLink to='/admin/room'>Room</NavLink>
             </Menu.Item>
             <Menu.Item key='loginAD' icon={<UserOutlined />}>
               <NavLink to='/admin/loginAD'>Login</NavLink>

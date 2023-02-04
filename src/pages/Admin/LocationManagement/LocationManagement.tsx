@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Button,
   Form,
   Input,
   InputNumber,
@@ -121,14 +122,14 @@ const LocationManagement: React.FC = () => {
       <Modaltest />
       <h1 className='text-4xl text-center'>Quản lý vị trí</h1>
       <div className='addAdminPage mb-3' style={{ cursor: "pointer" }}>
-        <Tag
-          color='cyan'
+        <Button
+          type='primary'
           data-bs-toggle='modal'
           data-bs-target='#modalId'
           onClick={handleAdd}
           className='text-xl'>
-          Thêm vị trí
-        </Tag>
+          <i className='fa fa-map-marker-alt mr-2'></i> Thêm vị trí
+        </Button>
       </div>
       <div className='row'>
         <form className='search col-lg-4'>

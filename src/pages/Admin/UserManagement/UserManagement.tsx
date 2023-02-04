@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Button,
   Popconfirm,
@@ -266,14 +266,15 @@ const UserManagement: React.FC = () => {
       <h1 className='text-4xl text-center'>Quản lý người dùng</h1>
       {/* Add user */}
       <div className='addAdminPage mb-3' style={{ cursor: "pointer" }}>
-        <Tag
+        <Button
           className='text-xl'
-          color='red'
+          type='primary'
           data-bs-toggle='modal'
           data-bs-target='#modalId'
           onClick={handleAdd}>
-          <i className='fa fa-user-plus'></i> Thêm người dùng
-        </Tag>
+          <i className='fa fa-user-plus mr-2'></i>
+          Thêm người dùng
+        </Button>
       </div>
       <Form form={form} component={false}>
         <Table loading={loading} bordered columns={columns} dataSource={data} />

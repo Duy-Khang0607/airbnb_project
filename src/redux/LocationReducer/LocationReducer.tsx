@@ -13,13 +13,13 @@ export interface LocationModel {
   quocGia: string;
   hinhAnh: string;
 }
-export type LocationState = {
+export interface LocationState {
   arrLocation: LocationModel[];
   location: LocationModel;
   arrLocationPageIndex: LocationModel[];
   totalRow: number;
   statusAction: number;
-};
+}
 
 const initialState: LocationState = {
   arrLocation: [],
