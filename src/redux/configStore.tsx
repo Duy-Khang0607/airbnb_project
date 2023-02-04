@@ -7,6 +7,7 @@ import loginSlice from "./Login/loginSlice";
 import LocationSlice from "./Home/LocationSlice";
 import LocationReducer from "./LocationReducer/LocationReducer";
 import ProfileSlice from "./Profile/ProfileSlice";
+import DetailRoomSlice from "./DetailRoomSlice/DetailRoomSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,7 +18,7 @@ export const store = configureStore({
     loginSlice,
     LocationSlice,
     ProfileSlice,
-    
+    DetailRoomSlice,
   },
 });
 

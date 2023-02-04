@@ -29,11 +29,12 @@ export interface Location {
 
 export interface LocationState {
     locationList: Location[],
-
+    detailLocation: Location | any,
 }
 
 const initialState: LocationState = {
     locationList: [],
+    detailLocation : [],
 }
 
 const LocationSlice = createSlice({
@@ -42,11 +43,14 @@ const LocationSlice = createSlice({
   reducers: {
     getAllLocation: (state: LocationState, action: PayloadAction<Location[]>) => {
                 state.locationList = action.payload
-    }
+    },
+    getLocationById: (state: LocationState, action: PayloadAction<Location[]>) => {
+        state.detailLocation = action.payload
+}
   }
 });
 
-export const {getAllLocation} = LocationSlice.actions
+export const {getAllLocation, getLocationById} = LocationSlice.actions
 
 export default LocationSlice.reducer
 
@@ -87,16 +91,13 @@ export const getLocationByIdApi = (id : number) => {
         try {
             const res = await requester({
                 method: "GET",
-                url:apiPath.LOCATIONBYID,
-                params: {
-                    id: id,
-                },
-              
+                url:apiPath.LOCATIONBYID  + id,
+                 
             })
 
             console.log(res.data.content)
             let location  = res.data.content
-            dispatch(location)
+            dispatch(getLocationById(location))
 
 
 

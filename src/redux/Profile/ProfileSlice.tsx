@@ -2,6 +2,9 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { DispatchType } from '../configStore';
 import requester from 'src/api/api';
 import { apiPath } from 'src/api/apiPath';
+import { request } from 'https';
+import type { UploadFile } from 'antd/es/upload/interface';
+import { ACCESS_TOKEN, getStore } from 'src/utils/setting';
 
 export interface UserProfile {
   id: number;
@@ -77,5 +80,24 @@ export const UpdateProfileApi = (id: number | string, profile : UserProfile) => 
       } catch (error) {
         console.log(error)
       }
+  }
+}
+
+
+export const UploadImgage = (formData : UploadFile[]) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const res = await requester({
+        method: "POST",
+        url: apiPath.UPLOADIMGAGE,
+        data: formData,
+        headers: {
+          token: getStore(ACCESS_TOKEN)
+        }
+      })
+      console.log(res.data.content)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
