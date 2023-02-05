@@ -5,12 +5,13 @@ import { openNotificationWithIcon } from "src/utils/notification";
 import requester from "../../api/api";
 import {
   ACCESS_TOKEN,
+  getStore,
   setStore,
   setStoreJSON,
   USER_LOGIN,
 } from "../../utils/setting";
 import { DispatchType } from "../configStore";
-import { setUserInfo } from "../UserReducer/UserReducer";
+import { setStatusAction, setUserInfo } from "../UserReducer/UserReducer";
 
 export interface UserSignIn {
   email: string;
@@ -58,14 +59,19 @@ export const signInApi = (userLogin: UserSignIn) => {
       console.log(
         `Email: ${userLogin.email} - Password: ${userLogin.password}`
       );
-      setStore(ACCESS_TOKEN, res.data.content.accessToken);
+      setStore(ACCESS_TOKEN, res.data.content.token);
+      // getStore(ACCESS_TOKEN);
+      console.log(getStore(ACCESS_TOKEN));
       setStoreJSON(USER_LOGIN, res.data.content);
+      // setStoreJSON(ACCESS_TOKEN, res.data.content.token);
+
       const action = setUserLogin(res.data.content);
       dispatch(action);
       dispatch(setUserInfo(res.data.content.user));
       // setUserInfo(result.data.content);
       const actionState = setStateLogin("okay");
       dispatch(actionState);
+      dispatch(setStatusAction(res.status));
       openNotificationWithIcon(
         "success",
         " ",

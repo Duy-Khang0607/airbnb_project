@@ -1,15 +1,5 @@
-import React, { Fragment, useEffect, useState } from "react";
-import {
-  Button,
-  Popconfirm,
-  Space,
-  Table,
-  Tag,
-  Form,
-  Input,
-  Modal,
-  Select,
-} from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Popconfirm, Space, Table, Tag, Form, Input } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import {
   SearchOutlined,
@@ -18,30 +8,33 @@ import {
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearStatusAction,
   deleteUser,
   editUser,
   getUserApi,
   UserModel,
 } from "../../../redux/UserReducer/UserReducer";
 import { DispatchType, RootState } from "../../../redux/configStore";
-import Upload from "antd/es/upload/Upload";
 import {
   setEditAction,
   setModalAction,
 } from "../../../redux/ModalReducer/ModalReducer";
 import Modaltest from "../../../HOC/Modaltest";
-import { signUpApi } from "../../../redux/SignUpReducer/SignUpReducer";
 import { useNavigate, useParams } from "react-router-dom";
 import { getStoreJSON } from "../../../utils/setting";
 import EditUser from "./EditUser";
 import "src/assets/css/Sidebar.css";
 import Upload_Image from "../UploadImage/Upload_Image";
 import AddUser from "../AddUser/AddUser";
-let timeout: ReturnType<typeof setTimeout>;
+import UploadAvatar from "../UploadAvatar/UploadAvatar";
 const UserManagement: React.FC = () => {
+  let timeout: ReturnType<typeof setTimeout>;
+
   const user: UserModel[] = useSelector(
     (state: RootState) => state.UserReducer.arrUser
   );
+
+  const { statusAction } = useSelector((state: RootState) => state.UserReducer);
 
   interface DataType {
     id: number;
@@ -50,7 +43,7 @@ const UserManagement: React.FC = () => {
     password: string;
     phone: string;
     birthday: string;
-    avatar?: string;
+    avatar: string;
     gender: boolean;
     role: string;
   }
@@ -83,9 +76,8 @@ const UserManagement: React.FC = () => {
 
   const handleUploadAvatar = (id: number) => {
     const actionUploadComponent = setModalAction({
-      Component: Upload_Image,
+      Component: UploadAvatar,
       title: "Upload User Avatar",
-      ID: id,
     });
     dispatch(actionUploadComponent);
   };
@@ -156,11 +148,9 @@ const UserManagement: React.FC = () => {
     //   dataIndex: "password",
     //   key: "password",
     // },
-    {
-      title: "Phone",
-      dataIndex: "phone",
-      key: "phone",
-    },
+    // {title: "Phone",
+    // dataIndex: "phone",
+    // key: "phone"},
     {
       title: "Birthday",
       dataIndex: "birthday",
@@ -180,13 +170,17 @@ const UserManagement: React.FC = () => {
         ) : (
           <Button
             type='primary'
-            style={{ background: "rgb(240, 189, 199)", width: "auto" }}
+            style={{
+              background: "rgb(240, 189, 199)",
+              width: "auto",
+              color: "black",
+            }}
             data-bs-toggle='modal'
             data-bs-target='#modalId'
             onClick={(event: React.MouseEvent<HTMLElement>) => {
               handleUploadAvatar(user?.id);
             }}>
-            Upload ảnh
+            <UploadOutlined className='text-xl -mt-2' />
           </Button>
         );
       },
@@ -229,8 +223,10 @@ const UserManagement: React.FC = () => {
               title='Bạn có muốn xóa ? '
               onConfirm={() => {
                 dispatch(deleteUser(record?.id));
-                // Load lại ds ng dùng
                 getAllUserApi();
+                const clearStatus = clearStatusAction();
+                dispatch(clearStatus);
+                // Load lại ds ng dùng
               }}>
               <Button type='primary' danger>
                 Xóa
@@ -254,11 +250,16 @@ const UserManagement: React.FC = () => {
   ];
 
   useEffect(() => {
-    setLoading(true);
-    // Call api
-    getAllUserApi();
-    setLoading(false);
-  }, []);
+    timeout = setTimeout(() => {
+      getAllUserApi();
+    }, 500);
+    return () => {
+      if (timeout !== null) {
+        clearTimeout(timeout);
+        // setReload(false);
+      }
+    };
+  }, [statusAction]);
 
   return (
     <div>

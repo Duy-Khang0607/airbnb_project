@@ -11,7 +11,7 @@ export interface LocationModel {
   tenViTri: string;
   tinhThanh: string;
   quocGia: string;
-  hinhAnh: string;
+  hinhAnh?: string;
 }
 export interface LocationState {
   arrLocation: LocationModel[];
@@ -148,13 +148,13 @@ export const deleteLocationApi = (viTri: number) => {
 };
 
 //post location
-export const postLocationApi = (viTri: LocationModel) => {
+export const postLocationApi = (model: LocationModel) => {
   return async (dispatch: DispatchType) => {
     try {
       let result = await requester({
         url: "/api/vi-tri",
         method: "POST",
-        data: viTri,
+        data: model,
       });
       console.log(result.status);
       dispatch(setStatusAction(result.status));
@@ -178,8 +178,44 @@ export const postLocationApi = (viTri: LocationModel) => {
   };
 };
 
+export const UploadImgLocationApi = (maViTri: number, formFile: File) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      let result = await requester({
+        url: "/api/vi-tri/upload-hinh-vitri",
+        method: "POST",
+        data: formFile,
+        params: {
+          maViTri: maViTri,
+        },
+      });
+      console.log(result.status);
+      console.log(result.data.content);
+      dispatch(setStatusAction(result.status));
+      dispatch(setArrLocationByPageIndex(result.data.content.data));
+      openNotificationWithIcon(
+        "success",
+        " ",
+        <Tag color='success' className='text-xl'>
+          Thêm vị trí thành công
+        </Tag>
+      );
+    } catch (err) {
+      console.log(err);
+      // console.log(err?.response.data.content);
+      openNotificationWithIcon(
+        "error",
+        " ",
+        <Tag color='error' className='text-lg'>
+          Thêm vị trí thất bại
+        </Tag>
+      );
+    }
+  };
+};
+
 //put location
-export const putLocationApi = (id: number, viTri: any) => {
+export const putLocationApi = (id: number, viTri: LocationModel) => {
   return async (dispatch: DispatchType) => {
     try {
       let result = await requester.put(`/api/vi-tri/${id}`, viTri);

@@ -215,7 +215,7 @@ export default function RoomManagement({}: Props) {
         );
         console.log("on search");
       }
-    }, 1000);
+    }, 100);
     return () => {
       if (timeout) {
         clearTimeout(timeout);

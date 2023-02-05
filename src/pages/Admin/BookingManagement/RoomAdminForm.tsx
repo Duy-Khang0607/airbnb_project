@@ -9,7 +9,6 @@ import {
   addRoomApi,
   clearStatusAction,
   editRoomApi,
-  getAllRoomsApi,
   RoomModel,
 } from "src/redux/RoomReducer/RoomReducer";
 import { useFormik } from "formik";
@@ -188,7 +187,7 @@ export default function RoomAdminForm({ room, handleCloseModal }: Props) {
         .min(-1, "Số lượng tối đa không được nhỏ hơn 0!"),
       moTa: Yup.string()
         .required("Không được bỏ trống trường này!")
-        .max(50, "Mô tả ít nhất 50 kí tự!"),
+        .min(50, "Mô tả ít nhất 50 kí tự!"),
       hinhAnh: Yup.mixed().required("Vui lòng thêm hình ảnh cho phòng!"),
       // maViTri: Yup.number().min(1, "Không được bỏ trống trường này!"),
     }),
@@ -404,6 +403,7 @@ export default function RoomAdminForm({ room, handleCloseModal }: Props) {
                     <input
                       required
                       id='khach'
+                      name='khach'
                       type='number'
                       className='form-control ms-2 w-50'
                       onChange={handleChange}
@@ -425,6 +425,7 @@ export default function RoomAdminForm({ room, handleCloseModal }: Props) {
                     <input
                       required
                       id='phongTam'
+                      name='phongTam'
                       type='number'
                       className='form-control ms-2 w-50'
                       onChange={handleChange}
@@ -448,6 +449,7 @@ export default function RoomAdminForm({ room, handleCloseModal }: Props) {
                     <input
                       required
                       id='phongNgu'
+                      name='phongNgu'
                       type='number'
                       className='form-control ms-2 w-50'
                       onBlur={handleBlur}
@@ -469,6 +471,7 @@ export default function RoomAdminForm({ room, handleCloseModal }: Props) {
                     <input
                       required
                       id='giuong'
+                      name='giuong'
                       type='number'
                       className='form-control ms-2 w-50'
                       onBlur={handleBlur}
@@ -489,6 +492,7 @@ export default function RoomAdminForm({ room, handleCloseModal }: Props) {
             <textarea
               required
               id='moTa'
+              name='moTa'
               className='form-control mt-2'
               style={{ height: "180px" }}
               onChange={handleChange}

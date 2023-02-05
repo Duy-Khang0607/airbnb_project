@@ -1,3 +1,10 @@
+import {
+  BackwardOutlined,
+  CaretLeftOutlined,
+  CaretRightOutlined,
+  ForwardOutlined,
+} from "@ant-design/icons";
+import { Button } from "antd";
 import _ from "lodash";
 
 type Props = {
@@ -18,52 +25,72 @@ export default function TablePagination({
   const pages = _.range(1, pageCount + 1);
 
   return (
-    <nav className='d-flex justify-content-end'>
+    <nav className='d-flex justify-content-center'>
       <ul className='pagination'>
         <li className='page-item'>
-          <button
-            className={currentPage - 1 <= 0 ? "d-none" : "page-link"}
+          <Button
+            className={
+              currentPage - 1 <= 0
+                ? "d-none"
+                : "bg-black mx-2 rounded text-white hover:bg-gray-400"
+            }
             onClick={() => handlePagination(1)}>
-            {"<<"}
-          </button>
+            {<BackwardOutlined className='text-2xl -mt-2' />}
+          </Button>
         </li>
         <li className='page-item'>
-          <button
-            className={currentPage - 1 <= 0 ? "d-none" : "page-link"}
+          <Button
+            className={
+              currentPage - 1 <= 0
+                ? "d-none"
+                : "bg-black mx-2 rounded text-white hover:bg-gray-400"
+            }
             onClick={() =>
               handlePagination(
                 currentPage - 1 <= 0 ? currentPage : currentPage - 1
               )
             }>
-            {"<"}
-          </button>
+            {<CaretLeftOutlined className='text-2xl -mt-2' />}
+          </Button>
         </li>
         {pages.map((page) => (
-          <li
-            className={page === currentPage ? "page-item active" : "page-item"}
+          <Button
+            className={
+              page === currentPage
+                ? "bg-pink mx-2 rounded text-white hover:bg-rose-300"
+                : "bg-black text-white mx-2 rounded hover:bg-gray-600"
+            }
             key={page}
             style={{ cursor: "pointer" }}
             onClick={() => handlePagination(page)}>
-            <button className='page-link'>{page}</button>
-          </li>
+            {page}
+          </Button>
         ))}
         <li className='page-item'>
-          <button
-            className={pages.length - currentPage <= 0 ? "d-none" : "page-link"}
+          <Button
+            className={
+              pages.length - currentPage <= 0
+                ? "d-none"
+                : "bg-black mx-2 rounded text-white hover:bg-gray-400"
+            }
             onClick={() =>
               handlePagination(
                 currentPage + 1 > pageCount ? currentPage : currentPage + 1
               )
             }>
-            {">"}
-          </button>
+            {<CaretRightOutlined className='text-2xl -mt-2' />}
+          </Button>
         </li>
         <li className='page-item'>
-          <button
-            className={pages.length - currentPage <= 0 ? "d-none" : "page-link"}
+          <Button
+            className={
+              pages.length - currentPage <= 0
+                ? "d-none"
+                : "bg-black mx-2 rounded text-white hover:bg-gray-400"
+            }
             onClick={() => handlePagination(pages.slice(-1)[0])}>
-            {">>"}
-          </button>
+            {<ForwardOutlined className='text-2xl -mt-2' />}
+          </Button>
         </li>
       </ul>
     </nav>

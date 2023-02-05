@@ -1,7 +1,6 @@
 import { Button } from "antd";
 import clsx from "clsx";
 import React, { useState } from "react";
-import "./pagination.css";
 type Props = {
   postsPerPage: number;
   setCurrentPage: (value: number) => void;
@@ -13,14 +12,14 @@ export default function Pagination({
   setCurrentPage,
   totalRow,
 }: Props) {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState<number>(1);
   const handlebutton = (page: number) => {
     setCurrentPage(page);
-    setActive(!active);
+    setActive(page);
   };
 
   let pages: number[] = [];
-  let currentPage = 1;
+
   for (let i = 1; i <= Math.ceil(totalRow / postsPerPage); i++) {
     pages.push(i);
   }
@@ -37,12 +36,19 @@ export default function Pagination({
 
             //   // setActive("btn btn-warning  mx-2 rounded-0 btnPagination");
             // }}>
-            className={`bg-black mx-2 ${
-              active === true ? "bg-red-600" : "bg-green-700"
-            }`}
             onClick={() => {
               handlebutton(page);
-            }}>
+              console.log("page", page);
+              console.log("postsPerPage", postsPerPage);
+              console.log("totalRow", totalRow);
+              console.log("index", index);
+              console.log(Math.ceil(totalRow / postsPerPage));
+            }}
+            className={
+              page === active
+                ? "bg-pink mx-2 rounded hover:bg-rose-300"
+                : "bg-black mx-2 rounded hover:bg-gray-600"
+            }>
             {page}
           </Button>
         );

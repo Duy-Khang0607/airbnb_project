@@ -97,6 +97,7 @@ const LocationManagement: React.FC = () => {
       title: "Change Picture Location",
       ID: id,
     });
+    console.log(id);
     dispatch(actionUploadComponent);
   };
 

@@ -11,7 +11,7 @@ export interface UserModel {
   password: string;
   phone: string;
   birthday: string;
-  avatar?: string;
+  avatar: string;
   gender: boolean;
   role: string;
 }
@@ -104,10 +104,10 @@ export const postUserApi = (user: UserModel) => {
         data: user,
       });
 
-      const content: UserModel[] = res.data.content;
-      //  Sau khi lấy dữ liệu từ API về => Bắt đầu dispatch lên store
-      const action: PayloadAction<UserModel[]> = setArrUserAction(content);
-      dispatch(action);
+      // const content: UserModel[] = res.data.content;
+      // //  Sau khi lấy dữ liệu từ API về => Bắt đầu dispatch lên store
+      // const action: PayloadAction<UserModel[]> = setArrUserAction(content);
+      // dispatch(action);
       dispatch(setStatusAction(res.status));
       openNotificationWithIcon(
         "success",
@@ -146,6 +146,7 @@ export const deleteUser = (id: number) => {
       const action: PayloadAction<UserModel[]> =
         setArrUserDeleteAction(content);
       dispatch(action);
+      dispatch(setStatusAction(res.status));
       openNotificationWithIcon(
         "success",
         " ",
@@ -181,13 +182,53 @@ export const updateUserApi = (id: number, user: UserModel) => {
       dispatch(setStatusAction(result.status));
       openNotificationWithIcon(
         "success",
-        "Update user information successfully !!",
+        " ",
         <Tag color='success' className='text-xl'>
-          Bấm "CLOSE" để hoàn thành sửa người dùng !
+          Sửa người dùng thành công
         </Tag>
       );
     } catch (err) {
       console.log(err);
+      openNotificationWithIcon(
+        "error",
+        " ",
+        <Tag color='error' className='text-xl'>
+          Sửa người dùng thất bại
+        </Tag>
+      );
+    }
+  };
+};
+
+export const updateAvatar = (formFile: string) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const res = await requester({
+        url: "/api/users/upload-avatar",
+        method: "POST",
+        data: formFile,
+      });
+      // const content: UserModel[] = res.data.content;
+      // console.log(content);
+      // const action: PayloadAction<UserModel[]> = setArrUserAction(content);
+      // dispatch(action);
+      dispatch(setStatusAction(res.status));
+      openNotificationWithIcon(
+        "success",
+        " ",
+        <Tag color='success' className='text-xl'>
+          Thêm ảnh thành công
+        </Tag>
+      );
+    } catch (err) {
+      console.log(err);
+      openNotificationWithIcon(
+        "error",
+        " ",
+        <Tag color='error' className='text-xl'>
+          Thêm ảnh thất bại
+        </Tag>
+      );
     }
   };
 };

@@ -1,12 +1,12 @@
 import axios from "axios";
-import { getStore } from "src/utils/setting";
+import { ACCESS_TOKEN, getStore } from "src/utils/setting";
 
 const requester = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   timeout: 6000,
   headers: {
     tokenCybersoft: process.env.REACT_APP_CYBERSOFT_TOKEN,
-    // token: process.env.REACT_APP_CYBERSOFT_TOKEN_ADMIN,
+    token: getStore(ACCESS_TOKEN),
 
     // => Để Authorization ở đây, thì khi user chưa đăng nhập thì các resquest Authorization  không có
 
