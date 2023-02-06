@@ -6,52 +6,14 @@ import logo from "src/assets/svg/logo.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import MenuProfile from "./MenuProfile";
 import HeaderSearch from "../HeaderSearch/HeaderSearch";
-import { Tabs } from "antd";
-import type { TabsProps } from "antd";
+
+
 
 const { Search } = Input;
 
 type Props = {};
 
-const onChange = (key: string) => {
-  console.log(key);
-};
 
-const items: TabsProps["items"] = [
-  {
-    key: "1",
-    label: `Stays`,
-    children: (
-      <>
-        <div className='rounded flex justify-center '>
-          <div>Where </div>
-          <div>Check in</div>
-          <div>Check out </div>
-          <div>
-            <span>
-              <h4>Who</h4>
-              <p>Add guests</p>
-            </span>
-            <span className='bg-pink p-5 rounded-full w-12 h-12 items-center'>
-              <SearchOutlined className='text-white' />
-              Search
-            </span>
-          </div>
-        </div>
-      </>
-    ),
-  },
-  {
-    key: "2",
-    label: `Experiences`,
-    children: `Content of Tab Pane 2`,
-  },
-  {
-    key: "3",
-    label: `Online Experience`,
-    children: `Content of Tab Pane 3`,
-  },
-];
 
 const Header = (props: Props) => {
   const [isClicked, setIsClicked] = useState(false);
@@ -70,7 +32,7 @@ const Header = (props: Props) => {
             <img src={logo} className='' alt='airbnb-logo' />
           </NavLink>
         </Col>
-        {true && (
+        {false && (
           <Col span={8}>
             <div
               className='  flex justify-between items-center rounded-full border-2 border-solid border-gray-300 p-2 shadow-sm   '
@@ -94,22 +56,20 @@ const Header = (props: Props) => {
             </div>
           </Col>
         )}
-        {true && (
-          <Col span={8} className='relative flex justify-center '>
-            <Tabs
-              defaultActiveKey='1'
-              items={items}
-              onChange={onChange}
-              className='absolute top-0   '></Tabs>
+
+{true && (
+          <Col span={8}>
+           <HeaderSearch />
           </Col>
         )}
+
 
         <Col span={8} className='flex justify-end'>
           <MenuProfile />
         </Col>
       </Row>
 
-      <HeaderSearch />
+      
     </div>
   );
 };
