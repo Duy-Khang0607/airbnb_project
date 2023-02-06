@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "src/assets/css/Sidebar.css";
-<<<<<<< HEAD
-import "../assets/css/Sidebar.css";
-=======
->>>>>>> master
 import { Layout, Menu, theme } from "antd";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {

@@ -6,11 +6,8 @@ const requester = axios.create({
   timeout: 6000,
   headers: {
     tokenCybersoft: process.env.REACT_APP_CYBERSOFT_TOKEN,
-<<<<<<< HEAD
-    token: process.env.REACT_APP_CYBERSOFT_TOKEN_ADMIN,
-=======
+    // token: process.env.REACT_APP_CYBERSOFT_TOKEN_ADMIN,
     token: getStore(ACCESS_TOKEN),
->>>>>>> master
 
     // => Để Authorization ở đây, thì khi user chưa đăng nhập thì các resquest Authorization  không có
 
