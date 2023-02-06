@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "src/assets/css/Sidebar.css";
+<<<<<<< HEAD
 import "../assets/css/Sidebar.css";
+=======
+>>>>>>> master
 import { Layout, Menu, theme } from "antd";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {
   FileOutlined,
   CalendarOutlined,
@@ -35,6 +38,12 @@ const AdminTemplate = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const navigate = useNavigate();
+  const handleSidbar = (key: string) => {
+    navigate(`/admin/${key}`);
+  };
+
   useEffect(() => {
     dispatch(getUserApi());
   }, [profile]);
@@ -48,7 +57,10 @@ const AdminTemplate = () => {
           className='sideBar'
           breakpoint='lg'
           collapsedWidth='0'
-          onBreakpoint={(broken) => {}}
+          onBreakpoint={(broken) => {
+            console.log(broken);
+          }}
+          onClick={(value) => console.log(value)}
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}>
@@ -66,9 +78,9 @@ const AdminTemplate = () => {
           </div>
           <Menu
             theme='dark'
-            defaultSelectedKeys={["dashboard"]}
+            defaultSelectedKeys={[`dashboard`]}
             mode='inline'
-            className='bg-black text-lg'>
+            className='bg-black text-lg leading-10'>
             <Menu.Item key='dashboard' icon={<DashboardOutlined />}>
               <NavLink to='/admin'>Dashboard</NavLink>
             </Menu.Item>

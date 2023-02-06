@@ -1,4 +1,5 @@
 import {
+  LoginOutlined,
   NotificationOutlined,
   UserAddOutlined,
   UsergroupAddOutlined,
@@ -12,24 +13,26 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { DispatchType, RootState } from "../../../redux/configStore";
 import { getUserApi, UserModel } from "../../../redux/UserReducer/UserReducer";
 import {
+  ACCESS_TOKEN,
   clearLocalStorage,
-  getStore,
   getStoreJSON,
-  setStore,
   USER_LOGIN,
 } from "../../../utils/setting";
-
+import logoAvatar from "src/assets/imgs/profile.png";
+import UploadAvatar from "../UploadAvatar/UploadAvatar";
+import { setModalAction } from "src/redux/ModalReducer/ModalReducer";
 type Props = {};
 
 const Profile = (props: Props) => {
   const profile = useSelector(
     (state: RootState) => state.SignInReducer.userLogin
   );
-  console.log(profile);
 
   const user: UserModel[] = useSelector(
     (state: RootState) => state.UserReducer.arrUser
   );
+  const { statusAction } = useSelector((state: RootState) => state.UserReducer);
+
   const userLogin = getStoreJSON("userLogin");
   const navigate = useNavigate();
   const dispatch: DispatchType = useDispatch();
@@ -46,6 +49,7 @@ const Profile = (props: Props) => {
   const handleLogOut = () => {
     // localStorage.removeItem(USER_LOGIN);
     clearLocalStorage(USER_LOGIN);
+    clearLocalStorage(ACCESS_TOKEN);
     navigate("/admin/loginAD");
     window.location.reload();
   };
@@ -56,9 +60,17 @@ const Profile = (props: Props) => {
     dispatch(actionAsync);
   };
 
+  const handleUploadAvatar = (id: number) => {
+    const actionUploadComponent = setModalAction({
+      Component: UploadAvatar,
+      title: "Upload User Avatar",
+    });
+    dispatch(actionUploadComponent);
+  };
+
   useEffect(() => {
     getAllUserApi();
-  }, [profile?.user]);
+  }, [profile?.user, statusAction]);
   return (
     <div>
       <div className='flex justify-end mr-6 align-content-center'>
@@ -67,18 +79,17 @@ const Profile = (props: Props) => {
             <Button onClick={showDrawer} className='mx-2 '>
               <NotificationOutlined />
             </Button>
-            <Badge count={1}>
-              {profile.avatar ? (
-                <img src={profile?.user?.avatar} alt='Image' />
-              ) : (
-                <Avatar
-                  src={
-                    <Image
-                      src='https://joeschmoe.io/api/v1/random'
-                      style={{ width: 50 }}
-                    />
-                  }
+            <Badge className='cursor-pointer'>
+              {profile?.user?.avatar ? (
+                <img
+                  src={profile?.user?.avatar}
+                  className='w-10 h-10 rounded'
+                  alt='Image logo'
                 />
+              ) : (
+                <Badge count={"!"}>
+                  <img src='' className='w-10 h-10 rounded' alt='Image User' />
+                </Badge>
               )}
             </Badge>
             <span className='px-3 text-lg'>{profile?.user?.name}</span>
@@ -91,23 +102,21 @@ const Profile = (props: Props) => {
             <NavLink
               to='/admin/loginAD'
               className={({ isActive }) => {
-                if (isActive) return "text-red-500 text-lg";
-                return "text-white text-xl   ";
+                if (isActive) {
+                  return "text-red-500 text-xl no-underline";
+                }
+                return "text-black text-xl no-underline";
               }}>
-              <Button className='text-base' type='text'>
-                Đăng nhập
-              </Button>
+              Đăng nhập <LoginOutlined className='text-2xl' />
             </NavLink>
-            <span className='text-black text-lg'>|</span>
+            <span className='text-black text-lg mx-2'>|</span>
             <NavLink
               to='/admin/registerAD'
               className={({ isActive }) => {
-                if (isActive) return "text-red-500 text-lg";
-                return "text-white text-xl   ";
+                if (isActive) return "text-red-500 text-xl no-underline";
+                return "text-black text-xl no-underline";
               }}>
-              <Button className='text-base' type='text'>
-                Đăng ký <UsergroupAddOutlined className='text-2xl' />
-              </Button>
+              Đăng ký <UsergroupAddOutlined className='text-2xl' />
             </NavLink>
           </nav>
         )}

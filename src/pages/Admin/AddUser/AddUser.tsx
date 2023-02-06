@@ -3,7 +3,7 @@ import { Formik, useFormik, FormikProps } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { DispatchType } from "src/redux/configStore";
-import { postUserApi } from "src/redux/UserReducer/UserReducer";
+import { getUserApi, postUserApi } from "src/redux/UserReducer/UserReducer";
 import { openNotificationWithIcon } from "src/utils/notification";
 import { clearStatusAction } from "src/redux/LocationReducer/LocationReducer";
 
@@ -21,6 +21,7 @@ export default function AddUser({}: Props) {
     password: string;
     phone: string;
     birthday: string;
+    avatar: string;
     gender: boolean;
     role: string;
   }>({
@@ -31,6 +32,7 @@ export default function AddUser({}: Props) {
       password: "",
       phone: "",
       birthday: "",
+      avatar: "",
       gender: true,
       role: "",
     },
@@ -52,14 +54,12 @@ export default function AddUser({}: Props) {
     onSubmit: async (values) => {
       console.log("User: ", values);
       try {
-        setSubmit(1);
         const addUserAction = postUserApi(values);
         dispatch(addUserAction);
-        openNotificationWithIcon(
-          "success",
-          "Add user successfully !!",
-          <p>Return user table to review information !</p>
-        );
+        dispatch(getUserApi());
+        setSubmit(1);
+        // const clearStatus = clearStatusAction();
+        // dispatch(clearStatus);
         resetFieldValue();
       } catch (err) {
         console.log(err);

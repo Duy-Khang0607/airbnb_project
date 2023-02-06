@@ -50,7 +50,7 @@ export default function EditLocation({}: Props) {
       // hinhAnh: Yup.string().required("Please enter website"),
     }),
     onSubmit: async (values) => {
-      const locationEdit: LocationUpdate = {
+      const locationEdit: LocationModel = {
         id: values?.id,
         tenViTri: values?.tenViTri,
         tinhThanh: values?.tinhThanh,
@@ -84,11 +84,12 @@ export default function EditLocation({}: Props) {
           <div className='row'>
             <div className='col-sm-12'>
               <div className='form-group my-1'>
-                <label className='form-label'>Place</label>
+                <label className='form-label'>Vị trí</label>
                 <input
                   type='text'
                   className='form-control'
                   id='tenViTri'
+                  name='viTri'
                   placeholder='Place adrress'
                   value={formik.values?.tenViTri}
                   onChange={formik.handleChange}
@@ -98,11 +99,12 @@ export default function EditLocation({}: Props) {
                 )}
               </div>
               <div className='form-group my-1'>
-                <label className='form-label'>City</label>
+                <label className='form-label'>Tỉnh Thành</label>
                 <input
                   type='text'
                   className='form-control'
                   id='tinhThanh'
+                  name='tinhThanh'
                   placeholder='Your city'
                   value={formik.values?.tinhThanh}
                   onChange={formik.handleChange}
@@ -114,11 +116,12 @@ export default function EditLocation({}: Props) {
             </div>
             <div className='col-sm-12'>
               <div className='form-group my-1'>
-                <label className='form-label'>Country</label>
+                <label className='form-label'>Quốc gia</label>
                 <input
                   type='text'
                   className='form-control'
                   id='quocGia'
+                  name='quocGia'
                   aria-describedby='emailHelp'
                   placeholder='Your nation'
                   value={formik.values?.quocGia}

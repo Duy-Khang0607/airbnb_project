@@ -3,6 +3,7 @@ import { DispatchType } from "../configStore";
 import requester from "../../api/api";
 import { openNotificationWithIcon } from "src/utils/notification";
 import { Tag } from "antd";
+import { setStatusAction } from "../UserReducer/UserReducer";
 
 export interface UserSignUp {
   id: number;
@@ -51,6 +52,7 @@ export const signUpApi = (userRegister: UserSignUp) => {
       });
       console.log(res.data.content);
       dispatch(res.data.content);
+      dispatch(setStatusAction(res.status));
       openNotificationWithIcon(
         "success",
         " ",

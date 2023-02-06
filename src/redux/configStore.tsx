@@ -6,18 +6,29 @@ import UserReducer from "./UserReducer/UserReducer";
 import loginSlice from "./Login/loginSlice";
 import LocationSlice from "./Home/LocationSlice";
 import LocationReducer from "./LocationReducer/LocationReducer";
+<<<<<<< HEAD
 
 import RoomReducer from "./RoomReducer/RoomReducer";
 import SignUpReducer from "./SignUpReducer/SignUpReducer";
 
 import ProfileSlice from "./Profile/ProfileSlice";
 import DetailRoomSlice from "./DetailRoomSlice/DetailRoomSlice";
+=======
+import RoomReducer from "./RoomReducer/RoomReducer";
+import SignUpReducer from "./SignUpReducer/SignUpReducer";
+import ProfileSlice from "./Profile/ProfileSlice";
+>>>>>>> master
 
 export const store = configureStore({
   reducer: {
+    SignInReducer,
+    SignUpReducer,
+
     UserReducer,
+    RoomReducer,
     LocationReducer,
     ModalReducer,
+<<<<<<< HEAD
     SignInReducer,
     SignUpReducer,
     RoomReducer,
@@ -26,6 +37,12 @@ export const store = configureStore({
     ProfileSlice,
     DetailRoomSlice,
 
+=======
+
+    loginSlice,
+    LocationSlice,
+    ProfileSlice,
+>>>>>>> master
   },
 });
 
