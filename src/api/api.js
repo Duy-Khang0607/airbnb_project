@@ -7,6 +7,7 @@ const requester = axios.create({
   timeout: 6000,
   headers: {
     tokenCybersoft: process.env.REACT_APP_CYBERSOFT_TOKEN,
+    // token: process.env.REACT_APP_CYBERSOFT_TOKEN_ADMIN,
     token: getStore(ACCESS_TOKEN),
     // token: process.env.REACT_APP_CYBERSOFT_TOKEN_ADMIN,
 

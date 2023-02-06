@@ -6,6 +6,7 @@ import UserReducer from "./UserReducer/UserReducer";
 import loginSlice from "./Login/loginSlice";
 import LocationSlice from "./Home/LocationSlice";
 import LocationReducer from "./LocationReducer/LocationReducer";
+
 import DetailRoomSlice from "./DetailRoomSlice/DetailRoomSlice";
 import RoomReducer from "./RoomReducer/RoomReducer";
 import SignUpReducer from "./SignUpReducer/SignUpReducer";
