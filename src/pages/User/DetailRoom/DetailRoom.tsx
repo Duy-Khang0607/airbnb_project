@@ -1,5 +1,5 @@
 import { StarOutlined, TranslationOutlined } from "@ant-design/icons";
-import { Col, Rate, Row } from "antd";
+import { Alert, Col, DatePicker, Rate, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,6 +7,10 @@ import { getLocationByIdApi } from "src/redux/Home/LocationSlice";
 import { DispatchType, RootState } from "src/redux/configStore";
 import { Divider, List, Typography } from "antd";
 import Avatar from "src/assets/imgs/avatarwhite.jpg";
+import { fetchCommentOfRoomApi } from "src/redux/DetailRoomSlice/DetailRoomSlice";
+import Comment from "./Comment";
+import dayjs from 'dayjs';
+import Notification from "src/components/Notification/Notification";
 
 const data = [
   {
@@ -37,23 +41,33 @@ const dataItem = [
 type Props = {};
 
 const DetailRoom = (props: Props) => {
-  let [guest, setGuest] = useState();
+
+  
+const dateFormat = 'YYYY/MM/DD';
+  const [rate, setRate] = useState(3);
+  let [guest, setGuest] = useState(0);
   const dispatch: DispatchType = useDispatch();
 
   const { detailLocation } = useSelector(
     (state: RootState) => state.LocationSlice
   );
 
-  console.log(detailLocation);
+  const { allComment, comment } = useSelector(
+    (state: RootState) => state.DetailRoomSlice
+  );
+
   const navigate = useNavigate();
 
   const { id } = useParams<string>();
 
   useEffect(() => {
     dispatch(getLocationByIdApi(Number(id)));
+
+    dispatch(fetchCommentOfRoomApi(Number(id)));
   }, [id]);
+
   return (
-    <div className="container px-20 my-5 mx-auto">
+    <div className="container px-20 my-5 mx-auto mt-32">
       <Row className="">
         <h4 className="align-center">
           {" "}
@@ -219,40 +233,49 @@ const DetailRoom = (props: Props) => {
           </div>
         </Col>
         <Col span={9}>
-          <div className="bg-white shadow-xl m-5 sticky top-28">
-            <div className="border-2 border-solid border-gray-300 p-3 rounded-md ">
+          <div className="bg-white shadow-2xl m-5 sticky top-28 rounded-lg">
+            <div className="border-2 border-solid border-white p-3 rounded-lg ">
               <div className="flex justify-between">
                 <span>$ 690000 đêm </span>
                 <span>4 . 81 đánh giá</span>
               </div>
 
-              <div>
-                <div className="flex justify-between border-2 border-solid border-gray-300 rounded-t-lg">
+              <div className="my-3">
+                <div className="flex justify-between border-2 border-solid border-gray-300 rounded-t-lg ">
                   <div className="text-start w-1/2">
-                    <h6>NHẬN PHÒNG</h6>
-                    <p>04-02-2023</p>
+                    <h6 className="text-center text-sm">NHẬN PHÒNG</h6>
+                    <DatePicker className="mx-3 border-none" defaultValue={dayjs('2015/01/01', dateFormat)} format={dateFormat} />
                   </div>
-                  <div className=" w-1/2 border-l-2 border-solid border-gray-300 border-y-0 border-r-0">
-                    <h6>NHẬN PHÒNG</h6>
-                    <p>04-02-2023</p>
+                  <div className=" w-1/2 border-l-2 border-solid border-gray-300 border-y-0 border-r-0 ">
+                    <h6 className="text-center text-sm">NHẬN PHÒNG</h6>
+                    <DatePicker className="mx-3 border-none" defaultValue={dayjs('2015/01/01', dateFormat)} format={dateFormat} />
                   </div>
                 </div>
-                <div className="flex justify-between border-2 border-solid border-gray-300 rounded-b-lg border-t-0">
-                  <button className="border-none bg-gray-400 rounded-md px-2  m-2 text-white">
+                <div className="flex justify-between items-center border-2 border-solid border-gray-300 rounded-b-lg border-t-0">
+                  <button className="border-none bg-gray-400 rounded-md px-2  m-2 text-white"
+                  onClick={() => {
+                    setGuest(guest -1 )
+                  }}>
                     -
                   </button>
-                  <p> {guest}guest </p>
-                  <button className="border-none bg-gray-400 rounded-md px-2  m-2 text-white">
+                  <p className="align-center mt-2 "> {guest} {" "}Guest </p>
+                  <button className="border-none bg-gray-400 rounded-md px-2  m-2 text-white" 
+                   onClick={() => {
+                    setGuest(guest + 1 )
+                  }}>
                     +
                   </button>
                 </div>
               </div>
 
               <div className="my-2">
-                <button className="w-full h-10 border-none rounded-lg text-white bg-pink">
+                <button className="w-full h-10 border-none rounded-lg text-white bg-pink my-2">
                   Đặt phòng
                 </button>
+
               </div>
+
+              
 
               <p className="text-center text-gray-400">
                 Bạn vẫn chưa bị trừ tiền
@@ -275,63 +298,80 @@ const DetailRoom = (props: Props) => {
           </div>
         </Col>
         <Divider orientation="left"></Divider>
+        <Notification/>
       </Row>
-      
-      <Row> <h6>Đánh giá</h6></Row>
+
+      <Row>
+        {" "}
+        <h6>Đánh giá</h6>
+      </Row>
       <Row className="rate">
-      <Col span={12} className="">
-         <div className="m-2"> <div className="flex justify-between items-center">
-            <div className="text-base"> Degree of cleanliness</div>
-            <div>
-              {" "}
-              <Rate />
+        <Col span={12} className="">
+          <div className="m-2">
+            {" "}
+            <div className="flex justify-between items-center">
+              <div className="text-base"> Degree of cleanliness</div>
+              <div>
+                {" "}
+                <Rate value={rate} />
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <div className="text-base"> Communicate</div>
+              <div>
+                {" "}
+                <Rate value={rate} />
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <div className="text-base">Check in</div>
+              <div>
+                {" "}
+                <Rate />
+              </div>
             </div>
           </div>
-          <div className="flex justify-between items-center">
-            <div className="text-base"> Communicate</div>
-            <div>
-              {" "}
-              <Rate />
-            </div>
-          </div>
-          <div className="flex justify-between items-center">
-            <div className="text-base">Check in</div>
-            <div>
-              {" "}
-              <Rate />
-            </div>
-          </div></div>
         </Col>
         <Col span={12}>
-       <div className="m-2">
-       <div className="flex justify-between items-center">
-            <div className="text-base">Accuracy</div>
-            <div>
-              {" "}
-              <Rate />
+          <div className="m-2">
+            <div className="flex justify-between items-center">
+              <div className="text-base">Accuracy</div>
+              <div>
+                {" "}
+                <Rate value={rate} />
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <div className="text-base"> Location</div>
+              <div>
+                {" "}
+                <Rate value={rate} />
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <div className="text-base">Value</div>
+              <div>
+                {" "}
+                <Rate value={rate} />
+              </div>
             </div>
           </div>
-          <div className="flex justify-between items-center">
-            <div className="text-base"> Location</div>
-            <div>
-              {" "}
-              <Rate />
-            </div>
-          </div>
-          <div className="flex justify-between items-center">
-            <div className="text-base">Value</div>
-            <div>
-              {" "}
-              <Rate />
-            </div>
-          </div>
-       </div>
         </Col>
       </Row>
-      <Row className="comment">
-        <Col span={12}></Col>
-        <Col span={12}></Col>
-      </Row>
+      <div className="comment mt-3">
+        <div className="flex flex-wrap">
+          {comment &&
+            comment.map((item: Comment, index: number) => {
+              return <Comment key={index} comment={item} />;
+            })}
+        </div>
+
+        <div className="flex justify-center  items-center">
+          <button className="rounded-lg px-5 py-2 border-2 border-solid border-black font-bold bg-white">
+            All Comment
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

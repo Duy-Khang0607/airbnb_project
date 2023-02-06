@@ -9,27 +9,34 @@ interface Comment {
     ngayBinhLuan: string,
     noiDung: string,
     saoBinhLuan: number,
+    tenNguoiBinhLuan: string;
+    avatar: any;
 }
 
 interface CommentState {
+    allComment: Comment[],
     comment: Comment[]
 }
 
 const initialState: CommentState = {
-    comment: []
+    allComment: [],
+    comment: [],
 }
 
 const DetailRoomSlice = createSlice({
   name: "DetailRoomSlice",
   initialState,
   reducers: {
-    setComment : (state: CommentState,action: PayloadAction<Comment[]> ) => {
+    setAllComment : (state: CommentState,action: PayloadAction<Comment[]> ) => {
+        state.allComment = action.payload
+    },
+    setCommentByRoom : (state: CommentState,action: PayloadAction<Comment[]> ) => {
         state.comment = action.payload
     }
   }
 });
 
-export const {} = DetailRoomSlice.actions
+export const {setAllComment, setCommentByRoom} = DetailRoomSlice.actions
 
 export default DetailRoomSlice.reducer
 
@@ -37,15 +44,36 @@ export default DetailRoomSlice.reducer
 // api
 
 
-export const fectchCommentApi = () => {
+export const fetchAllCommentApi = () => {
     return async (dispatch: DispatchType) => {
             try {
                 const res = await requester({
                     method: "GET",
-                    url: apiPath.COMMENT
+                    url: apiPath.ALLCOMMENT
                 })
 
-                console.log(res.data.content)
+                dispatch(setAllComment(res.data.content) )
+
+
+
+
+            } catch (error) {
+                console.log(error)
+            }
+
+
+    }
+}
+
+export const fetchCommentOfRoomApi = (id: string | number) => {
+    return async (dispatch: DispatchType) => {
+            try {
+                const res = await requester({
+                    method: "GET",
+                    url: apiPath.COMMENTBYROOM + id
+                })
+
+                dispatch(setCommentByRoom(res.data.content) )
 
 
 
