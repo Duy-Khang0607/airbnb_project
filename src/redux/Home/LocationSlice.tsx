@@ -65,16 +65,15 @@ export const getAllLocationApi = () => {
         try {
             const res = await requester({
                 method: "GET",
-                url: apiPath.LOCATION,
-               
+                url: apiPath.LOCATION,              
             })
 
            
             let locationList: Location[] = res.data.content
-
+console.log(locationList)
             // write action , type, payload dispatched reducer
-            const action = getAllLocation(locationList)
-            dispatch(action)
+            // const action = getAllLocation(locationList)
+            // dispatch(action)
             
         } catch (error) {
             console.log(error)

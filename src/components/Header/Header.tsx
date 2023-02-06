@@ -32,7 +32,7 @@ const items: TabsProps["items"] = [
               <h4>Who</h4>
               <p>Add guests</p>
             </span>
-            <span className='bg-pink p-2 rounded-full w-6 h-6 items-center'>
+            <span className='bg-pink p-5 rounded-full w-12 h-12 items-center'>
               <SearchOutlined className='text-white' />
               Search
             </span>
@@ -61,7 +61,7 @@ const Header = (props: Props) => {
     setIsClicked(!isClicked);
   };
   return (
-    <>
+    <div className="fixed w-full bg-white z-30" >
       <Row
         className='bg-white py-3 mx-16 border-b-2 border-gray-400  '
         style={{ border: "20px", borderColor: "red" }}>
@@ -73,7 +73,7 @@ const Header = (props: Props) => {
         {true && (
           <Col span={8}>
             <div
-              className='  flex justify-between items-center rounded-full border-2 border-solid border-gray-300 p-2 shadow-lg   '
+              className='  flex justify-between items-center rounded-full border-2 border-solid border-gray-300 p-2 shadow-sm   '
               onClick={showDropdown}>
               <button className='border-none bg-inherit  w-1/4 text-sm'>
                 AnyWhere
@@ -87,7 +87,7 @@ const Header = (props: Props) => {
               <button className=' flex justify-between border-none bg-inherit  w-2/4 items-center text-sm text-gray-400'>
                 <span className='text-center m-auto'>Add guests </span>
 
-                <span className='bg-pink p-2 rounded-full w-6 h-6 items-center'>
+                <span className='bg-pink p-2 rounded-full w-10 h-10 items-center'>
                   <SearchOutlined className='text-white' />
                 </span>
               </button>
@@ -110,7 +110,7 @@ const Header = (props: Props) => {
       </Row>
 
       <HeaderSearch />
-    </>
+    </div>
   );
 };
 

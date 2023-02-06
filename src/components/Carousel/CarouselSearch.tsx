@@ -117,7 +117,7 @@ const CarouselSearch = ({} : Props) => {
       };
   return (
     <div>
-        <div className="container flex">
+        <div className="container flex mt-36">
             <div className=" relative w-11/12 inline-block mr-7">
                 <button className="absolute left-0 font-medium  text-sm rounded-full bg-white w-9 h-9 shadow-light border-gray-300"
                 style={{top: "50% ", transform: "translateY(-50%)", zIndex: "2"}}

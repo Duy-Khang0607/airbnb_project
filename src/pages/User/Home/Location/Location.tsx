@@ -4,6 +4,7 @@ import {useEffect} from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import LocationItem from 'src/components/LocationItem/LocationItem'
 import { getAllLocationApi } from 'src/redux/Home/LocationSlice'
+import { getAllRoomsApi } from 'src/redux/RoomReducer/RoomReducer'
 import { DispatchType, RootState } from 'src/redux/configStore'
 
 type Props = {}
@@ -12,18 +13,18 @@ const Location = ( {} : Props) => {
     // const dispatch = useDispatch<DispatchType>();
     const dispatch: DispatchType = useDispatch();
 
-    const {locationList} = useSelector(
-      (state: RootState) =>  state.LocationSlice
+    const {arrRooms, statusAction} = useSelector(
+      (state: RootState) =>  state.RoomReducer
     )
     useEffect(()=> {
-            dispatch(getAllLocationApi());
-    }, [])
+            dispatch(getAllRoomsApi());
+    }, [statusAction])
   return (
     <>
         <div className='flex justify-between flex-wrap m-5'>
 
 {
-  locationList.slice(30, 50).map((item: any, index: number ) => {
+  arrRooms.slice(30, 50).map((item: any, index: number ) => {
     return (
         <LocationItem key={index} location={item}/>
     )
