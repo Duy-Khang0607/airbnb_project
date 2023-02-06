@@ -31,27 +31,6 @@ requester.interceptors.request.use(
   (err) => {
     return Promise.reject(err);
   }
-); // block request
-
-requester.interceptors.response.use();
-requester.interceptors.response.use(
-  (response) => {
-    // console.log(response?.data.content);
-    return response;
-  },
-  (err) => {
-    // const originalRequest = error.config;
-    console.log(err.response);
-    if (err.response?.status === 400 || err.response?.status === 404) {
-      // history.push("/");
-      return Promise.reject(err);
-    }
-    if (err.response.status === 401 || err.response.status === 403) {
-      alert("Token không hợp lệ ! Vui lòng đăng nhập lại !");
-      // history.push("/login");
-      return Promise.reject(err);
-    }
-  }
 );
 export default requester;
 
