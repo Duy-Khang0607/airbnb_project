@@ -11,7 +11,7 @@ import Home from "./pages/User/Home/Home";
 import Login from "./pages/User/Login/Login";
 // import Profile from "./pages/User/Profile/Profile";
 import Register from "./pages/User/Register/Register";
-import Roombycity from "./pages/User/RoomList/Roombycity";
+import Roombycity from "./pages/User/RoomByCity/Roombycity";
 import AdminTemplate from "./templates/AdminTemplate";
 import HomeTemplate from "./templates/HomeTemplate";
 import Loading from "./components/Loading/Loading";

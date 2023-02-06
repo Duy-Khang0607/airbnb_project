@@ -30,9 +30,9 @@ const HeaderSearch = () => {
     setValue(newValue);
   };
 
-  let [idLocation, setId] = useState<string>();
+  let [idLocation, setId] = useState<number>();
 
-  const onChange = (value: string) => {
+  const onChange = (value: number) => {
     setId(value);
   };
 
@@ -64,7 +64,7 @@ const HeaderSearch = () => {
 
   return (
     <div className="" onScroll={() => {}}>
-      <div className="w-1/2 mx-auto bg-gray-200 border-2 border-solid border-gray-300 px-3 py-2  rounded-3xl flex flex-nowrap justify-between items-center">
+      <div className="w-1/2 mx-auto bg-gray-100 border-2 border-solid border-gray-100 px-3 py-2  rounded-3xl flex flex-nowrap justify-between items-center">
         <div className="w-1/5">
           <Select
             className="w-full"
@@ -96,7 +96,7 @@ const HeaderSearch = () => {
           <TreeSelect
             showSearch
             style={{ width: "100%" }}
-            value={value}
+          
             dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
             placeholder="Who guests"
             allowClear
