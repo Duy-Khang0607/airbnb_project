@@ -10,6 +10,7 @@ import Avatar from "src/assets/imgs/avatarwhite.jpg";
 import { fetchCommentOfRoomApi } from "src/redux/DetailRoomSlice/DetailRoomSlice";
 import Comment from "./Comment";
 import dayjs from 'dayjs';
+import Notification from "src/components/Notification/Notification";
 
 const data = [
   {
@@ -297,6 +298,7 @@ const dateFormat = 'YYYY/MM/DD';
           </div>
         </Col>
         <Divider orientation="left"></Divider>
+        <Notification/>
       </Row>
 
       <Row>
