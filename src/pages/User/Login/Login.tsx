@@ -41,11 +41,11 @@ const Login = (props: Props) => {
   useEffect(()=> {
 
   }, [])
-  return <div>
+  return <div className="">
     
      
-  <Row>
-    <Col span={8} className="container mx-auto border-2 border-gray-300 border-solid  px-5 rounded-lg">
+  <Row className="">
+    <Col span={8} className=" mt-36 container mx-auto border-2 border-gray-300 border-solid  px-5 rounded-lg">
     <Form onSubmitCapture={formik.handleSubmit}>
         <h5 className="text-center text-xl">Log In</h5>
         <p className="text-center">Welcom to Airbnb !</p>
