@@ -73,8 +73,8 @@ export const getAllRoomsApi = () => {
       const result = await requester.get("/api/phong-thue");
 
 
-      // dispatch(setArrRooms(result.data.content));
-      // console.log(result.data.content);
+      dispatch(setArrRooms(result.data.content));
+      console.log(result.data.content);
     } catch (err) {
       console.log(err);
     }

@@ -16,18 +16,18 @@ const AppRoute = (props: Props) => {
 
   if (props.isPrivate) {
     if (token) return <Component />; // or check profile
-    return <Navigate to='/login' replace />;
+    return <Navigate to="/login" replace />;
   }
 
   if (props.isAuth) {
     if (!profile) return <Component />;
-    return <Navigate to='/' replace />;
+    return <Navigate to="/" replace />;
   }
 
   if (props.isAdmin) {
     console.log(maLoaiNguoiDung);
     if (maLoaiNguoiDung === "ADMIN") return <Component />;
-    return <Navigate to='/login' replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return <Component />;

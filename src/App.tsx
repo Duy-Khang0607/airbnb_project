@@ -44,7 +44,10 @@ const App = (props: Props) => {
         {/* Home Template */}
         <Route path='' element={<HomeTemplate />}>
           <Route index element={<Home />}></Route>
-          <Route path='roombycity' element={<Roombycity />}></Route>
+          <Route path='roombycity' element={<Roombycity />}>
+
+          <Route path=':id' element={<Roombycity />}></Route>
+          </Route>
           <Route path='detail'>
             <Route path=':id' element={<DetailRoom />}></Route>
           </Route>

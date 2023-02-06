@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row } from "antd";
 import { NavLink } from "react-router-dom";
 import { Input, Space } from "antd";
@@ -6,6 +6,7 @@ import logo from "src/assets/svg/logo.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import MenuProfile from "./MenuProfile";
 import HeaderSearch from "../HeaderSearch/HeaderSearch";
+import useScroll from "src/HOOK/UseScroll";
 
 
 
@@ -22,6 +23,13 @@ const Header = (props: Props) => {
   const showDropdown = () => {
     setIsClicked(!isClicked);
   };
+  const scroll = useScroll();
+  useEffect(() => {
+    if (scroll > 100) {
+      setIsClicked(false)
+      
+    }
+  }, [scroll]);
   return (
     <div className="fixed w-full bg-white z-30" >
       <Row
@@ -32,7 +40,7 @@ const Header = (props: Props) => {
             <img src={logo} className='' alt='airbnb-logo' />
           </NavLink>
         </Col>
-        {false && (
+         
           <Col span={8}>
             <div
               className='  flex justify-between items-center rounded-full border-2 border-solid border-gray-300 p-2 shadow-sm   '
@@ -55,20 +63,18 @@ const Header = (props: Props) => {
               </button>
             </div>
           </Col>
-        )}
+        
 
-{true && (
-          <Col span={8}>
-           <HeaderSearch />
-          </Col>
-        )}
+
 
 
         <Col span={8} className='flex justify-end'>
           <MenuProfile />
         </Col>
       </Row>
-
+    
+      {isClicked && <HeaderSearch />}
+       
       
     </div>
   );
