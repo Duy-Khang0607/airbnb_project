@@ -6,12 +6,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import DetailRoom from "./pages/User/DetailRoom/DetailRoom";
-import Home from "./pages/User/Home/Home";
-import Login from "./pages/User/Login/Login";
 // import Profile from "./pages/User/Profile/Profile";
-import Register from "./pages/User/Register/Register";
-import Roombycity from "./pages/User/RoomByCity/Roombycity";
 import AdminTemplate from "./templates/AdminTemplate";
 import HomeTemplate from "./templates/HomeTemplate";
 import Loading from "./components/Loading/Loading";
@@ -19,7 +14,7 @@ import { createBrowserHistory } from "history";
 import AppRoute from "./api/AppRoute";
 export const history = createBrowserHistory({ window });
 type Props = {};
-
+// Admin Template
 const Dashboard = React.lazy(
   () => import("src/pages/Admin/Dashboard/Dashboard")
 );
@@ -36,40 +31,83 @@ const LoginAdmin = React.lazy(() => import("src/pages/Admin/Login/LoginAdmin"));
 const RegisterAdmin = React.lazy(
   () => import("src/pages/Admin/Register/RegisterAdmin")
 );
-const Profile = React.lazy(() => import("src/pages/User/Profile/Profile"));
+// User Template
 
+const Home = React.lazy(() => import("src/pages/User/Home/Home"));
+const Roombycity = React.lazy(
+  () => import("src/pages/User/RoomByCity/Roombycity")
+);
+const DetailRoom = React.lazy(
+  () => import("src/pages/User/DetailRoom/DetailRoom")
+);
+const Register = React.lazy(() => import("src/pages/User/Register/Register"));
+const Login = React.lazy(() => import("src/pages/User/Login/Login"));
+const Profile = React.lazy(() => import("src/pages/User/Profile/Profile"));
+//-----------------------------
 const App = (props: Props) => {
   return (
     <HistoryRouter history={history as any}>
       <Routes>
         {/* Home Template */}
         <Route path='' element={<HomeTemplate />}>
-          <Route index element={<Home />}></Route>
-          <Route path='roombycity' element={<Roombycity />}>
-
-          <Route path=':id' element={<Roombycity />}></Route>
-          </Route>
-          <Route path='detail'>
-            <Route path=':id' element={<DetailRoom />}></Route>
-          </Route>
-          <Route path='register' element={<Register />}></Route>
-          <Route path='login' element={<Login />}></Route>
-          <Route path='profile' element={<Profile />}></Route>
-        </Route>
-
-        {/* Admin Template */}
-        <Route path='admin' element={<AdminTemplate />}>
           <Route
             index
             element={
-              <AppRoute
-                component={
-                  <React.Suspense fallback={<Loading />}>
-                    <Dashboard />
-                  </React.Suspense>
-                }
-                isAdmin
-              />
+              <React.Suspense fallback={<Loading />}>
+                <Home />
+              </React.Suspense>
+            }></Route>
+          <Route path='roombycity'>
+            <Route
+              path=':id'
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <Roombycity />
+                </React.Suspense>
+              }></Route>
+          </Route>
+          <Route path='detail'>
+            <Route
+              path=':id'
+              element={
+                <React.Suspense fallback={<Loading />}>
+                  <AppRoute component={DetailRoom} isPrivate />
+                </React.Suspense>
+              }></Route>
+          </Route>
+          <Route
+            path='register'
+            element={
+              <React.Suspense fallback={<Loading />}>
+                <Register />
+              </React.Suspense>
+            }></Route>
+          <Route
+            path='login'
+            element={
+              <React.Suspense fallback={<Loading />}>
+                <AppRoute component={Login} isAuth />
+              </React.Suspense>
+            }></Route>
+          <Route
+            path='profile'
+            element={
+              <React.Suspense fallback={<Loading />}>
+                <Profile />
+              </React.Suspense>
+            }></Route>
+        </Route>
+
+        {/* Admin Template */}
+        <Route
+          path='admin'
+          element={<AppRoute component={AdminTemplate} isAdmin />}>
+          <Route
+            index
+            element={
+              <React.Suspense fallback={<Loading />}>
+                <Dashboard />
+              </React.Suspense>
             }></Route>
           <Route
             path='user'

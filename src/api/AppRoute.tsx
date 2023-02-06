@@ -11,15 +11,15 @@ import {
 } from "src/utils/setting";
 type Props = {
   component: any;
-  isPrivate?: any;
-  isAuth?: any;
-  isAdmin: any;
+  isAdmin?: boolean;
+  isPrivate?: boolean;
+  isAuth?: boolean;
 };
 
 const AppRoute = ({
   component: Component,
-  // isPrivate,
-  // isAuth,
+  isPrivate,
+  isAuth,
   isAdmin,
   ...routeProps
 }: Props) => {
@@ -28,18 +28,16 @@ const AppRoute = ({
     (state: RootState) => state.SignInReducer.userLogin
   );
   const maLoaiNguoiDung = localStorage.getItem("isAdmin");
-  // const role = getStoreJSON(USER_LOGIN);
-  // const maLoaiNguoiDung = role?.user.role;
 
-  // if (props.isPrivate) {
-  //   if (token) return <Component />; // or check profile
-  //   return <Navigate to="/login" replace />;
-  // }
+  if (isPrivate) {
+    if (token) return <Component />; // or check profile
+    return <Navigate to='/login' replace />;
+  }
 
-  // if (props.isAuth) {
-  //   if (!profile) return <Component />;
-  //   return <Navigate to="/" replace />;
-  // }
+  if (isAuth) {
+    if (!profile) return <Component />;
+    return <Navigate to='/' replace />;
+  }
 
   if (isAdmin) {
     console.log(maLoaiNguoiDung);

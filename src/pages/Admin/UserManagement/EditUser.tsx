@@ -2,24 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-// import {
-//   updateUserApi,
-//   User,
-// } from "../../../redux/reducers/userReducer";
-// import { openNotificationWithIcon } from "../../../util/notification";
-// import { clearStatusAction } from "../../../redux/reducers/orderRoomReducer";
 import moment from "moment/moment.js";
 import { DispatchType, RootState } from "../../../redux/configStore";
 import {
   clearStatusAction,
-  getUserApi,
   updateUserApi,
   UserModel,
 } from "../../../redux/UserReducer/UserReducer";
-import { openNotificationWithIcon } from "../../../utils/notification";
 import { getStoreJSON, setStoreJSON, USER_LOGIN } from "src/utils/setting";
-import { Tag } from "antd";
-import { signInApi } from "src/redux/SignInReducer/SignInReducer";
 
 type Props = {};
 let timeout: ReturnType<typeof setTimeout>;
@@ -29,6 +19,7 @@ const EditUser = (props: Props) => {
   const profile = useSelector(
     (state: RootState) => state.SignInReducer.userLogin
   );
+  const { statusAction } = useSelector((state: RootState) => state.UserReducer);
 
   const [submit, setSubmit] = useState(0);
   console.log("User Edit: ", editUser);
@@ -67,6 +58,7 @@ const EditUser = (props: Props) => {
         .required("Phone is required!")
         .min(10, "Phone must have at least 10 number"),
       birthday: Yup.string().required("birthday is required!"),
+      // avatar: Yup.string().required("Avatar is required!"),
       role: Yup.string().required("role is required!"),
     }),
     onSubmit: async (values) => {
@@ -76,16 +68,18 @@ const EditUser = (props: Props) => {
         name: values?.name,
         email: values?.email,
         password: values?.password,
-        avatar: values?.avatar,
         phone: values?.phone,
         birthday: moment(values?.birthday).format("MM/DD/YYYY").toString(),
+        avatar: values?.avatar,
         gender: values?.gender,
         role: values?.role,
       };
-      setStoreJSON(USER_LOGIN, updateUser);
+      // setStoreJSON(USER_LOGIN, updateUser);
       const updateAction = updateUserApi(editUser?.id, updateUser);
       dispatch(updateAction);
-      dispatch(getUserApi());
+      const clearAction = clearStatusAction();
+      dispatch(clearAction);
+      // dispatch(getUserApi());
       setSubmit(1);
       resetFieldValue();
     },
@@ -101,6 +95,7 @@ const EditUser = (props: Props) => {
       "birthday",
       moment(editUser.birthday).format("MM/DD/YYYY")
     );
+    // formik.setFieldValue("avatar", editUser.avatar);
     formik.setFieldValue("role", editUser.role);
   };
 
@@ -111,30 +106,14 @@ const EditUser = (props: Props) => {
     formik.setFieldValue("password", "");
     formik.setFieldValue("phone", "");
     formik.setFieldValue("birthday", "");
+    // formik.setFieldValue("avatar", "");
     formik.setFieldValue("role", "");
-  };
-
-  const clearStatus = () => {
-    const clearAction = clearStatusAction();
-    dispatch(clearAction);
   };
 
   useEffect(() => {
     setFieldValue();
     renderEditUser();
-  }, [editUser]);
-
-  useEffect(() => {
-    timeout = setTimeout(() => {
-      clearStatus();
-    }, 200);
-    return () => {
-      if (timeout !== null) {
-        clearTimeout(timeout);
-        setSubmit(0);
-      }
-    };
-  }, [submit]);
+  }, [editUser, submit, statusAction]);
 
   const renderEditUser = () => {
     return (
