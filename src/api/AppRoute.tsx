@@ -4,8 +4,8 @@ import { Navigate, Route } from "react-router-dom";
 import { RootState } from "../redux/configStore";
 type Props = {
   component: any;
-  isPrivate: any;
-  isAuth: any;
+  isPrivate?: any;
+  isAuth?: any;
   isAdmin: any;
 };
 
