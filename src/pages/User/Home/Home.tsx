@@ -6,7 +6,7 @@ import Location from "./Location/Location";
 type Props = {};
 
 const Home = (props: Props) => {
-  return <div>
+  return <div >
     <Row>
       <CarouselSearch/>
     </Row>

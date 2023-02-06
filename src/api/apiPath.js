@@ -5,6 +5,8 @@ export const apiPath = {
   LOCATION: "/api/phong-thue",
   LOCATIONBYID: "/api/phong-thue/",
   GETUSERBYID: "/api/users/",
+  UPLOADIMGAGE: "/api/users/upload-avatar",
+  COMMENT: "/api/binh-luan", 
   
   // 1) Quản lý vé
   DANH_SACH_VE: "/api/tickets",

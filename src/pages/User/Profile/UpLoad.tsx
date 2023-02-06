@@ -3,6 +3,9 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Modal, Upload } from 'antd';
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
+import { DispatchType } from 'src/redux/configStore';
+import { useDispatch } from 'react-redux';
+import { UploadImgage } from 'src/redux/Profile/ProfileSlice';
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -13,6 +16,7 @@ const getBase64 = (file: RcFile): Promise<string> =>
   });
 
 const App: React.FC = () => {
+    const dispatch: DispatchType = useDispatch();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
@@ -38,8 +42,12 @@ const App: React.FC = () => {
     setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
   };
 
-  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) =>
+  const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
+    console.log(fileList)
+    dispatch(UploadImgage(fileList))
+
+   }
 
   const uploadButton = (
     <div>
@@ -50,7 +58,7 @@ const App: React.FC = () => {
   return (
     <>
       <Upload
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        action=""
         listType="picture-card"
         fileList={fileList}
         onPreview={handlePreview}

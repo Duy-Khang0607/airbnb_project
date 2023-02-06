@@ -85,6 +85,7 @@ export const getUserApi = () => {
         method: "GET",
       });
       const content: UserModel[] = res.data.content;
+      console.log(content);
       //  Sau khi lấy dữ liệu từ API về => Bắt đầu dispatch lên store
       const action: PayloadAction<UserModel[]> = setArrUserAction(content);
       dispatch(action);

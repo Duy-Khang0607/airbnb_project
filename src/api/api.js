@@ -8,6 +8,7 @@ const requester = axios.create({
   headers: {
     tokenCybersoft: process.env.REACT_APP_CYBERSOFT_TOKEN,
     token: getStore(ACCESS_TOKEN),
+    // token: process.env.REACT_APP_CYBERSOFT_TOKEN_ADMIN,
 
     // => Để Authorization ở đây, thì khi user chưa đăng nhập thì các resquest Authorization  không có
 
@@ -33,6 +34,7 @@ requester.interceptors.request.use(
 ); // block request
 
 // requester.interceptors.response.use();
+<<<<<<< HEAD
 requester.interceptors.response.use(
   (response) => {
     // console.log(response?.data.content);
@@ -52,6 +54,27 @@ requester.interceptors.response.use(
     }
   }
 );
+=======
+// requester.interceptors.response.use(
+//   (response) => {
+//     // console.log(response?.data.content);
+//     return response;
+//   },
+//   (err) => {
+//     // const originalRequest = error.config;
+//     console.log(err.response);
+//     if (err.response?.status === 400 || err.response?.status === 404) {
+//       // history.push("/");
+//       return Promise.reject(err);
+//     }
+//     if (err.response.status === 401 || err.response.status === 403) {
+//       alert("Token không hợp lệ ! Vui lòng đăng nhập lại !");
+//       // history.push("/login");
+//       return Promise.reject(err);
+//     }
+//   }
+// );
+>>>>>>> 91ee69a9c776ec5b7d6d03c56ea2e1d8bc823a74
 export default requester;
 
 // routing protection
