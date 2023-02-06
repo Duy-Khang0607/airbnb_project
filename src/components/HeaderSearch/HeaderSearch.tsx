@@ -1,60 +1,120 @@
-import { SearchOutlined } from '@ant-design/icons';
-import { Col, Tabs } from 'antd'
-import React from 'react'
+import { SearchOutlined } from "@ant-design/icons";
+import { Col, Select, Tabs, Form } from "antd";
+import React, { useEffect, useState } from "react";
 import type { TabsProps } from "antd";
+import type { SelectProps } from "antd";
+import type { DatePickerProps } from "antd";
+import { DatePicker, Space } from "antd";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import { TreeSelect } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { getLocationApi } from "src/redux/LocationReducer/LocationReducer";
+import { DispatchType, RootState } from "src/redux/configStore";
+import { NavLink } from "react-router-dom";
+import useScroll from "src/HOOK/UseScroll";
 
 const HeaderSearch = () => {
-  const onChange = (key: string) => {
-    console.log(key);
-  };
-  
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: `Stays`,
-      children: (
-        <>
-          <div className='rounded flex justify-center '>
-            <div>Where </div>
-            <div>Check in</div>
-            <div>Check out </div>
-            <div>
-              <span>
-                <h4>Who</h4>
-                <p>Add guests</p>
-              </span>
-              <span className='bg-pink p-5 rounded-full w-6 h-6 items-center'>
-                <SearchOutlined className='text-white' />
-                Search
-              </span>
-            </div>
-          </div>
-        </>
-      ),
-    },
-    {
-      key: "2",
-      label: `Experiences`,
-      children: `Content of Tab Pane 2`,
-    },
-    {
-      key: "3",
-      label: `Online Experience`,
-      children: `Content of Tab Pane 3`,
-    },
-  ];
-  return (
-    <div>
-       
-            <Tabs
-              defaultActiveKey='1'
-              items={items}
-              onChange={onChange}
-              className='absolute top-0   '></Tabs>
-     
-        
-    </div>
-  )
-}
+  const dispatch: DispatchType = useDispatch();
 
-export default HeaderSearch
+  const { arrLocation } = useSelector(
+    (state: RootState) => state.LocationReducer
+  );
+
+  const treeData = [{}];
+
+  const [value, setValue] = useState<string>();
+
+  const onChangeTreeSlect = (newValue: string) => {
+    console.log(newValue);
+    setValue(newValue);
+  };
+
+  let [idLocation, setId] = useState<number>();
+
+  const onChange = (value: number) => {
+    setId(value);
+  };
+
+  console.log(idLocation);
+  const onSearch = (value: string) => {
+    // console.log("search:", value);
+  };
+
+  const { RangePicker } = DatePicker;
+
+  const dateFormat = "YYYY/MM/DD";
+  const weekFormat = "MM/DD";
+  const monthFormat = "YYYY/MM";
+
+  const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
+
+  const customFormat: DatePickerProps["format"] = (value) =>
+    `custom format: ${value.format(dateFormat)}`;
+
+  const customWeekStartEndFormat: DatePickerProps["format"] = (value) =>
+    `${dayjs(value).startOf("week").format(weekFormat)} ~ ${dayjs(value)
+      .endOf("week")
+      .format(weekFormat)}`;
+
+
+  useEffect(() => {
+    dispatch(getLocationApi());
+  }, []);
+
+  return (
+    <div className="" onScroll={() => {}}>
+      <div className="w-1/2 mx-auto bg-gray-200 border-2 border-solid border-gray-200 px-3 py-2  rounded-3xl flex flex-nowrap justify-between items-center shadow-lg">
+        <div className="w-1/5">
+          <Select
+            className="w-full"
+            showSearch
+            placeholder="Where"
+            optionFilterProp="children"
+            onChange={onChange}
+            onSearch={onSearch}
+            filterOption={(input, option) =>
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            options={arrLocation.map((item, index) => ({
+              label: item.tenViTri,
+              value: item.id,
+            }))}
+          />
+        </div>
+
+        <div className="w-2/5">
+          <RangePicker
+            defaultValue={[
+              dayjs("2015/01/01", dateFormat),
+              dayjs("2015/01/01", dateFormat),
+            ]}
+            format={dateFormat}
+          />
+        </div>
+        <div className="w-1/5">
+          <TreeSelect
+            showSearch
+            style={{ width: "100%" }}
+          
+            dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+            placeholder="Who guests"
+            allowClear
+            multiple
+            treeDefaultExpandAll
+            onChange={onChange}
+            treeData={treeData}
+          />
+        </div>
+        <NavLink
+          className="border-none bg-pink  rounded-full py-2 px-4 text-white  w-1/5 ml-2 no-underline "
+          to={`/roombycity/${idLocation}`}
+        >
+          Search
+        </NavLink>
+      </div>
+    </div>
+  );
+};
+
+export default HeaderSearch;

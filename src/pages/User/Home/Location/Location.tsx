@@ -16,6 +16,8 @@ const Location = ( {} : Props) => {
     const {arrRooms, statusAction} = useSelector(
       (state: RootState) =>  state.RoomReducer
     )
+
+    console.log(arrRooms)
     useEffect(()=> {
             dispatch(getAllRoomsApi());
     }, [statusAction])

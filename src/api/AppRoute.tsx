@@ -31,14 +31,14 @@ const AppRoute = ({
   // const role = getStoreJSON(USER_LOGIN);
   // const maLoaiNguoiDung = role?.user.role;
 
-  // if (isAuth) {
-  //   if (!profile) return <Component />;
-  //   return <Navigate to='' replace />;
+  // if (props.isPrivate) {
+  //   if (token) return <Component />; // or check profile
+  //   return <Navigate to="/login" replace />;
   // }
 
-  // if (isPrivate) {
-  //   if (token) return <Component />; // or check profile
-  //   return <Navigate to='/login' replace />;
+  // if (props.isAuth) {
+  //   if (!profile) return <Component />;
+  //   return <Navigate to="/" replace />;
   // }
 
   if (isAdmin) {

@@ -73,8 +73,8 @@ export const getAllRoomsApi = () => {
       const result = await requester.get("/api/phong-thue");
 
 
-      // dispatch(setArrRooms(result.data.content));
-      // console.log(result.data.content);
+      dispatch(setArrRooms(result.data.content));
+      console.log(result.data.content);
     } catch (err) {
       console.log(err);
     }
@@ -82,7 +82,7 @@ export const getAllRoomsApi = () => {
 };
 
 // Lấy danh sách phòng vị trí theo id
-export const getRoomsByLocationId = (locationId: undefined | string) => {
+export const getRoomsByLocationId = (locationId: undefined | string | number) => {
   return async (dispatch: DispatchType) => {
     try {
       const result = await requester.get(
@@ -90,6 +90,7 @@ export const getRoomsByLocationId = (locationId: undefined | string) => {
       );
 
       dispatch(setArrRooms(result.data.content));
+      console.log(result.data.content);
     } catch (err) {
       console.log(err);
     }
