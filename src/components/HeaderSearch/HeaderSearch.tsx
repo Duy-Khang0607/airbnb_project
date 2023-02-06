@@ -64,7 +64,7 @@ const HeaderSearch = () => {
 
   return (
     <div className="" onScroll={() => {}}>
-      <div className="w-1/2 mx-auto bg-gray-100 border-2 border-solid border-gray-100 px-3 py-2  rounded-3xl flex flex-nowrap justify-between items-center">
+      <div className="w-1/2 mx-auto bg-gray-200 border-2 border-solid border-gray-200 px-3 py-2  rounded-3xl flex flex-nowrap justify-between items-center shadow-lg">
         <div className="w-1/5">
           <Select
             className="w-full"
