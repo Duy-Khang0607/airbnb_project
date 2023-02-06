@@ -16,6 +16,7 @@ import AdminTemplate from "./templates/AdminTemplate";
 import HomeTemplate from "./templates/HomeTemplate";
 import Loading from "./components/Loading/Loading";
 import { createBrowserHistory } from "history";
+import AppRoute from "./api/AppRoute";
 export const history = createBrowserHistory({ window });
 type Props = {};
 
@@ -58,9 +59,14 @@ const App = (props: Props) => {
           <Route
             index
             element={
-              <React.Suspense fallback={<Loading />}>
-                <Dashboard />
-              </React.Suspense>
+              <AppRoute
+                component={
+                  <React.Suspense fallback={<Loading />}>
+                    <Dashboard />
+                  </React.Suspense>
+                }
+                isAdmin
+              />
             }></Route>
           <Route
             path='user'
@@ -97,14 +103,15 @@ const App = (props: Props) => {
                 <RegisterAdmin />
               </React.Suspense>
             }></Route>
+          <Route
+            path='profile'
+            element={
+              <React.Suspense fallback={<Loading />}>
+                <Profile />
+              </React.Suspense>
+            }></Route>
         </Route>
-        <Route
-          path='profile'
-          element={
-            <React.Suspense fallback={<Loading />}>
-              <Profile />
-            </React.Suspense>
-          }></Route>
+
         <Route path='*' element={<Navigate to='' />}></Route>
       </Routes>
     </HistoryRouter>
