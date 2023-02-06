@@ -49,89 +49,81 @@ const AdminTemplate = () => {
       <Layout
         style={{
           minHeight: "100vh",
-        }}
-      >
+        }}>
         <Sider
-          className="sideBar"
-          breakpoint="lg"
-          collapsedWidth="0"
+          className='sideBar'
+          breakpoint='lg'
+          collapsedWidth='0'
           onBreakpoint={(broken) => {
             console.log(broken);
           }}
           onClick={(value) => console.log(value)}
           collapsible
           collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
-        >
+          onCollapse={(value) => setCollapsed(value)}>
           <div
             style={{
               height: "auto",
               margin: 5,
               textAlign: "center",
-            }}
-          >
+            }}>
             <img
               src={clsx(logo)}
-              alt=""
-              className="w-24 h-24 object-cover rounded-2xl"
+              alt=''
+              className='w-24 h-24 object-cover rounded-2xl'
             />
           </div>
           <Menu
-            theme="dark"
+            theme='dark'
             defaultSelectedKeys={[`dashboard`]}
-            mode="inline"
-            className="bg-black text-lg leading-10"
-          >
-            <Menu.Item key="dashboard" icon={<DashboardOutlined />}>
-              <NavLink to="/admin">Dashboard</NavLink>
+            mode='inline'
+            className='bg-black text-lg leading-10'>
+            <Menu.Item key='dashboard' icon={<DashboardOutlined />}>
+              <NavLink to='/admin'>Dashboard</NavLink>
             </Menu.Item>
-            <Menu.Item key="user" icon={<UserOutlined />}>
-              <NavLink to="/admin/user">User</NavLink>
+            <Menu.Item key='user' icon={<UserOutlined />}>
+              <NavLink to='/admin/user'>User</NavLink>
             </Menu.Item>
-            <Menu.Item key="location" icon={<CompassOutlined />}>
-              <NavLink to="/admin/location">Location</NavLink>
+            <Menu.Item key='location' icon={<CompassOutlined />}>
+              <NavLink to='/admin/location'>Location</NavLink>
             </Menu.Item>
-            <Menu.Item key="room" icon={<HomeOutlined />}>
-              <NavLink to="/admin/room">Room</NavLink>
+            <Menu.Item key='room' icon={<HomeOutlined />}>
+              <NavLink to='/admin/room'>Room</NavLink>
             </Menu.Item>
-            <Menu.Item key="loginAD" icon={<UserOutlined />}>
-              <NavLink to="/admin/loginAD">Login</NavLink>
+            <Menu.Item key='loginAD' icon={<UserOutlined />}>
+              <NavLink to='/admin/loginAD'>Login</NavLink>
             </Menu.Item>
-            <Menu.Item key="registerAD" icon={<EditOutlined />}>
-              <NavLink to="/admin/registerAD">Register</NavLink>
+            <Menu.Item key='registerAD' icon={<EditOutlined />}>
+              <NavLink to='/admin/registerAD'>Register</NavLink>
             </Menu.Item>
           </Menu>
         </Sider>
 
-        <Layout className="site-layout">
+        <Layout className='site-layout'>
           <Header
             style={{
               padding: 0,
               background: colorBgContainer,
-            }}
-          >
+            }}>
             <Profile />
           </Header>
           <Content
             style={{
               margin: "16px",
-            }}
-          >
+            }}>
             <div
               style={{
                 padding: 24,
                 minHeight: 360,
                 background: colorBgContainer,
-              }}
-            >
+              }}>
               <Outlet />
             </div>
           </Content>
           <Footer
             style={{
               textAlign: "center",
-            }}
-          >
+            }}>
             Ant Design ©2018 Created by Ant UED
           </Footer>
         </Layout>
