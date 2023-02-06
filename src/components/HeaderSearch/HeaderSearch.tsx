@@ -45,13 +45,13 @@ const HeaderSearch = () => {
   ];
   return (
     <div>
-        <Col span={8} className='relative flex justify-center items-center '>
+       
             <Tabs
               defaultActiveKey='1'
               items={items}
               onChange={onChange}
               className='absolute top-0   '></Tabs>
-          </Col>
+     
         
     </div>
   )
