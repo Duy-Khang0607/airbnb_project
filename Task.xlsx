@@ -1,0 +1,19 @@
+---------------- Phân chia công việc --------------
+Project Air Bnb : Nhóm 11 
++ Trần Thế Sinh 
++ Nguyễn Hoàng Duy Khang 
+
+
+* USER: --> Sinh
+- Trang chủ 
+- Trang danh sách các phòng
+- Trang chi tiết phòng
+- Trang thông tin các nhân
+- Trang đăng nhập
+- Trang đăng ký
+
+
+* ADMIN: --> Khang
+- Trang quản lý người dùng
+- Trang quản lý vị trí
+- Trang quản lý phòng

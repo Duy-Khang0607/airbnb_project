@@ -89,7 +89,7 @@ const Register = (props: Props) => {
       <Row>
         <Col
           span={8}
-          className="container mx-auto border-2 border-gray-300 border-solid  px-5 rounded-lg   "
+          className="mt-32 container mx-auto border-2 border-gray-300 border-solid  px-5 rounded-lg   "
         >
           <h5 className="text-center text-xl   ">Sign Up</h5>
           <p className="text-center  text-lg font-normal">

@@ -52,7 +52,6 @@ export default function RegisterAdmin({}: Props) {
       // }
       const action = signUpApi(values);
       console.log(action);
-      alert("Đăng ký thành công !");
       navigate("/admin/loginAD");
       dispatch(action);
     },

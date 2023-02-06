@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getStoreJSON } from "../../../utils/setting";
-import { DispatchType } from "../../../redux/configStore";
+import { DispatchType, RootState } from "../../../redux/configStore";
 import { signInApi } from "../../../redux/SignInReducer/SignInReducer";
 import { Input, Tag } from "antd";
 import { openNotificationWithIcon } from "src/utils/notification";
+import { clearStatusAction } from "src/redux/UserReducer/UserReducer";
 
 type Props = {};
 
 export default function LoginAdmin({}: Props) {
   const userLogin = getStoreJSON("userLogin");
+  const { statusAction } = useSelector((state: RootState) => state.UserReducer);
+
   const navigate = useNavigate();
   const dispatch: DispatchType = useDispatch();
   const formik = useFormik<{
@@ -24,14 +27,11 @@ export default function LoginAdmin({}: Props) {
       password: "",
     },
     onSubmit: async (values: any) => {
-      try {
-        const action = signInApi(values);
-        await dispatch(action);
-        navigate("/admin");
-        console.log(values.data.content);
-      } catch (error: any) {
-        console.log(error.response.data.content);
-      }
+      const action = signInApi(values);
+      dispatch(action);
+      const clearStatus = clearStatusAction();
+      dispatch(clearStatus);
+      navigate("/admin");
     },
     validationSchema: Yup.object().shape({
       email: Yup.string()
@@ -42,15 +42,14 @@ export default function LoginAdmin({}: Props) {
         .min(8, "Password must have at least 8 characters"),
     }),
   });
-
   useEffect(() => {
-    // !userLogin && navigate("/admin/loginAD");
-    // if (userLogin) {
-    //   navigate("/");
-    // } else {
-    //   navigate("/admin/loginAD");
-    // }
-  }, []);
+    !userLogin && navigate("/admin/loginAD");
+    if (userLogin) {
+      navigate("/");
+    } else {
+      navigate("/admin/loginAD");
+    }
+  }, [statusAction, userLogin]);
 
   return (
     <div className='container'>
@@ -78,11 +77,11 @@ export default function LoginAdmin({}: Props) {
                     ""
                   )}
                 </div>
-                <div className='form-group mb-3'>
+                <div className='form-group mb-3 '>
                   <label className='my-1'>Password</label>
                   <Input.Password
                     type='password'
-                    className='form-control'
+                    className='form-control flex'
                     id='password'
                     placeholder='Password'
                     onChange={formik.handleChange}
@@ -104,6 +103,7 @@ export default function LoginAdmin({}: Props) {
                       outline: "rgb(22 119 255)",
                       padding: "4px 15px",
                       color: "#fff",
+                      marginTop: "20px",
                     }}
                     type='submit'>
                     Sign In

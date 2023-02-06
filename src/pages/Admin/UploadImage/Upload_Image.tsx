@@ -1,52 +1,66 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/configStore";
+import { useDispatch, useSelector } from "react-redux";
+import { DispatchType, RootState } from "../../../redux/configStore";
 import requester from "src/api/api";
 import { Tag } from "antd";
 import { openNotificationWithIcon } from "src/utils/notification";
+import {
+  clearStatusAction,
+  setStatusAction,
+  updateAvatar,
+} from "src/redux/UserReducer/UserReducer";
+import {
+  LocationModel,
+  UploadImgLocationApi,
+} from "src/redux/LocationReducer/LocationReducer";
+import { useParams } from "react-router-dom";
 type Props = {};
 
 export default function Upload_Image({}: Props) {
   const [active, setActive] = useState<number>(0);
   const [submit, setSubmit] = useState(0);
   const [image, setImage] = useState<any>("");
+  const Params = useParams();
+  const maViTri = Params.maViTri;
+  const { statusAction } = useSelector((state: RootState) => state.UserReducer);
   const { idOrderRoom } = useSelector((state: RootState) => state.ModalReducer);
+  const location: LocationModel[] = useSelector(
+    (state: RootState) => state.LocationReducer.arrLocation
+  );
+  const dispatch: DispatchType = useDispatch();
   console.log("ID: ", idOrderRoom);
+
   const formik = useFormik<{
+    maViTri: number;
     hinhAnh: string | any;
   }>({
     initialValues: {
+      maViTri: idOrderRoom,
       hinhAnh: "",
     },
     // validationSchema: Yup.object({
     //   avatar: Yup.mixed().required("Required !"),
     // }),
     onSubmit: async (values) => {
-      //   setImage(values.hinhAnh);
-      try {
-        let result = await requester.post(
-          `/api/users/upload-avatar`,
-          values?.hinhAnh
-        );
-        openNotificationWithIcon(
-          "success",
-          " ",
-          <Tag color='success' className='text-xl'>
-            Thêm ảnh thành công
-          </Tag>
-        );
-        console.log(result.data.content);
-      } catch (err: any) {
-        console.log(err);
-        openNotificationWithIcon(
-          "error",
-          " ",
-          <Tag color='error' className='text-xl'>
-            Thêm ảnh thất bại
-          </Tag>
-        );
-      }
+      setImage(values.hinhAnh);
+
+      const update = UploadImgLocationApi(idOrderRoom, values?.hinhAnh);
+      dispatch(update);
+      // const clearStatus = clearStatusAction();
+      // dispatch(clearStatus);
+      console.log(values?.hinhAnh);
+      // try {
+      //   let result = await requester.post(
+      //     `/vi-tri/upload-hinh-vitri?maViTri=${idOrderRoom}`,
+      //     values?.hinhAnh
+      //   );
+
+      //   console.log(result.config);
+      //   // alert("Update Location Successfully !");
+      // } catch (err) {
+      //   console.log(err);
+      // }
     },
   });
 
@@ -114,7 +128,7 @@ export default function Upload_Image({}: Props) {
 
   useEffect(() => {
     setImage("");
-  }, [active]);
+  }, [active, statusAction, maViTri]);
   //   console.log("Image: ", image);
 
   return (

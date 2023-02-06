@@ -10,6 +10,7 @@ import {
   postLocationApi,
 } from "src/redux/LocationReducer/LocationReducer";
 import { useParams } from "react-router-dom";
+import { getStore, getStoreJSON } from "src/utils/setting";
 
 type Props = {};
 
@@ -20,6 +21,7 @@ export default function AddLocation({}: Props) {
   const profile = useSelector(
     (state: RootState) => state.SignInReducer.userLogin
   );
+  const { statusAction } = useSelector((state: RootState) => state.UserReducer);
   const dispatch: DispatchType = useDispatch();
   const formik = useFormik<{
     id: number;
@@ -53,11 +55,11 @@ export default function AddLocation({}: Props) {
 
       const addLocationAction = postLocationApi(location);
       dispatch(addLocationAction);
-      handleResetValues();
       const clearStatus = clearStatusAction();
       dispatch(clearStatus);
       dispatch(getLocationApi());
       console.log(values.hinhAnh);
+      handleResetValues();
     },
   });
 
@@ -131,7 +133,7 @@ export default function AddLocation({}: Props) {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {}, [statusAction]);
 
   return (
     <div>
@@ -142,9 +144,10 @@ export default function AddLocation({}: Props) {
               <h3 className='card-title text-center mb-5'>New Location</h3>
               <form onSubmit={formik.handleSubmit}>
                 <div className='form-group mb-3'>
-                  <label className='my-1'>Location Name</label>
+                  <label className='my-1'>Vị trí</label>
                   <input
                     type='text'
+                    name='tenViTri'
                     className='form-control'
                     id='tenViTri'
                     placeholder='Your Location'
@@ -157,11 +160,12 @@ export default function AddLocation({}: Props) {
                   )}
                 </div>
                 <div className='form-group mb-3'>
-                  <label className='my-1'>City</label>
+                  <label className='my-1'>Tỉnh thành</label>
                   <input
                     type='text'
                     className='form-control'
                     id='tinhThanh'
+                    name='tinhThanh'
                     placeholder='City'
                     onChange={formik.handleChange}
                   />
@@ -174,11 +178,12 @@ export default function AddLocation({}: Props) {
                   )}
                 </div>
                 <div className='form-group mb-3'>
-                  <label className='my-1'>Country</label>
+                  <label className='my-1'>Quốc gia</label>
                   <input
                     type='text'
                     className='form-control'
                     id='quocGia'
+                    name='quocGia'
                     placeholder='Country'
                     onChange={formik.handleChange}
                   />
@@ -189,7 +194,7 @@ export default function AddLocation({}: Props) {
                   )}
                 </div>
                 <div className='form-group mb-3'>
-                  <label className='my-1'>Picture</label>
+                  <label className='my-1'>Hình ảnh</label>
                   <select className='form-select' onChange={handleSelect}>
                     <option value={0}>Open this select upload type</option>
                     <option value={1}>Upload by URL</option>

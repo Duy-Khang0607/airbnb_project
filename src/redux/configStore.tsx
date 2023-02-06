@@ -15,17 +15,20 @@ import DetailRoomSlice from "./DetailRoomSlice/DetailRoomSlice";
 
 export const store = configureStore({
   reducer: {
-    UserReducer,
-    LocationReducer,
-    ModalReducer,
     SignInReducer,
     SignUpReducer,
+
+    UserReducer,
     RoomReducer,
+    LocationReducer,
+    ModalReducer,
     loginSlice,
     LocationSlice,
     ProfileSlice,
     DetailRoomSlice,
 
+
+    
   },
 });
 

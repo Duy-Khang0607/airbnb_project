@@ -94,7 +94,7 @@ const Header = (props: Props) => {
             </div>
           </Col>
         )}
-        {false && (
+        {true && (
           <Col span={8} className='relative flex justify-center '>
             <Tabs
               defaultActiveKey='1'
