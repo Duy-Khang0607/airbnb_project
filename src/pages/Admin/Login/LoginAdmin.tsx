@@ -45,7 +45,7 @@ export default function LoginAdmin({}: Props) {
   useEffect(() => {
     !userLogin && navigate("/admin/loginAD");
     if (userLogin) {
-      navigate("/");
+      navigate("/admin/profile");
     } else {
       navigate("/admin/loginAD");
     }

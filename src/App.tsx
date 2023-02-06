@@ -9,7 +9,7 @@ import {
 import DetailRoom from "./pages/User/DetailRoom/DetailRoom";
 import Home from "./pages/User/Home/Home";
 import Login from "./pages/User/Login/Login";
-import Profile from "./pages/User/Profile/Profile";
+// import Profile from "./pages/User/Profile/Profile";
 import Register from "./pages/User/Register/Register";
 import Roombycity from "./pages/User/RoomList/Roombycity";
 import AdminTemplate from "./templates/AdminTemplate";
@@ -35,6 +35,7 @@ const LoginAdmin = React.lazy(() => import("src/pages/Admin/Login/LoginAdmin"));
 const RegisterAdmin = React.lazy(
   () => import("src/pages/Admin/Register/RegisterAdmin")
 );
+const Profile = React.lazy(() => import("src/pages/User/Profile/Profile"));
 
 const App = (props: Props) => {
   return (
@@ -97,6 +98,13 @@ const App = (props: Props) => {
               </React.Suspense>
             }></Route>
         </Route>
+        <Route
+          path='profile'
+          element={
+            <React.Suspense fallback={<Loading />}>
+              <Profile />
+            </React.Suspense>
+          }></Route>
         <Route path='*' element={<Navigate to='' />}></Route>
       </Routes>
     </HistoryRouter>

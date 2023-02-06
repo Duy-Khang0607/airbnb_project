@@ -15,52 +15,54 @@ import {
   UploadImgLocationApi,
 } from "src/redux/LocationReducer/LocationReducer";
 import { useParams } from "react-router-dom";
+import * as Yup from "yup";
+
 type Props = {};
 
 export default function Upload_Image({}: Props) {
   const [active, setActive] = useState<number>(0);
-  const [submit, setSubmit] = useState(0);
+  // const [active, setActive] = useState<string>("0");
   const [image, setImage] = useState<any>("");
-  const Params = useParams();
-  const maViTri = Params.maViTri;
-  const { statusAction } = useSelector((state: RootState) => state.UserReducer);
+
+  // const { statusAction } = useSelector((state: RootState) => state.UserReducer);
   const { idOrderRoom } = useSelector((state: RootState) => state.ModalReducer);
-  const location: LocationModel[] = useSelector(
-    (state: RootState) => state.LocationReducer.arrLocation
-  );
+
+  const { location } = useSelector((state: RootState) => state.LocationReducer);
+
   const dispatch: DispatchType = useDispatch();
   console.log("ID: ", idOrderRoom);
-
   const formik = useFormik<{
-    maViTri: number;
-    hinhAnh: string | any;
+    id: number;
+    tenViTri: string;
+    tinhThanh: string;
+    quocGia: string;
+    hinhAnh: string;
   }>({
     initialValues: {
-      maViTri: idOrderRoom,
+      id: 0,
+      tenViTri: "",
+      tinhThanh: "",
+      quocGia: "",
       hinhAnh: "",
     },
-    // validationSchema: Yup.object({
-    //   avatar: Yup.mixed().required("Required !"),
-    // }),
+    validationSchema: Yup.object().shape({
+      tenViTri: Yup.string().required("Location is required!"),
+      tinhThanh: Yup.string().required("City is required!"),
+      quocGia: Yup.string().required("Country is required!"),
+      hinhAnh: Yup.string().required("Please enter website"),
+    }),
     onSubmit: async (values) => {
-      setImage(values.hinhAnh);
-
-      const update = UploadImgLocationApi(idOrderRoom, values?.hinhAnh);
-      dispatch(update);
-      // const clearStatus = clearStatusAction();
-      // dispatch(clearStatus);
-      console.log(values?.hinhAnh);
-      // try {
-      //   let result = await requester.post(
-      //     `/vi-tri/upload-hinh-vitri?maViTri=${idOrderRoom}`,
-      //     values?.hinhAnh
-      //   );
-
-      //   console.log(result.config);
-      //   // alert("Update Location Successfully !");
-      // } catch (err) {
-      //   console.log(err);
-      // }
+      const locationEdit: LocationModel = {
+        id: values?.id,
+        tenViTri: values?.tenViTri,
+        tinhThanh: values?.tinhThanh,
+        quocGia: values?.quocGia,
+        hinhAnh: values?.hinhAnh,
+      };
+      const updateAction = UploadImgLocationApi(idOrderRoom, locationEdit);
+      dispatch(updateAction);
+      const clearStatus = clearStatusAction();
+      dispatch(clearStatus);
     },
   });
 
@@ -79,6 +81,7 @@ export default function Upload_Image({}: Props) {
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     console.log("Value: ", event.target.value);
     setActive(Number(event.target.value));
+    // setActive(event.target.value);
   };
 
   const renderURL = () => {
@@ -128,26 +131,33 @@ export default function Upload_Image({}: Props) {
 
   useEffect(() => {
     setImage("");
-  }, [active, statusAction, maViTri]);
+  }, [active, location]);
   //   console.log("Image: ", image);
 
   return (
-    <div>
-      <div className='card my-1 border-0'>
-        <select className='form-select' onChange={handleSelect}>
-          <option value={0}>Open this select upload type</option>
-          <option value={1}>Upload by URL</option>
-          <option value={2}>Upload by File</option>
-        </select>
-        <form onSubmit={formik.handleSubmit}>
-          {handleAvatar()}
-          <div className='d-flex justify-content-end mt-2'>
-            <button className='btn btn-outline-success rounded-4' type='submit'>
-              Submit
-            </button>
+    <form onSubmit={formik.handleSubmit}>
+      <div>
+        <div className='card border-0'>
+          <div className='form-group'>
+            <select className='form-select' onChange={handleSelect}>
+              <option selected>Open this select upload type</option>
+              <option value={1}>URL</option>
+              <option value={2}>FILE</option>
+            </select>
           </div>
-        </form>
+
+          <div className='card-body'>
+            {handleAvatar()}
+            <div className='btnSubmit d-md-flex justify-content-md-end'>
+              <button
+                className='btn btn-outline-warning btn-md mt-2 rounded-pill px-4'
+                type='submit'>
+                Upload
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </form>
   );
 }

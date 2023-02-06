@@ -11,7 +11,7 @@ export interface LocationModel {
   tenViTri: string;
   tinhThanh: string;
   quocGia: string;
-  hinhAnh?: string;
+  hinhAnh: string;
 }
 export interface LocationState {
   arrLocation: LocationModel[];
@@ -178,36 +178,32 @@ export const postLocationApi = (model: LocationModel) => {
   };
 };
 
-export const UploadImgLocationApi = (maViTri: number, formFile: File) => {
+export const UploadImgLocationApi = (
+  maViTri: number,
+  formFile: LocationModel
+) => {
   return async (dispatch: DispatchType) => {
     try {
-      let result = await requester({
-        url: "/api/vi-tri/upload-hinh-vitri",
-        method: "POST",
-        data: formFile,
-        params: {
-          maViTri: maViTri,
-        },
-      });
+      let result = await requester.post(
+        `/api/vi-tri/upload-hinh-vitri?maViTri=${maViTri}`,
+        formFile
+      );
       console.log(result.status);
-      console.log(result.data.content);
       dispatch(setStatusAction(result.status));
-      dispatch(setArrLocationByPageIndex(result.data.content.data));
       openNotificationWithIcon(
         "success",
         " ",
         <Tag color='success' className='text-xl'>
-          Thêm vị trí thành công
+          Upload ảnh thành công
         </Tag>
       );
-    } catch (err) {
-      console.log(err);
-      // console.log(err?.response.data.content);
+    } catch (err: any) {
+      console.log(err?.response.data);
       openNotificationWithIcon(
         "error",
         " ",
-        <Tag color='error' className='text-lg'>
-          Thêm vị trí thất bại
+        <Tag color='error' className='text-xl'>
+          {err?.response.data.content}
         </Tag>
       );
     }

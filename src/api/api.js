@@ -1,4 +1,5 @@
 import axios from "axios";
+import { history } from "src/App";
 import { ACCESS_TOKEN, getStore } from "src/utils/setting";
 
 const requester = axios.create({
@@ -46,7 +47,7 @@ requester.interceptors.response.use(
     }
     if (err.response.status === 401 || err.response.status === 403) {
       alert("Token không hợp lệ ! Vui lòng đăng nhập lại !");
-      // history.push("/login");
+      // history.push("/login")
       return Promise.reject(err);
     }
   }
