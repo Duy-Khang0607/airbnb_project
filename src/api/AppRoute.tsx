@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Route } from "react-router-dom";
+import { RouteProps } from "react-router-dom";
 import { RootState } from "../redux/configStore";
+import {
+  ACCESS_TOKEN,
+  USER_LOGIN,
+  getStore,
+  getStoreJSON,
+} from "src/utils/setting";
 type Props = {
   component: any;
   isPrivate?: any;
@@ -9,22 +16,32 @@ type Props = {
   isAdmin: any;
 };
 
-const AppRoute = (props: Props) => {
-  const token = localStorage.getItem("token");
-  const profile = useSelector((state: RootState) => state.UserReducer);
+const AppRoute = ({
+  component: Component,
+  // isPrivate,
+  // isAuth,
+  isAdmin,
+  ...routeProps
+}: Props) => {
+  const token = getStore(ACCESS_TOKEN);
+  const profile = useSelector(
+    (state: RootState) => state.SignInReducer.userLogin
+  );
   const maLoaiNguoiDung = localStorage.getItem("isAdmin");
+  // const role = getStoreJSON(USER_LOGIN);
+  // const maLoaiNguoiDung = role?.user.role;
 
-  if (props.isPrivate) {
-    if (token) return <Component />; // or check profile
-    return <Navigate to='/login' replace />;
-  }
+  // if (isAuth) {
+  //   if (!profile) return <Component />;
+  //   return <Navigate to='' replace />;
+  // }
 
-  if (props.isAuth) {
-    if (!profile) return <Component />;
-    return <Navigate to='/' replace />;
-  }
+  // if (isPrivate) {
+  //   if (token) return <Component />; // or check profile
+  //   return <Navigate to='/login' replace />;
+  // }
 
-  if (props.isAdmin) {
+  if (isAdmin) {
     console.log(maLoaiNguoiDung);
     if (maLoaiNguoiDung === "ADMIN") return <Component />;
     return <Navigate to='/login' replace />;

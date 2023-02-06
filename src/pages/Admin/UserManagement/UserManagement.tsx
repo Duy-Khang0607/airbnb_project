@@ -21,7 +21,7 @@ import {
 } from "../../../redux/ModalReducer/ModalReducer";
 import Modaltest from "../../../HOC/Modaltest";
 import { useNavigate, useParams } from "react-router-dom";
-import { getStoreJSON } from "../../../utils/setting";
+import { USER_LOGIN, getStore, getStoreJSON } from "../../../utils/setting";
 import EditUser from "./EditUser";
 import "src/assets/css/Sidebar.css";
 import Upload_Image from "../UploadImage/Upload_Image";
@@ -33,7 +33,8 @@ const UserManagement: React.FC = () => {
   const user: UserModel[] = useSelector(
     (state: RootState) => state.UserReducer.arrUser
   );
-
+  const role = getStoreJSON(USER_LOGIN);
+  console.log(role.user.role);
   const { statusAction } = useSelector((state: RootState) => state.UserReducer);
 
   interface DataType {
