@@ -11,4 +11,7 @@
   .profileName {
     font-size: 1rem !important;
   }
+  .user {
+    overflow: hidden;
+  }
 }
