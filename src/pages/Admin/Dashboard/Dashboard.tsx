@@ -4,6 +4,7 @@ import "src/assets/css/all.min.css";
 import photo from "src/assets/imgs/undraw_posting_photo.svg";
 import { RootState } from "src/redux/configStore";
 import { useSelector } from "react-redux";
+import "src/assets/css/Dashboard.css";
 type Props = {};
 
 const Dashboard = (props: Props) => {
@@ -15,7 +16,7 @@ const Dashboard = (props: Props) => {
       <div className='container-fluid'>
         {/* <!-- Page Heading --> */}
         <div className='d-sm-flex align-items-center justify-content-between mb-4'>
-          <h1 className='h3 mb-0 text-gray-800'>Dashboard</h1>
+          <h1 className='title h3 mb-0 text-black'>Dashboard</h1>
           <a
             href='#'
             className='d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm'>
