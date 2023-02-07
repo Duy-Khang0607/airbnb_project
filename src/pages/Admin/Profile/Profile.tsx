@@ -6,7 +6,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Drawer } from "@mui/material";
-import { Avatar, Badge, Button, Image } from "antd";
+import { Avatar, Badge, Button, Col, Image, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -72,8 +72,13 @@ const Profile = (props: Props) => {
     getAllUserApi();
   }, [profile?.user, statusAction]);
   return (
-    <div>
-      <div className='flex justify-end mr-6 align-content-center'>
+    <Row>
+      <Col
+        xs={12}
+        sm={12}
+        md={12}
+        lg={12}
+        className='flex justify-end mr-6 align-content-center'>
         {profile ? (
           <div className='user '>
             <Button onClick={showDrawer} className='mx-2 '>
@@ -120,11 +125,15 @@ const Profile = (props: Props) => {
             </NavLink>
           </nav>
         )}
-      </div>
-      <Drawer anchor='right' title='Basic Drawer' onClose={onClose} open={open}>
-        <div>Thông báo</div>
-      </Drawer>
-    </div>
+        <Drawer
+          anchor='right'
+          title='Basic Drawer'
+          onClose={onClose}
+          open={open}>
+          <div>Thông báo</div>
+        </Drawer>
+      </Col>
+    </Row>
   );
 };
 
