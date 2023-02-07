@@ -23,16 +23,14 @@
   font-size: 20px;
 }
 
-:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark:not(
-    .ant-menu-horizontal
-  )
-  .ant-menu-item:not(.ant-menu-item-selected):active {
-  background-color: transparent !important;
-  position: relative;
+:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark .ant-menu-item a,
+:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark
+  .ant-menu-item
+  a:hover {
+  text-decoration: none !important;
 }
 
-:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark
-  .ant-menu-item-selected::before {
+:where(.css-1n7nwfa).ant-menu-dark .ant-menu-item-selected::before {
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
@@ -43,16 +41,10 @@
   transition: all 0.5s;
 }
 
-:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark .ant-menu-item a,
-:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark
-  .ant-menu-item
-  a:hover {
-  text-decoration: none !important;
-}
-:where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark
-  .ant-menu-item-selected {
+:where(.css-1n7nwfa).ant-menu-dark .ant-menu-item-selected {
   background-color: pink !important;
 }
+
 :where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-inline.ant-menu-root
   .ant-menu-item,
 :where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-inline.ant-menu-root
