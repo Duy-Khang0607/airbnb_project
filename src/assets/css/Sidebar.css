@@ -6,30 +6,6 @@
   background-color: pink !important;
 }
 
-/* Menu  */
-.menu {
-  margin-top: 3rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  background-color: black !important;
-}
-.menuItem {
-  display: flex;
-  justify-content: flex-start;
-  /* margin-left: 2rem; */
-  /* padding-left: 2rem; */
-  width: 100%;
-  gap: 1rem;
-  align-items: center;
-  font-size: 20px;
-  position: relative;
-  transition: all 0.5s;
-  height: 2.5rem;
-}
-.menuItem:hover {
-  cursor: pointer;
-}
 :where(.css-dev-only-do-not-override-1n7nwfa).ant-menu
   .ant-menu-item
   .ant-menu-item-icon
@@ -38,22 +14,22 @@
   .ant-menu-submenu-title
   .ant-menu-item-icon
   svg {
-  font-size: 18px;
+  font-size: 18px !important;
 }
 :where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark.ant-menu-inline
   .ant-menu-item
   .active {
-  background-color: transparent;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  margin-left: 0;
+  background-color: transparent !important;
+  border-top-right-radius: 6px !important;
+  border-bottom-right-radius: 6px !important;
+  margin-left: 0 !important;
 }
 :where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark
   .ant-menu-item-selected
   .active::before {
-  content: "";
-  width: 15px;
-  height: 100%;
+  content: "" !important;
+  width: 15px !important;
+  height: 100% !important;
   background-color: rgb(235, 105, 127) !important;
 }
 
@@ -61,7 +37,7 @@
 :where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark
   .ant-menu-item
   a:hover {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 :where(.css-dev-only-do-not-override-1n7nwfa).ant-menu-dark
   .ant-menu-item-selected {
