@@ -15,8 +15,8 @@
     margin-right: 10px;
   }
   :where(.css-1n7nwfa).ant-layout
-    .ant-layout-sider-zero-width-trigger:focus
+    .ant-layout-sider-zero-width-trigger:focus-visible
     :where(.css-1n7nwfa).ant-btn-primary.ant-btn-dangerous {
-    display: none;
+    display: none !important;
   }
 }

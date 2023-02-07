@@ -19,6 +19,8 @@ import { getUserApi, UserModel } from "src/redux/UserReducer/UserReducer";
 import { DispatchType, RootState } from "src/redux/configStore";
 import { useDispatch, useSelector } from "react-redux";
 
+import "src/assets/css/Sidebar.css";
+
 type Props = {};
 
 const AdminTemplate = () => {
