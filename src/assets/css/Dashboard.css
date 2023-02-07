@@ -14,7 +14,9 @@
   .title {
     margin-right: 10px;
   }
-  :where(.css-1n7nwfa).ant-layout .ant-layout-sider-zero-width-trigger:focus {
+  :where(.css-1n7nwfa).ant-layout
+    .ant-layout-sider-zero-width-trigger:focus
+    :where(.css-1n7nwfa).ant-btn-primary.ant-btn-dangerous {
     display: none;
   }
 }
