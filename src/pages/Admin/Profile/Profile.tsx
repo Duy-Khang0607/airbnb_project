@@ -21,6 +21,7 @@ import {
 import logoAvatar from "src/assets/imgs/profile.png";
 import UploadAvatar from "../UploadAvatar/UploadAvatar";
 import { setModalAction } from "src/redux/ModalReducer/ModalReducer";
+import "src/assets/css/Profile.css";
 type Props = {};
 
 const Profile = (props: Props) => {
@@ -97,7 +98,9 @@ const Profile = (props: Props) => {
                 </Badge>
               )}
             </Badge>
-            <span className='px-3 text-lg'>{profile?.user?.name}</span>
+            <span className='profileName px-3 text-lg'>
+              {profile?.user?.name}
+            </span>
             <Button danger type='primary' onClick={handleLogOut}>
               Log Out <i className='icomoon icon-exit'></i>
             </Button>

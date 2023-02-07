@@ -8,4 +8,7 @@
 }
 
 @media (max-width: 576px) {
+  .profileName {
+    font-size: 1rem;
+  }
 }
