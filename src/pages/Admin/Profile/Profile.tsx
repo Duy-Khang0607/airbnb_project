@@ -77,7 +77,7 @@ const Profile = (props: Props) => {
         xs={12}
         sm={12}
         md={12}
-        lg={12}
+        lg={24}
         className='flex justify-end mr-6 align-content-center'>
         {profile ? (
           <div className='user '>
