@@ -1,0 +1,14 @@
+@media screen and (max-width: 1200px) {
+}
+
+@media screen and (max-width: 992px) {
+}
+
+@media screen and (max-width: 768px) {
+}
+
+@media (max-width: 576px) {
+  :where(.css-1n7nwfa).ant-layout .ant-layout-header {
+    height: auto;
+  }
+}
