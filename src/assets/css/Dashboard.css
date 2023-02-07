@@ -11,11 +11,7 @@
   :where(.css-1n7nwfa).ant-layout .ant-layout-content {
     margin: 0 !important;
   }
-
   .title {
     margin-right: 10px;
-  }
-  #content div {
-    padding: 0 !important;
   }
 }
