@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Popconfirm, Space, Table, Tag, Form, Input } from "antd";
+import {
+  Button,
+  Popconfirm,
+  Space,
+  Table,
+  Tag,
+  Form,
+  Input,
+  Row,
+  Col,
+} from "antd";
 import type { ColumnsType } from "antd/es/table";
 import {
   SearchOutlined,
@@ -20,11 +30,11 @@ import {
   setModalAction,
 } from "../../../redux/ModalReducer/ModalReducer";
 import Modaltest from "../../../HOC/Modaltest";
-import { useNavigate, useParams } from "react-router-dom";
-import { USER_LOGIN, getStore, getStoreJSON } from "../../../utils/setting";
+import { useNavigate } from "react-router-dom";
+import { USER_LOGIN, getStoreJSON } from "../../../utils/setting";
 import EditUser from "./EditUser";
 import "src/assets/css/Sidebar.css";
-import Upload_Image from "../UploadImage/Upload_Image";
+import "src/assets/css/UserManagement.css";
 import AddUser from "../AddUser/AddUser";
 import UploadAvatar from "../UploadAvatar/UploadAvatar";
 const UserManagement: React.FC = () => {
@@ -66,7 +76,7 @@ const UserManagement: React.FC = () => {
     dispatch(actionEditComponent);
     dispatch(actionEditReduce);
   };
-
+  // -------------- Add User ---------
   const handleAdd = () => {
     const actionAddComponent = setModalAction({
       Component: AddUser,
@@ -74,7 +84,7 @@ const UserManagement: React.FC = () => {
     });
     dispatch(actionAddComponent);
   };
-
+  // -------------- Upload User ---------
   const handleUploadAvatar = (id: number) => {
     const actionUploadComponent = setModalAction({
       Component: UploadAvatar,
@@ -82,7 +92,7 @@ const UserManagement: React.FC = () => {
     });
     dispatch(actionUploadComponent);
   };
-
+  // -------------- Call api List User ---------
   const getAllUserApi = () => {
     // Goi api va dua du lieu len redux
     const actionAsync = getUserApi();
@@ -94,6 +104,7 @@ const UserManagement: React.FC = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      colSpan: 3,
       render: (text) => <a>{text}</a>,
       filterDropdown: ({
         setSelectedKeys,
@@ -265,8 +276,11 @@ const UserManagement: React.FC = () => {
   return (
     <div>
       <Modaltest />
-      <h1 className='text-4xl text-center'>Quản lý người dùng</h1>
+      <h1 className='userName text-4xl text-center text-black'>
+        Quản lý người dùng
+      </h1>
       {/* Add user */}
+
       <div className='addAdminPage mb-3' style={{ cursor: "pointer" }}>
         <Button
           className='text-xl'
@@ -278,6 +292,7 @@ const UserManagement: React.FC = () => {
           Thêm người dùng
         </Button>
       </div>
+
       <Form form={form} component={false}>
         <Table loading={loading} bordered columns={columns} dataSource={data} />
       </Form>

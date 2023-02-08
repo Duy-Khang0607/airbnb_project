@@ -1,0 +1,28 @@
+@media screen and (max-width: 1200px) {
+}
+
+@media screen and (max-width: 992px) {
+}
+
+@media screen and (max-width: 768px) {
+}
+
+@media (max-width: 576px) {
+  .locationName {
+    font-size: 20px;
+    text-align: left !important;
+  }
+  [type="button"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  button:not(:disabled) {
+    font-size: 12px;
+  }
+  .btn:not(:disabled):not(.disabled) {
+    margin: 0 !important;
+  }
+  .table-hover tbody img {
+    width: 150px !important;
+    height: 150px !important;
+  }
+}

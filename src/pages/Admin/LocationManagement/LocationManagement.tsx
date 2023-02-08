@@ -1,25 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Form,
-  Input,
-  InputNumber,
-  Popconfirm,
-  Table,
-  Tag,
-  Typography,
-} from "antd";
+import { Button, Popconfirm } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
 import {
   deleteLocationApi,
-  getLocationApi,
   getLocationByIdApi,
   getLocationPaginationApi,
   LocationModel,
 } from "src/redux/LocationReducer/LocationReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, RootState } from "src/redux/configStore";
-import type { ColumnGroupType, ColumnsType } from "antd/es/table";
 import Pagination from "src/components/Pagination/Pagination";
 import Modaltest from "src/HOC/Modaltest";
 import {
@@ -29,13 +18,8 @@ import {
 import Upload_Image from "../UploadImage/Upload_Image";
 import EditLocation from "../EditLocation/EditLocation";
 import AddLocation from "../AddLocation/AddLocation";
-import { getStore, USER_LOGIN } from "src/utils/setting";
-
-type Props = {
-  // postsPerPage: number;
-  // setCurrentPage: (value: number) => void;
-  // totalRow: number;
-};
+import "src/assets/css/LocationManagement.css";
+type Props = {};
 let timeout: ReturnType<typeof setTimeout>;
 interface Item {
   id: string;
@@ -121,7 +105,9 @@ const LocationManagement: React.FC = () => {
   return (
     <section>
       <Modaltest />
-      <h1 className='text-4xl text-center'>Quản lý vị trí</h1>
+      <h1 className='locationName text-4xl text-center text-black'>
+        Quản lý vị trí
+      </h1>
       <div className='addAdminPage mb-3' style={{ cursor: "pointer" }}>
         <Button
           type='primary'
@@ -226,28 +212,6 @@ const LocationManagement: React.FC = () => {
             totalRow={totalRow}
           />
         </div>
-        {/* <Modal show={openModal} size="lg" className="modal-dialog-scrollable">
-          <Modal.Header>
-            <Modal.Title>
-              {openPopUp ? "Upload Picture" : "Edit Location Infor"}
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {openPopUp ? (
-              <UploadPicure id={String(idLocation)} />
-            ) : (
-              <EditLocation id={idLocation} />
-            )}
-          </Modal.Body>
-          <Modal.Footer>
-            <button
-              className="btn btn-secondary"
-              onClick={() => handleCloseModal()}
-            >
-              Close
-            </button>
-          </Modal.Footer>
-        </Modal> */}
       </div>
     </section>
   );

@@ -8,4 +8,14 @@
 }
 
 @media (max-width: 576px) {
+  .userName {
+    font-size: 20px;
+    text-align: left !important;
+  }
+  [type="button"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  button:not(:disabled) {
+    font-size: 12px;
+  }
 }
