@@ -19,6 +19,9 @@ const EditUser = (props: Props) => {
   const profile = useSelector(
     (state: RootState) => state.SignInReducer.userLogin
   );
+
+  const [image, setImage] = useState<any>("");
+  const [active, setActive] = useState<number>(0);
   const { statusAction } = useSelector((state: RootState) => state.UserReducer);
 
   const [submit, setSubmit] = useState(0);

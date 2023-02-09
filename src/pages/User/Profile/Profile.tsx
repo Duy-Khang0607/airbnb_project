@@ -34,7 +34,7 @@ const Profile = (props: Props) => {
     dispatch(fetchProfileApi(getStoreJSON(USER_LOGIN).user.id));
   }, []);
   return (
-    <Row gutter={80} className='profile container mx-auto p-5 flex '>
+    <Row gutter={50} className='profile container mx-auto p-5 flex '>
       <Col
         xs={24}
         sm={24}
@@ -78,7 +78,7 @@ const Profile = (props: Props) => {
           </div>
         </div>
       </Col>
-      <Col xs={24} sm={24} md={16} lg={18} className=''>
+      <Col xs={24} sm={24} md={16} lg={16} className=''>
         {!isDisplay && (
           <div className='name'>
             <div>

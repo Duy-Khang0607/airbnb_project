@@ -104,7 +104,6 @@ const UserManagement: React.FC = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      colSpan: 3,
       render: (text) => <a>{text}</a>,
       filterDropdown: ({
         setSelectedKeys,
@@ -280,7 +279,6 @@ const UserManagement: React.FC = () => {
         Quản lý người dùng
       </h1>
       {/* Add user */}
-
       <div className='addAdminPage mb-3' style={{ cursor: "pointer" }}>
         <Button
           className='text-xl'

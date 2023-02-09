@@ -27,6 +27,9 @@
 }
 
 @media (max-width: 576px) {
+  .name {
+    padding: 0 !important;
+  }
   .profile {
     padding: 0 !important;
     margin: 0 !important;
