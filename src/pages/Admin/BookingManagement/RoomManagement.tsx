@@ -18,8 +18,7 @@ import RoomAdminForm from "./RoomAdminForm";
 import SortButton from "src/components/Admin/Room/SortButton/SortButton";
 import { Button, Popconfirm } from "antd";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { HomeOutlined } from "@ant-design/icons";
-
+import "src/assets/css/RoomManagement.css";
 let timeout: ReturnType<typeof setTimeout>;
 
 // table header
@@ -230,108 +229,122 @@ export default function RoomManagement({}: Props) {
 
   return (
     <div className='admin-room'>
-      <h1 className='text-4xl text-center'>Quản lý thông tin phòng</h1>
+      <h1 className='roomName text-4xl text-center text-black'>
+        Quản lý thông tin phòng
+      </h1>
       <Button className='text-xl ' type='primary' onClick={handleClickAdd}>
         <i className='fa fa-home mr-2'></i>
         Thêm phòng
       </Button>
-      {/* Thanh Search */}
-      <form>
-        <div className='admin__searchBar input-group mt-2'>
-          <input
-            type='text'
-            value={searchTerm}
-            onChange={handleSearchTermChange}
-            className='form-control'
-            placeholder='Start your search'
-            aria-label='Start your search'
-            aria-describedby='basic-addon2'
-          />
-          <div className='input-group-append'>
-            <button className='btn btn-outline-secondary' type='button'>
-              <i className='fa fa-search'></i>
-            </button>
+      <div className='row'>
+        {/* Thanh Search */}
+        <form className='search col-lg-4'>
+          <div className='admin__searchBar input-group mt-2'>
+            <input
+              type='text'
+              value={searchTerm}
+              onChange={handleSearchTermChange}
+              className='form-control'
+              placeholder='Start your search'
+              aria-label='Start your search'
+              aria-describedby='basic-addon2'
+            />
+            <div className='input-group-append'>
+              <button className='btn btn-outline-secondary' type='button'>
+                <i className='fa fa-search'></i>
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
 
-      <table className='table table-striped'>
-        <thead>
-          <tr>
-            {tableHeaders.map((header) => (
-              <th onClick={() => changeSort(header.key)}>
-                <div className='d-flex align-items-center justify-content-between'>
-                  <span>{header.label}</span>
-                  <SortButton
-                    colKey={header.key}
-                    {...{
-                      sortKey,
-                      sortOrder,
-                    }}
-                  />
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {arrRooms.length > 0 &&
-            sortedData()?.map((room) => (
-              <tr key={room.id}>
-                <td>{room.id}</td>
-                <td>{room.tenPhong}</td>
-                <td>
-                  <LazyLoadImage
-                    src={room.hinhAnh}
-                    alt={room.tenPhong}
-                    effect='black-and-white'
-                    style={{ width: "200px", borderRadius: "10px" }}
-                  />
-                </td>
-                <td>
-                  {arrLocation.length > 0 && renderRoomLocation(room.maViTri)}
-                </td>
-                <td>
-                  {room.moTa.length > 200
-                    ? room.moTa.slice(0, 200) + "..."
-                    : room.moTa}
-                </td>
-                <td>${room.giaTien}</td>
-                <td>
-                  <div className='d-flex'>
-                    <div className='btnEdit me-2'>
-                      <button
-                        className='btn btn-outline-warning'
-                        onClick={() => {
-                          handleClickEdit(room);
-                        }}>
-                        <i className='fa fa-edit'></i>
-                      </button>
+        <div className='table-responsive'>
+          <table className='table cursor-pointer'>
+            <thead>
+              <tr>
+                {tableHeaders.map((header) => (
+                  <th onClick={() => changeSort(header.key)}>
+                    <div className='d-flex align-items-center justify-content-between'>
+                      <span>{header.label}</span>
+                      <SortButton
+                        colKey={header.key}
+                        {...{
+                          sortKey,
+                          sortOrder,
+                        }}
+                      />
                     </div>
-                    <Popconfirm
-                      title='Bạn có muốn xóa ? '
-                      onConfirm={() => {
-                        handleDeleteRoom(room.id);
-                      }}>
-                      <div className='btnDelete'>
-                        <button className='btn btn-outline-danger'>
-                          <DeleteForeverIcon />
-                        </button>
-                      </div>
-                    </Popconfirm>
-                  </div>
-                </td>
+                  </th>
+                ))}
               </tr>
-            ))}
-        </tbody>
-      </table>
-      {/* table pagination */}
-      <TablePagination
-        totalRow={totalRow}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        handlePagination={handlePagination}
-      />
+            </thead>
+            <tbody>
+              {arrRooms.length > 0 &&
+                sortedData()?.map((room) => (
+                  <tr key={room.id}>
+                    <td>{room.id}</td>
+                    <td>
+                      {room.tenPhong.length > 10
+                        ? room.tenPhong.slice(0, 10) + "..."
+                        : room.tenPhong}
+                    </td>
+                    <td className='img'>
+                      <LazyLoadImage
+                        src={room.hinhAnh}
+                        alt={room.tenPhong}
+                        effect='black-and-white'
+                        style={{ width: "200px", borderRadius: "10px" }}
+                      />
+                    </td>
+                    <td>
+                      {arrLocation.length > 0 &&
+                        renderRoomLocation(room.maViTri)}
+                    </td>
+                    <td>
+                      {room.moTa.length > 50
+                        ? room.moTa.slice(0, 50) + "..."
+                        : room.moTa}
+                    </td>
+                    <td>${room.giaTien}</td>
+                    <td>
+                      <div className='d-flex'>
+                        <div className='btnEdit me-2'>
+                          <button
+                            className='btn btn-outline-warning'
+                            onClick={() => {
+                              handleClickEdit(room);
+                            }}>
+                            <i className='fa fa-edit'></i>
+                          </button>
+                        </div>
+                        <Popconfirm
+                          title='Bạn có muốn xóa ? '
+                          onConfirm={() => {
+                            handleDeleteRoom(room.id);
+                          }}>
+                          <div className='btnDelete'>
+                            <button className='btn btn-outline-danger'>
+                              <i className='fa fa-trash'></i>
+                            </button>
+                          </div>
+                        </Popconfirm>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className='pagination d-flex justify-content-center'>
+          {/* table pagination */}
+          <TablePagination
+            totalRow={totalRow}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            handlePagination={handlePagination}
+          />
+        </div>
+      </div>
 
       {/* modal */}
       <Modal show={openModal} size='xl' className='modal-dialog-scrollable'>

@@ -25,4 +25,10 @@
     width: 150px !important;
     height: 150px !important;
   }
+  table tbody tr {
+    transition: all 0.5s;
+  }
+  table tbody tr:hover {
+    background-color: rgb(209, 205, 205) !important;
+  }
 }

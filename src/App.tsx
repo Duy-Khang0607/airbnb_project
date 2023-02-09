@@ -32,7 +32,6 @@ const RegisterAdmin = React.lazy(
   () => import("src/pages/Admin/Register/RegisterAdmin")
 );
 // User Template
-
 const Home = React.lazy(() => import("src/pages/User/Home/Home"));
 const Roombycity = React.lazy(
   () => import("src/pages/User/RoomByCity/Roombycity")

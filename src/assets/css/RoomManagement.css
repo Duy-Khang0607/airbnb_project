@@ -1,0 +1,52 @@
+@media screen and (max-width: 1200px) {
+}
+
+@media screen and (max-width: 992px) {
+}
+
+@media screen and (max-width: 768px) {
+}
+
+@media (max-width: 576px) {
+  .roomName {
+    font-size: 20px;
+    text-align: left !important;
+  }
+  [type="button"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  button:not(:disabled) {
+    font-size: 12px;
+  }
+  .btn:not(:disabled):not(.disabled) {
+    margin: 0 !important;
+  }
+  .table-hover tbody tr td .img {
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .btnEdit,
+  .btnDelete {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  table tbody tr {
+    transition: all 0.5s;
+  }
+  table tbody tr:hover {
+    background-color: rgb(209, 205, 205) !important;
+  }
+  table tbody tr td {
+    width: 200px !important;
+  }
+  .table-striped > tbody > tr:nth-of-type(odd) > *:hover {
+    background-color: gray !important;
+  }
+  .arrow-right-single button,
+  .arrow-right-double button,
+  .arrow-left-single button,
+  .arrow-left-double button {
+    display: none !important;
+  }
+}
