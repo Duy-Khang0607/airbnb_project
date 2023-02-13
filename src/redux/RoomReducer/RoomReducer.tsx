@@ -32,12 +32,14 @@ export interface RoomState {
   arrRoomId: number[];
   totalRow: number;
   statusAction: number;
+  arrRoomPageIndex: RoomModel[];
 }
 
 const initialState: RoomState = {
   arrRooms: [],
   room: {} as RoomModel,
   arrRoomId: [],
+  arrRoomPageIndex: [],
   totalRow: 0,
   statusAction: 0,
 };
@@ -58,11 +60,22 @@ const RoomReducer = createSlice({
     setStatusAction: (state: RoomState, action: PayloadAction<number>) => {
       state.statusAction = action.payload;
     },
+    setArrRoomByPageIndex: (
+      state: RoomState,
+      action: PayloadAction<RoomModel[]>
+    ) => {
+      state.arrRoomPageIndex = action.payload;
+    },
   },
 });
 
-export const { setArrRooms, setRoom, setTotalRow, setStatusAction } =
-  RoomReducer.actions;
+export const {
+  setArrRooms,
+  setRoom,
+  setTotalRow,
+  setStatusAction,
+  setArrRoomByPageIndex,
+} = RoomReducer.actions;
 
 export default RoomReducer.reducer;
 
@@ -71,7 +84,6 @@ export const getAllRoomsApi = () => {
   return async (dispatch: DispatchType) => {
     try {
       const result = await requester.get("/api/phong-thue");
-
 
       dispatch(setArrRooms(result.data.content));
       console.log(result.data.content);
@@ -82,7 +94,9 @@ export const getAllRoomsApi = () => {
 };
 
 // Lấy danh sách phòng vị trí theo id
-export const getRoomsByLocationId = (locationId: undefined | string | number) => {
+export const getRoomsByLocationId = (
+  locationId: undefined | string | number
+) => {
   return async (dispatch: DispatchType) => {
     try {
       const result = await requester.get(
@@ -103,6 +117,25 @@ export const getRoomByIdApi = (roomId: undefined | number | string) => {
     try {
       const result = await requester.get(`/api/phong-thue/${roomId}`);
       dispatch(setRoom(result.data.content));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const getRoomPaginationApi = (
+  pageIndex: number,
+  pageSize: number,
+  keyword?: string
+) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const result = await requester.get(
+        `/api/phong-thue/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}`
+      );
+      console.log(result.data.content.data);
+      dispatch(setArrRoomByPageIndex(result.data.content.data));
+      dispatch(setTotalRow(result.data.content.totalRow));
     } catch (err) {
       console.log(err);
     }

@@ -1,5 +1,4 @@
 import { Button } from "antd";
-import clsx from "clsx";
 import React, { useState } from "react";
 type Props = {
   postsPerPage: number;
