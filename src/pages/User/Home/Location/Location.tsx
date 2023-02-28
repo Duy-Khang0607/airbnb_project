@@ -23,17 +23,17 @@ const Location = ({}: Props) => {
   );
 
   return (
-    <Row gutter={20}>
+    <Row gutter={50} className='conatiner mx-auto'>
       {arrRoomPageIndex?.map((item: any, index: number) => {
         return (
-          <Col lg={6} className='relative '>
+          <Col lg={6} className='relative'>
             <NavLink to={`/detail/${item.id}`} className='no-underline'>
-              <div className='w-80 h-96 mx-auto'>
-                <div>
+              <div className='w-full h-96 mx-auto'>
+                <div className='w-full'>
                   <img
                     src={item.hinhAnh}
                     alt=''
-                    className='w-72 h-60 rounded-2xl object-cover'
+                    className='w-full h-60 rounded-2xl object-cover'
                     onClick={() => {}}
                   />
                 </div>
@@ -51,7 +51,7 @@ const Location = ({}: Props) => {
                     </span>
                   </p>
                 </div>
-                <button className='absolute top-2 right-20 z-20 bg-pink shadow-2xl shadow-pink border-0 rounded-xl'>
+                <button className='absolute top-2 right-8 z-20 bg-pink shadow-2xl shadow-pink border-0 rounded-xl'>
                   <HeartOutlined className='font-bold text-xl text-white leading-0' />
                 </button>
               </div>
