@@ -6,13 +6,17 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import { NavLink, useNavigate } from "react-router-dom";
-import { USER_LOGIN } from "src/utils/setting";
+import { ACCESS_TOKEN, USER_LOGIN } from "src/utils/setting";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/configStore";
 
 const MenuProfile = () => {
   const { userLogin } = useSelector((state: RootState) => state.SignInReducer);
+  console.log(userLogin);
+
   const profile = localStorage.getItem(USER_LOGIN);
+  console.log(profile);
+
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -59,21 +63,26 @@ const MenuProfile = () => {
             <i className='fa fa-bars'></i>
             <i className='fa fa-user'></i>
           </IconButton> */}
-          <div onClick={handleClick}>
-            <button className='btn btn-light  mx-auto btnUser relative'>
-              <>
-                <i className='fa fa-bars text-xl font-semibold'></i>
-                <i className='fa fa-user w-7 h-7 rounded-full bg-gray-400  leading-7 text-xl ml-2'></i>
-                <div className='d-inline-block absolute top-0 right-0 h-4 w-4 rounded-full text-center bg-red-500 text-white text-sm'>
-                  1
-                </div>
-              </>
-            </button>
-          </div>
+          <button
+            onClick={handleClick}
+            className='btn btn-light  relative cursor-pointer'>
+            {userLogin ? (
+              <img
+                className='w-10 h-10 object-cover rounded'
+                alt=''
+                src={userLogin.user.avatar}
+              />
+            ) : (
+              <i className='fa fa-bars text-xl font-semibold '></i>
+            )}
+
+            <div className='d-inline-block absolute top-0 right-0 h-4 w-4 rounded-full text-center bg-red-500 text-white text-sm'>
+              1
+            </div>
+          </button>
         </div>
       </Box>
       <Menu
-        key={userLogin.user.id}
         anchorEl={anchorEl}
         id='account-menu'
         open={open}
@@ -171,7 +180,7 @@ const MenuProfile = () => {
                 onClick={() => {
                   //logout
                   localStorage.removeItem("userLogin");
-                  // localStorage.removeItem(ACCESS_TOKEN);
+                  localStorage.removeItem(ACCESS_TOKEN);
                   // history.push('/');
                   navigate("/");
                   window.location.reload();

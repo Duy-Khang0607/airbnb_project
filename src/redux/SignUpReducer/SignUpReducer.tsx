@@ -50,9 +50,6 @@ export const signUpApi = (userRegister: UserSignUp) => {
         method: "POST",
         data: userRegister,
       });
-      console.log(res.data.content);
-      dispatch(res.data.content);
-      dispatch(setStatusAction(res.status));
       openNotificationWithIcon(
         "success",
         " ",
@@ -61,6 +58,8 @@ export const signUpApi = (userRegister: UserSignUp) => {
         </Tag>
       );
       console.log(res.data.content);
+      dispatch(res.data.content);
+      dispatch(setStatusAction(res.status));
     } catch (err: any) {
       console.log(err.response.data.content);
       openNotificationWithIcon(

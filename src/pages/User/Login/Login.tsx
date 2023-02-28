@@ -32,7 +32,10 @@ const Login = (props: Props) => {
       navigate("/");
     },
     validationSchema: yup.object().shape({
-      email: yup.string().required("Must be email ").email("Invalid email"),
+      email: yup
+        .string()
+        .required("Please enter your email")
+        .email("Invalid email"),
       password: yup
         .string()
         .required("Please enter your password")
@@ -42,40 +45,68 @@ const Login = (props: Props) => {
 
   useEffect(() => {}, []);
   return (
-    <div className=''>
-      <Row className=''>
-        <Col
-          span={8}
-          className=' mt-36 container mx-auto border-2 border-gray-300 border-solid  px-5 rounded-lg'>
-          <Form onSubmitCapture={formik.handleSubmit}>
-            <h5 className='text-center text-xl'>Log In</h5>
-            <p className='text-center'>Welcom to Airbnb !</p>
-            <Form.Item label='Email'>
-              <Input
-                name='email'
-                value={formik.values.email}
-                onChange={formik.handleChange}
-              />
-              {formik.errors.email && (
-                <span className='text-red-400'>{formik.errors.email}</span>
-              )}
-            </Form.Item>
-            <Form.Item label='Password'>
-              <Input
-                name='password'
-                value={formik.values.password}
-                onChange={formik.handleChange}
-              />
-              {formik.errors.email && (
-                <span className='text-red-400'>{formik.errors.email}</span>
-              )}
-            </Form.Item>
-            <div className='flex justify-center'>
-              <Button htmlType='submit'>Log In</Button>
+    <div className='container'>
+      <div className='row'>
+        <div className='col-sm-9 col-md-7 col-lg-5 mx-auto'>
+          <div className='card border-0 shadow rounded-3 my-5'>
+            <div className='card-body p-4 p-sm-5'>
+              <h5 className='card-title text-center mb-5 titleSignIn text-3xl'>
+                Đăng nhập
+              </h5>
+              <h3 style={{ color: "rgb(255 56 92)" }}>Welcome to Airbnb</h3>
+              <form onSubmit={formik.handleSubmit}>
+                <div className='form-group mb-3'>
+                  <label className='my-1'>Email</label>
+                  <input
+                    type='email'
+                    className='form-control'
+                    id='email'
+                    placeholder='name@example.com'
+                    onChange={formik.handleChange}
+                  />
+                  {formik.errors.email ? (
+                    <p className='text-danger mt-1'>{formik.errors.email}</p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className='form-group mb-3 '>
+                  <label className='my-1'>Password</label>
+                  <Input.Password
+                    type='password'
+                    className='form-control flex'
+                    id='password'
+                    placeholder='Password'
+                    onChange={formik.handleChange}
+                  />
+                  {formik.errors.password ? (
+                    <p className='text-danger mt-1'>{formik.errors.password}</p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className='d-grid'>
+                  <button
+                    style={{
+                      background: "rgb(22 119 255)",
+                      borderRadius: "6px",
+                      lineHeight: "22px",
+                      fontSize: "14px",
+                      borderColor: "rgb(22 119 255)",
+                      outline: "rgb(22 119 255)",
+                      padding: "4px 15px",
+                      color: "#fff",
+                      marginTop: "20px",
+                    }}
+                    type='submit'>
+                    Sign In
+                  </button>
+                </div>
+              </form>
             </div>
-          </Form>
-        </Col>
-      </Row>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
