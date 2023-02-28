@@ -11,6 +11,7 @@ import DetailRoomSlice from "./DetailRoomSlice/DetailRoomSlice";
 import RoomReducer from "./RoomReducer/RoomReducer";
 import SignUpReducer from "./SignUpReducer/SignUpReducer";
 import ProfileSlice from "./Profile/ProfileSlice";
+import OrderRoomReducer from "./OrderRoomReducer/OrderRoomReducer";
 
 export const store = configureStore({
   reducer: {
@@ -23,10 +24,10 @@ export const store = configureStore({
     ModalReducer,
 
     // USER
-    loginSlice,
     LocationSlice,
     ProfileSlice,
     DetailRoomSlice,
+    OrderRoomReducer,
   },
 });
 

@@ -12,6 +12,7 @@ import HomeTemplate from "./templates/HomeTemplate";
 import Loading from "./components/Loading/Loading";
 import { createBrowserHistory } from "history";
 import AppRoute from "./api/AppRoute";
+import MyRio from "./pages/MyRio";
 export const history = createBrowserHistory({ window });
 type Props = {};
 // Admin Template
@@ -96,6 +97,13 @@ const App = (props: Props) => {
               </React.Suspense>
             }></Route>
         </Route>
+        <Route
+          path='myrio'
+          element={
+            <React.Suspense fallback={<Loading />}>
+              <MyRio />
+            </React.Suspense>
+          }></Route>
 
         {/* Admin Template */}
         <Route

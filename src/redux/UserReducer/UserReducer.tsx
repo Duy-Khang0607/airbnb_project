@@ -3,23 +3,45 @@ import { DispatchType } from "../configStore";
 import requester from "../../api/api";
 import { openNotificationWithIcon } from "src/utils/notification";
 import { Tag } from "antd";
+import { setStoreJSON, USER_LOGIN } from "src/utils/setting";
+import Swal from "sweetalert2";
 // Sài interface sử dụng trùng tên dc , khả năng mở rộng cao hơn với type
 export interface UserModel {
   id: number;
   name: string;
   email: string;
-  password: string;
+  password?: string;
   phone: string;
   birthday: string;
-  avatar: string;
+  avatar?: string;
   gender: boolean;
   role: string;
+}
+
+export interface RentedRoom {
+  id: number;
+  maPhong: number;
+  ngayDen: Date;
+  ngayDi: Date;
+  soLuongKhach: number;
+  maNguoiDung: number;
+  hinhAnh: string;
+  tenPhong: string;
+  giaTien: number;
+  mayGiat: boolean;
+  banLa: boolean;
+  tivi: boolean;
+  dieuHoa: boolean;
+  wifi: boolean;
+  phongNgu: number;
+  phongTam: number;
 }
 
 export type UserState = {
   arrUser: UserModel[];
   editUser: any;
   userInfo: any;
+  rentedRoom: RentedRoom[];
   statusAction: number;
 };
 
@@ -27,6 +49,7 @@ const initialState: UserState = {
   arrUser: [],
   editUser: {},
   userInfo: {},
+  rentedRoom: [],
   statusAction: 0,
 };
 
@@ -61,6 +84,9 @@ const UserReducer = createSlice({
     setUserByID: (state: UserState, action: PayloadAction<UserModel[]>) => {
       state.editUser = action.payload;
     },
+    getRentedRoom: (state: UserState, action: PayloadAction<RentedRoom[]>) => {
+      state.rentedRoom = action.payload;
+    },
   },
 });
 
@@ -71,6 +97,7 @@ export const {
   setArrUserEditAction,
   setStatusAction,
   setUserByID,
+  getRentedRoom,
 } = UserReducer.actions;
 
 export default UserReducer.reducer;
@@ -238,6 +265,47 @@ export const updateAvatar = (formFile: string) => {
 export const clearStatusAction = () => {
   return async (dispatch: DispatchType) => {
     dispatch(setStatusAction(0));
+  };
+};
+
+export const getRentedRoomByEachUser = (id: number) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      if (id !== null) {
+        const result = await requester.get(
+          `/api/dat-phong/lay-theo-nguoi-dung/${id}`
+        );
+        console.log(result.data.content);
+        dispatch(getRentedRoom(result.data.content));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+export const editUserAction = (userId: number, userInfo: any) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const result = await requester.put(`/api/users/${userId}`, userInfo);
+      console.log(result);
+      if (result.status === 200) {
+        Swal.fire({
+          title: "Update Successfully!",
+          icon: "success",
+          confirmButtonColor: "#44c020",
+        });
+        dispatch(setUserInfo(result.data.content));
+        setStoreJSON(USER_LOGIN, { user: result.data.content });
+      }
+    } catch (errors: any) {
+      console.log(errors);
+      Swal.fire({
+        icon: "error",
+        title: errors.response?.data.message,
+        text: `${errors.response?.data.content}`,
+      });
+    }
   };
 };
 

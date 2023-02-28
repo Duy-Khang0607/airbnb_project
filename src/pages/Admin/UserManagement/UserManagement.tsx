@@ -47,18 +47,7 @@ const UserManagement: React.FC = () => {
   console.log(role.user.role);
   const { statusAction } = useSelector((state: RootState) => state.UserReducer);
 
-  interface DataType {
-    id: number;
-    name: string;
-    email: string;
-    password: string;
-    phone: string;
-    birthday: string;
-    avatar: string;
-    gender: boolean;
-    role: string;
-  }
-  const data: DataType[] = user;
+  const data: UserModel[] = user;
   const dispatch: DispatchType = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -99,7 +88,7 @@ const UserManagement: React.FC = () => {
     dispatch(actionAsync);
   };
 
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<UserModel> = [
     {
       title: "Name",
       dataIndex: "name",
@@ -227,7 +216,7 @@ const UserManagement: React.FC = () => {
     {
       title: <SettingOutlined className='text-2xl' />,
       key: "action",
-      render: (_: any, record: DataType) => {
+      render: (_: any, record: UserModel) => {
         return data.length >= 1 ? (
           <Space>
             <Popconfirm

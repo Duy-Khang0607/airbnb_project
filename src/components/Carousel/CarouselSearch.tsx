@@ -119,13 +119,19 @@ const CarouselSearch = ({}: Props) => {
     slidesToScroll: 1,
     autoplaySpeed: 2000,
   };
+  const { arrRoomPageIndex } = useSelector(
+    (state: RootState) => state.RoomReducer
+  );
 
   return (
     <Row className='container flex mt-36 justify-center mx-auto'>
-      <Col className='relative w-11/12 inline-block mr-7'>
+      <Col
+        xs={6}
+        md={12}
+        lg={24}
+        className='relative w-11/12 inline-block mr-7'>
         <button
-          className='absolute left-0 font-medium  text-sm rounded-full bg-white w-9 h-9 shadow-light border-gray-300'
-          style={{ top: "50% ", transform: "translateY(-50%)", zIndex: "2" }}
+          className='absolute top-5 left-0 font-medium  text-sm rounded-full bg-white w-9 h-9 shadow-light border-gray-300 z-10'
           onClick={() => {
             slider.current?.prev();
           }}>
@@ -135,7 +141,10 @@ const CarouselSearch = ({}: Props) => {
           <Carousel ref={slider} {...settings}>
             {image1.map((item, index) => {
               return (
-                <NavLink to={"/"} key={index} className='font-bold text-black'>
+                <NavLink
+                  to={"/"}
+                  key={index}
+                  className='font-bold text-black no-underline'>
                   <div className='flex flex-col items-center py-2'>
                     <img src={item.url} alt='..' className='w-6' />
                     <p className='text-xs hover:text-black'>{item.name}</p>
@@ -146,18 +155,11 @@ const CarouselSearch = ({}: Props) => {
           </Carousel>
         </div>
         <button
-          className='absolute right-0 font-medium text-sm rounded-full bg-white w-9 h-9 shadow-light border-gray-300 items-center flex justify-center'
-          style={{ top: "50% ", transform: "translateY(-50%)", zIndex: "2" }}
+          className='absolute top-5 right-0 font-medium  text-sm rounded-full bg-white w-9 h-9 shadow-light border-gray-300 z-10'
           onClick={() => {
             slider.current?.prev();
           }}>
           <FcNext />
-        </button>
-      </Col>
-      <Col className='flex items-center'>
-        <button className='flex items-center border rounded-md text-base  bg-white border-2 border-gray-400 shadow-md'>
-          <TbGitBranch className='mr-2' />
-          Filter
         </button>
       </Col>
     </Row>

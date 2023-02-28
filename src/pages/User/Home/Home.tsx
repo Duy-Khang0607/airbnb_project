@@ -6,26 +6,39 @@ import { useDispatch, useSelector } from "react-redux";
 import Location from "./Location/Location";
 import Pagination from "src/components/Pagination/Pagination";
 import { DispatchType, RootState } from "src/redux/configStore";
-import { getRoomPaginationApi } from "src/redux/RoomReducer/RoomReducer";
+import {
+  getAllRoomsApi,
+  getRoomPaginationApi,
+} from "src/redux/RoomReducer/RoomReducer";
+import {
+  getLocationApi,
+  getLocationPaginationApi,
+} from "src/redux/LocationReducer/LocationReducer";
 
 type Props = {};
 let timeout: ReturnType<typeof setTimeout>;
 
 const Home = (props: Props) => {
-  const { arrRoomPageIndex, totalRow, statusAction } = useSelector(
+  const { totalRow, statusAction } = useSelector(
     (state: RootState) => state.RoomReducer
   );
 
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [postsPerPage, setPostPerPage] = useState<number>(5);
+  const [postsPerPage, setPostPerPage] = useState<number>(10);
   const dispatch: DispatchType = useDispatch();
+
+  // const getLocationPageIndexAction = () => {
+  //   const action = getLocationPaginationApi(currentPage, postsPerPage);
+  //   dispatch(action);
+  // };
+
   const getRoomPageIndexAction = () => {
     const action = getRoomPaginationApi(currentPage, postsPerPage);
     dispatch(action);
   };
   useEffect(() => {
+    window.scroll(0, 0);
     timeout = setTimeout(() => {
-      // getAllLocationApi();
       getRoomPageIndexAction();
     }, 100);
     return () => {
@@ -36,7 +49,7 @@ const Home = (props: Props) => {
   }, [currentPage, statusAction]);
 
   return (
-    <div>
+    <section>
       <Row>
         <CarouselSearch />
       </Row>
@@ -50,7 +63,7 @@ const Home = (props: Props) => {
           totalRow={totalRow}
         />
       </Row>
-    </div>
+    </section>
   );
 };
 

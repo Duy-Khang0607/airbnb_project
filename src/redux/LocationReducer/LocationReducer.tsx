@@ -70,21 +70,33 @@ export const {
 
 export default LocationReducer.reducer;
 
+// export const getLocationApi = () => {
+//   return async (dispatch: DispatchType) => {
+//     try {
+//       const res = await requester({
+//         url: "/api/vi-tri",
+//         method: "GET",
+//       });
+//       const content: LocationModel[] = res.data.content;
+//       //  Sau khi lấy dữ liệu từ API về => Bắt đầu dispatch lên store
+//       const action: PayloadAction<LocationModel[]> =
+//         setArrLocationAction(content);
+//       dispatch(action);
+//       console.log(content);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// };
+
 export const getLocationApi = () => {
   return async (dispatch: DispatchType) => {
     try {
-      const res = await requester({
-        url: "/api/vi-tri",
-        method: "GET",
-      });
-      const content: LocationModel[] = res.data.content;
-      //  Sau khi lấy dữ liệu từ API về => Bắt đầu dispatch lên store
-      const action: PayloadAction<LocationModel[]> =
-        setArrLocationAction(content);
-      dispatch(action);
-      console.log(content);
-    } catch (error) {
-      console.log(error);
+      const result = await requester.get("/api/vi-tri");
+      console.log(result);
+      dispatch(setArrLocationAction(result.data.content));
+    } catch (err) {
+      console.log(err);
     }
   };
 };

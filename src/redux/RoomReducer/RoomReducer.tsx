@@ -84,9 +84,8 @@ export const getAllRoomsApi = () => {
   return async (dispatch: DispatchType) => {
     try {
       const result = await requester.get("/api/phong-thue");
-
+      console.log(result);
       dispatch(setArrRooms(result.data.content));
-      console.log(result.data.content);
     } catch (err) {
       console.log(err);
     }
