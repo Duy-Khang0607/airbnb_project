@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { type } from "os";
 import ModalReducer from "./ModalReducer/ModalReducer";
 import SignInReducer from "./SignInReducer/SignInReducer";
 import UserReducer from "./UserReducer/UserReducer";

@@ -5,18 +5,19 @@ import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, USER_LOGIN } from "src/utils/setting";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/configStore";
+import type { MenuProps } from "antd";
+import { Dropdown, Space } from "antd";
+import { Avatar } from "@mui/material";
+import { BarsOutlined } from "@ant-design/icons";
+import { deepOrange } from "@mui/material/colors";
 
 const MenuProfile = () => {
   const { userLogin } = useSelector((state: RootState) => state.SignInReducer);
-  console.log(userLogin);
-
   const profile = localStorage.getItem(USER_LOGIN);
-  console.log(profile);
-
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -26,6 +27,66 @@ const MenuProfile = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleLogOut = () => {
+    localStorage.removeItem("userLogin");
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem(ACCESS_TOKEN);
+    // history.push('/');
+    navigate("/login");
+    console.log("123");
+
+    window.location.reload();
+  };
+  const items: MenuProps["items"] = [
+    {
+      label: (
+        <p>
+          <Link className='no-underline text-black font-medium' to='/register'>
+            Sign up
+          </Link>
+        </p>
+      ),
+      key: "0",
+    },
+    {
+      label: (
+        <p>
+          <Link to='/login' className='no-underline text-black font-medium'>
+            Login
+          </Link>
+        </p>
+      ),
+      key: "1",
+    },
+    {
+      label: (
+        // {userLogin?.user?.role === "ADMIN" ? (<div></div>):(<h3></h3>)}
+        <p>
+          {userLogin?.user?.role === "ADMIN" ? (
+            <Link to='/login' className='no-underline text-black font-medium'>
+              Admin Management
+            </Link>
+          ) : (
+            <Link to='/' className='no-underline text-black font-medium'>
+              Host your home
+            </Link>
+          )}
+        </p>
+      ),
+      key: "2",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: (
+        <p className='text-red-600 font-medium' onClick={handleLogOut}>
+          Log out
+        </p>
+      ),
+      key: "3",
+    },
+  ];
 
   return (
     <React.Fragment>
@@ -51,106 +112,54 @@ const MenuProfile = () => {
             </svg>
           </NavLink>
         </Typography>
-        <div title='Account Setting'>
-          {/* <IconButton
-            className='btn btn-light'
-            onClick={handleClick}
-            size='small'
-            sx={{ ml: 2 }}
-            aria-controls={open ? "account-menu" : undefined}
-            aria-haspopup='true'
-            aria-expanded={open ? "true" : undefined}>
-            <i className='fa fa-bars'></i>
-            <i className='fa fa-user'></i>
-          </IconButton> */}
-          <button
-            onClick={handleClick}
-            className='btn btn-light  relative cursor-pointer'>
-            {userLogin ? (
-              <img
-                className='w-10 h-10 object-cover rounded'
-                alt=''
-                src={userLogin.user.avatar}
-              />
-            ) : (
-              <i className='fa fa-bars text-xl font-semibold '></i>
-            )}
-
-            <div className='d-inline-block absolute top-0 right-0 h-4 w-4 rounded-full text-center bg-red-500 text-white text-sm'>
-              1
-            </div>
-          </button>
-        </div>
       </Box>
-      <Menu
-        anchorEl={anchorEl}
-        id='account-menu'
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-            mt: 1.5,
-            "& .MuiAvatar-root": {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            "&:before": {
-              content: '""',
-              display: "block",
-              position: "absolute",
-              top: 0,
-              right: 14,
-              width: 10,
-              height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
-              zIndex: 0,
-            },
-          },
-        }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
+      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         {/* chua login  */}
         {!userLogin && (
           <>
-            <MenuItem>
-              <NavLink
-                to='/login'
-                className='dropdown__item text-black no-underline'>
-                Sign in
-              </NavLink>
-            </MenuItem>
-            <MenuItem>
-              <NavLink
-                to='/register'
-                className='dropdown__item text-black no-underline'>
-                Sign up
-              </NavLink>
-            </MenuItem>
+            <Dropdown menu={{ items }} trigger={["click"]}>
+              <a onClick={(e) => e.preventDefault()}>
+                <Space>
+                  <button className='btn btn-light'>
+                    <BarsOutlined className='text-black text-xl' />
+                  </button>
+                </Space>
+              </a>
+            </Dropdown>
           </>
         )}
         {/* profile */}
         {userLogin && (
           <>
-            <MenuItem>
-              <NavLink
-                to='/profile'
-                className='dropdown__item text-black no-underline'
-                onClick={() => {}}>
-                Profile
-              </NavLink>
-            </MenuItem>
+            <nav className='flex gap-2 items-center'>
+              {userLogin.user.avatar ? (
+                <img
+                  src={userLogin.user.avatar}
+                  className='w-10 h-10 object-cover rounded-full'
+                />
+              ) : (
+                <Avatar
+                  alt='img'
+                  src={userLogin.user.avatar}
+                  sx={{ width: 56, height: 56, bgcolor: deepOrange[500] }}>
+                  {userLogin.user.name}
+                </Avatar>
+              )}
+
+              <Dropdown menu={{ items }} trigger={["click"]}>
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                    <button className='btn btn-light'>
+                      <BarsOutlined className='text-black text-xl' />
+                    </button>
+                  </Space>
+                </a>
+              </Dropdown>
+            </nav>
           </>
         )}
-        <hr />
 
-        {userLogin?.user?.role === "ADMIN" ? (
+        {/* {userLogin?.user?.role === "ADMIN" ? (
           <MenuItem>
             <NavLink
               to='/admin'
@@ -165,11 +174,7 @@ const MenuProfile = () => {
             </NavLink>
           </MenuItem>
         )}
-        <MenuItem>
-          <NavLink to='' className='dropdown__item text-black no-underline'>
-            Help
-          </NavLink>
-        </MenuItem>
+       
 
         {userLogin && (
           <>
@@ -178,10 +183,8 @@ const MenuProfile = () => {
                 to='/logout'
                 className='dropdown__item text-black no-underline'
                 onClick={() => {
-                  //logout
                   localStorage.removeItem("userLogin");
                   localStorage.removeItem(ACCESS_TOKEN);
-                  // history.push('/');
                   navigate("/");
                   window.location.reload();
                 }}>
@@ -189,8 +192,8 @@ const MenuProfile = () => {
               </NavLink>
             </MenuItem>
           </>
-        )}
-      </Menu>
+        )} */}
+      </Box>
     </React.Fragment>
   );
 };

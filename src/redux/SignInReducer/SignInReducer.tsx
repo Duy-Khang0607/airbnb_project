@@ -59,7 +59,7 @@ export const signInApi = (userLogin: UserSignIn) => {
       console.log(res);
 
       setStore(ACCESS_TOKEN, res.data.content.token);
-      localStorage.setItem("isAdmin", res.data.content.role);
+      localStorage.setItem("isAdmin", res.data.content.user.role);
       // getStore(ACCESS_TOKEN);
       console.log(getStore(ACCESS_TOKEN));
       setStoreJSON(USER_LOGIN, res.data.content);

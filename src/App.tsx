@@ -150,7 +150,6 @@ const App = (props: Props) => {
               </React.Suspense>
             }></Route>
         </Route>
-
         <Route path='*' element={<Navigate to='' />}></Route>
       </Routes>
     </HistoryRouter>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import GoogleMapReact from "google-map-react";
 
 const AnyReactComponent = ({ text }: any) => <div>{text}</div>;
@@ -6,22 +6,26 @@ const AnyReactComponent = ({ text }: any) => <div>{text}</div>;
 type Props = {};
 
 export default function MapGoogle({}: Props) {
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627,
-    },
-    zoom: 11,
-  };
+  const center = useMemo(
+    () => ({
+      lat: 44,
+      lng: -80,
+    }),
+    []
+  );
 
   return (
     // Important! Always set the container height explicitly
-    <div style={{ height: "100vh", width: "100%" }} className="rounded-lg">
+    <div style={{ height: "100vh", width: "100%" }} className='rounded-lg'>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "" }}
-        defaultCenter={defaultProps.center}
-        defaultZoom={defaultProps.zoom}>
-        <AnyReactComponent lat={59.955413} lng={30.337844} text='My Marker' />
+        defaultCenter={center}
+        defaultZoom={10}>
+        <AnyReactComponent
+          lat={59.955413}
+          lng={30.337844}
+          text={<i className='fa fa-map-marker-alt text-red-600 text-xl'></i>}
+        />
       </GoogleMapReact>
     </div>
   );

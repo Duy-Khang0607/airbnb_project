@@ -38,7 +38,7 @@ export default function RegisterAdmin({}: Props) {
       email: "",
       password: "",
       phone: "",
-      birthday: "",
+    birthday: "",
       gender: true,
       role: "",
     },

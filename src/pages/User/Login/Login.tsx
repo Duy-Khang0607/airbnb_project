@@ -26,10 +26,13 @@ const Login = (props: Props) => {
       password: "",
     },
     onSubmit: async (values) => {
-      console.log(values);
-      const action = signInApi(values);
-      dispatch(action);
-      navigate("/");
+      try {
+        console.log(values);
+        const action = signInApi(values);
+        await dispatch(action);
+      } catch (error) {
+        console.log(error);
+      }
     },
     validationSchema: yup.object().shape({
       email: yup
